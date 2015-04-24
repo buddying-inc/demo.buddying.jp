@@ -1,0 +1,50 @@
+/*** Common ***/
+.noscript {
+	background-color: #ffe5e5;
+	border: 1px solid #f00;
+	color: #f00;
+	display: none;
+	font-weight: bold;
+	line-height: 3;
+	text-align: center;
+}
+
+body {
+	font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro';
+}
+
+#wrapper {
+	margin: 0 auto;
+	padding: 1em;
+	width: 90%;
+}
+
+@include keyframes (DASH) {
+	0%{
+		stroke-dashoffset:2000;
+	}
+	100%{
+		stroke-dashoffset:0;
+	}
+}
+
+path {
+	stroke:#000;
+	fill:none;
+	stroke-width:1;
+	stroke-dasharray: 2000;
+	stroke-dashoffset: 2000;
+	@include animation(DASH 2s ease-in forwards);
+}
+.sample02 {
+	.title {
+		fill: #63c3f0;
+		font-size: 110px;
+		font-weight: bold;
+		font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro';
+	}
+	path {
+		stroke: #3D93B6;
+		stroke-width: 2;
+	}
+}
