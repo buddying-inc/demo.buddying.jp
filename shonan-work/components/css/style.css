@@ -244,8 +244,8 @@ a {
   margin-right: .5em;
 }
 .avatar-img img {
-  height: 62px;
-  width: 62px;
+  height: 50px;
+  width: 50px;
 }
 
 .views {
@@ -407,6 +407,9 @@ article .next {
   -moz-box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.14), 0 10px 6px -8px transparent, 0 1px 5px 0 rgba(0, 0, 0, 0.12);
   -webkit-box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.14), 0 10px 6px -8px transparent, 0 1px 5px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.14), 0 10px 6px -8px transparent, 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+.home .ttl03 {
+  margin-right: 1em;
 }
 
 /*** / details***/
