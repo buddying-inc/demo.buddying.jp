@@ -1,0 +1,19 @@
+/* Buttons */
+.btn01 {
+	color: #fff;
+	background: $accentColor;
+	border-radius: 5px;
+	display: block;
+	padding: 1em 5em;
+	text-align: center;
+}
+.btn02 {
+	@extend .btn01;
+	background: $green;
+	@include box-shadow(0 3px 2px 0 rgba(0, 0, 0, 0.14), 0 10px 6px -8px rgba(0, 0, 0, -0.8), 0 1px 5px 0 rgba(0, 0, 0, 0.12));
+}
+.btn03 {
+	@extend .btn01;
+	background: $bdc;
+	color: $text;
+}

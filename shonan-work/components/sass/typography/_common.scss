@@ -1,0 +1,19 @@
+$base-font-size: 14px;
+$base-line-height: 21px;
+@include establish-baseline;
+
+body {
+	@extend .ffg;
+	@include break-point(mobile) {
+		$font-size: 14px;
+		@include adjust-font-size-to($font-size);
+	}
+}
+
+strong {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
