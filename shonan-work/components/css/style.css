@@ -230,15 +230,6 @@ em {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   background: #fafafa;
-  margin: 0 auto;
-  height: 800px;
-  position: relative;
-  width: 320px;
-}
-@media only screen and (max-width: 1023px) {
-  #container {
-    width: 100%;
-  }
 }
 
 body {
