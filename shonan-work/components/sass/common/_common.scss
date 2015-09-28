@@ -13,6 +13,7 @@
 	@include box-sizing(border-box);
 	background: $bg;
 	margin: 0 auto;
+	height: 800px;
 	position: relative;
 	width: $width;
 	@include break-point(tablet) {
