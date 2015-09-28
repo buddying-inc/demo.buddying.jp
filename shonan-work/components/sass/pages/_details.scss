@@ -1,0 +1,16 @@
+/*** / details***/
+.details {
+	main {
+		padding-bottom: 70px;
+	}
+	article > section {
+		border-bottom: 1px solid $bdc; 
+	}
+	.job_other {
+		border-bottom: none;
+		a > article {
+			border-bottom: 1px solid $bdc;
+			padding: .5em;
+		}
+	}
+}

@@ -1,0 +1,34 @@
+.ttl01 {
+	$font-size: 20px;
+	@include adjust-font-size-to($font-size);
+	color: #fff;
+	font-weight: 100;
+}
+.ttl02 {
+	font-weight: bold;
+	margin-top: 1em;
+}
+.ttl03 {
+	$font-size: 16px;
+	@include adjust-font-size-to($font-size);
+	color: #000;
+	font-weight: bold;
+	margin-bottom: .5em;
+}
+.ttl04 {
+	color: $accentColor;
+	font-weight: 700;
+	margin-bottom: .5em;
+}
+.ttl05 {
+	color: $text;
+	font-weight: 500;
+}
+.mailttl {
+	color: $text;
+	font-weight: 700;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 200px;
+	white-space: nowrap;
+}

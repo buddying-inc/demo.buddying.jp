@@ -1,0 +1,11 @@
+/*** Header ***/
+.mdl-layout__header {
+	@extend .clearfix;
+	@include background(linear-gradient(left, #6598b3, #81b5c9));
+	.mdl-button--icon {
+		position: absolute;
+		right: 0;
+		top: 0;
+		padding: 16px;
+	}
+}

@@ -1,0 +1,83 @@
+/*** /mypage ***/
+.mypage {
+	.account {
+		@extend .clearfix;
+		position: relative;
+		.avatar-img {
+			img {
+				width: 72px;
+				height: 72px;
+			}
+		}
+		.name {
+			font-weight: 700;
+		}
+		a {
+			$font-size: 11px;
+			@include adjust-font-size-to($font-size);
+			text-decoration: underline;
+		}
+		.entrys {
+			$font-size: 12px;
+			@extend .fr;
+			@include adjust-font-size-to($font-size);
+			color: $accentColor;
+			text-align: center;
+			margin-top: -1em;
+			height: 25%;
+			width: 25%;
+			span {
+				$font-size: 24px;
+				@include adjust-font-size-to($font-size);
+				font-weight: 700;
+			}
+		}
+	}
+	.tablabel {
+		@extend .clearfix;
+		li {
+			@extend .fl;
+			background: $bdc;
+			text-align: center;
+			width: 50%;
+			padding: 1em 0;
+			&.active {
+				background: $accentColor;
+				color: #fff;
+				@include box-shadow(0 -2px 2px 0 rgba(0, 0, 0, 0.14), 0 10px 6px -8px rgba(0, 0, 0, -0.8), 0 1px 5px 0 rgba(0, 0, 0, 0.12));
+			}
+		}
+	}
+	.tab_area {
+		padding: 0;
+	}
+	.tab-content {
+		@extend .clearfix;
+		@include box-shadow(0 -5px 2px 0 rgba(0, 0, 0, 0.14), 0 10px 6px -8px rgba(0, 0, 0, -0.8), 0 1px 5px 0 rgba(0, 0, 0, 0.12));
+		display: none;
+		padding: .5em;
+	}
+	li {
+		border-bottom: 1px solid $bdc;
+		padding: .5em 0;
+		&:last-child {
+			border: none;
+		}
+	}
+	input[type="radio"] {
+		display: none;
+	}
+	input:checked + .tab-content {
+		display: block;
+	}
+	.sender {
+		$font-size: 11px;
+		@include adjust-font-size-to($font-size);
+		color: $text;
+	}
+	.date {
+		@extend .sender;
+		@extend .fr;
+		margin-right: 1.5em;
+	}
+}
