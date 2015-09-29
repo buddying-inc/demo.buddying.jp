@@ -1,0 +1,56 @@
+/*** /message ***/
+.message {
+	.msg-area {
+		margin-top: 1em;
+		.balloon {
+			width: 70%;
+		}
+		time {
+			$font-size: 12px;
+			@include adjust-font-size-to($font-size);
+			@include opacity(.5);
+		}
+		.msg {
+			margin-bottom: 2em;
+			&:nth-child(2n+1) {
+				.balloon {
+					@extend .fl;
+					background: $bdc;
+					@include border-radius(10px);
+					padding: 1em;
+					&:before {
+						content: "";
+						position: absolute;
+						top: 7px;
+						left: 45px;
+						@include rotate(90deg);
+						border: 7px solid transparent;
+						border-top: 12px solid $bdc;
+					}
+				}
+			}
+			&:nth-child(2n){
+				.balloon {
+					@extend .fr;
+					background: $accentColor;
+					@include border-radius(10px);
+					color: #fff;
+					padding: 1em;
+					&:before {
+						content: "";
+						position: absolute;
+						bottom: 7px;
+						right: -10px;
+						@include rotate(-90deg);
+						border: 7px solid transparent;
+						border-top: 12px solid $accentColor;
+					}
+				}
+				time {
+					text-align: right;
+					display: block;
+				}
+			}
+		}
+	}
+}

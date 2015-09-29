@@ -94,11 +94,11 @@ img {
   font-family: Yu Mincho, '游明朝体', 'ヒラギノ明朝 ProN W6', 'HiraMinProN-W6', 'HG明朝E', 'ＭＳ Ｐ明朝', 'MS PMincho', 'MS 明朝', serif;
 }
 
-.fr, .mypage .account .entrys, .mypage .date {
+.fr, .mypage .account .entrys, .mypage .date, .message .msg-area .msg:nth-child(2n) .balloon {
   float: right;
 }
 
-.fl, .avatar-img, .mypage .tablabel li {
+.fl, .avatar-img, .mypage .tablabel li, .message .msg-area .msg:nth-child(2n+1) .balloon {
   float: left;
 }
 
@@ -304,7 +304,7 @@ article .next {
   color: #6598b3;
   position: absolute;
   right: -.4em;
-  top: 1em;
+  top: .5em;
 }
 
 .btn_entry {
@@ -500,4 +500,64 @@ article .next {
 }
 .mypage .date {
   margin-right: 1.5em;
+}
+
+/*** /message ***/
+.message .msg-area {
+  margin-top: 1em;
+}
+.message .msg-area .balloon {
+  width: 70%;
+}
+.message .msg-area time {
+  font-size: 0.85714em;
+  line-height: 1.75em;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+  opacity: 0.5;
+}
+.message .msg-area .msg {
+  margin-bottom: 2em;
+}
+.message .msg-area .msg:nth-child(2n+1) .balloon {
+  background: #efebe9;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  padding: 1em;
+}
+.message .msg-area .msg:nth-child(2n+1) .balloon:before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 45px;
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+  border: 7px solid transparent;
+  border-top: 12px solid #efebe9;
+}
+.message .msg-area .msg:nth-child(2n) .balloon {
+  background: #6598b3;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  color: #fff;
+  padding: 1em;
+}
+.message .msg-area .msg:nth-child(2n) .balloon:before {
+  content: "";
+  position: absolute;
+  bottom: 7px;
+  right: -10px;
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  border: 7px solid transparent;
+  border-top: 12px solid #6598b3;
+}
+.message .msg-area .msg:nth-child(2n) time {
+  text-align: right;
+  display: block;
 }
