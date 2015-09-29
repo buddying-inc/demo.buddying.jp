@@ -266,6 +266,7 @@ article header {
 }
 article .movie {
   background: #efebe9;
+  overflow: hidden;
   height: 320px;
   width: 100%;
 }
