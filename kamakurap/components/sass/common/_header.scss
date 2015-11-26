@@ -1,0 +1,23 @@
+/*** Header ***/
+#header {
+	@extend .clearfix;
+	padding: 1em;
+	&.map00 {
+		background: #E83F6F;
+	}
+	&.map01 {
+		background: #ff8b00;
+	}
+	&.map02 {
+		background: #00a4ff;
+	}
+	#logo {
+		height: auto;
+		margin-bottom: 1em;
+		width: 100px;
+		@include break-point(tablet){
+			height: auto;
+			width: 50px;
+		}
+	}
+}

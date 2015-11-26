@@ -1,0 +1,83 @@
+/*** Common ***/
+.noscript {
+	background-color: #ffe5e5;
+	border: 1px solid #f00;
+	color: #f00;
+	display: none;
+	font-weight: bold;
+	line-height: 3;
+	text-align: center;
+}
+#container {
+	@extend .clearfix;
+	@include box-sizing(border-box);
+	margin-bottom: 2em;
+}
+#main {
+	margin: 0 auto;
+	padding: $base-line-height;
+	width: $width;
+	@include break-point(tablet) {
+		width: 85%;
+	}
+}
+.inner {
+	margin: 0 auto;
+	width: 80%;
+	@include break-point(tablet) {
+		width: 100%;
+	}
+}
+.btn {
+	a {
+		background: #565656;
+		color: #fff;
+		display: inline-block;
+		@include border-radius(50%);
+		text-decoration: none;
+		text-align: center;
+		line-height: 2em;
+		margin: 0 1em 1em 0;
+		height: 30px;
+		width: 30px;
+		&:hover {
+			@extend .hover;
+		}
+		&.current {
+			background: #ccc;
+		}
+	}
+}
+#map_canvas {
+	margin-bottom: 1em;
+}
+.color_line {
+	display: inline-block;
+	margin-left: 1em;
+	height: 3px;
+	width: 5em;
+	&.c01 {
+		background: #e45991;
+	}
+	&.c02 {
+		background: #88D498;
+	}
+	&.c03 {
+		background: #F9C22E;
+	}
+}
+.badge {
+	$font-size: 10px;
+	@include adjust-font-size-to($font-size);
+	color: #fff;
+	display: inline-block;
+	@include border-radius(5px);
+	margin: 0 1em 1em 0;
+	padding: 0 8px;
+	&.cafe {
+		background: #754F44;
+	}
+	&.atmosphere {
+		background: #F15946;
+	}
+}

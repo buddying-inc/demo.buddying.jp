@@ -1,0 +1,305 @@
+@charset "UTF-8";
+/*** Reset CSS ***/
+@import url(https://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+html {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+q, blockquote {
+  quotes: none;
+}
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+a img {
+  border: none;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+input,
+textarea {
+  outline: 0;
+}
+
+img {
+  vertical-align: top;
+}
+
+.clearfix, #container, #header {
+  zoom: 1;
+}
+.clearfix:after, #container:after, #header:after {
+  clear: both;
+  content: '';
+  display: block;
+}
+
+.hover, .linkttl:hover, .btn a:hover {
+  -moz-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+.hover:hover, .linkttl:hover, .btn a:hover {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+  opacity: 0.7;
+}
+
+.ffg, body {
+  font-family: 'Noto Sans Japanese', Yu Gothic, '游ゴシック体',  'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+}
+
+.ffm {
+  font-family: Yu Mincho, '游明朝体', 'ヒラギノ明朝 ProN W6', 'HiraMinProN-W6', 'HG明朝E', 'ＭＳ Ｐ明朝', 'MS PMincho', 'MS 明朝', serif;
+}
+
+.fr {
+  float: right;
+}
+
+.fl, #g-nav li {
+  float: left;
+}
+
+.tac {
+  text-align: center;
+}
+
+.tal {
+  text-align: left;
+}
+
+.tar {
+  text-align: right;
+}
+
+/*** Typography ***/
+html {
+  font-size: 87.5%;
+  line-height: 1.5em;
+}
+
+body {
+  font-weight: 200;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -moz-font-feature-settings: 'liga', 'kern';
+}
+@media only screen and (max-width: 478px) {
+  body {
+    font-size: 1em;
+    line-height: 1.5em;
+  }
+}
+
+strong {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
+
+h1 {
+  font-size: 1.71429em;
+  line-height: 1.75em;
+  color: #fff;
+}
+
+.linkttl {
+  font-size: 1.42857em;
+  line-height: 2.1em;
+  color: #000;
+  display: block;
+  text-decoration: none;
+  line-height: 2em;
+  display: block;
+}
+
+.txtlink {
+  color: #00A8E8;
+  display: block;
+  margin-bottom: 0.75em;
+}
+.txtlink:hover {
+  text-decoration: none;
+}
+
+/*** UI ***/
+/* Lists */
+/* Images */
+/* Buttons */
+/* Forms */
+/* Tables */
+/* Icons */
+/*** Common ***/
+.noscript {
+  background-color: #ffe5e5;
+  border: 1px solid #f00;
+  color: #f00;
+  display: none;
+  font-weight: bold;
+  line-height: 3;
+  text-align: center;
+}
+
+#container {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-bottom: 2em;
+}
+
+#main {
+  margin: 0 auto;
+  padding: 21px;
+  width: 1024px;
+}
+@media only screen and (max-width: 1023px) {
+  #main {
+    width: 85%;
+  }
+}
+
+.inner {
+  margin: 0 auto;
+  width: 80%;
+}
+@media only screen and (max-width: 1023px) {
+  .inner {
+    width: 100%;
+  }
+}
+
+.btn a {
+  background: #565656;
+  color: #fff;
+  display: inline-block;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  text-decoration: none;
+  text-align: center;
+  line-height: 2em;
+  margin: 0 1em 1em 0;
+  height: 30px;
+  width: 30px;
+}
+.btn a.current {
+  background: #ccc;
+}
+
+#map_canvas {
+  margin-bottom: 1em;
+}
+
+.color_line {
+  display: inline-block;
+  margin-left: 1em;
+  height: 3px;
+  width: 5em;
+}
+.color_line.c01 {
+  background: #e45991;
+}
+.color_line.c02 {
+  background: #88D498;
+}
+.color_line.c03 {
+  background: #F9C22E;
+}
+
+.badge {
+  font-size: 0.71429em;
+  line-height: 2.1em;
+  color: #fff;
+  display: inline-block;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin: 0 1em 1em 0;
+  padding: 0 8px;
+}
+.badge.cafe {
+  background: #754F44;
+}
+.badge.atmosphere {
+  background: #F15946;
+}
+
+/*** Header ***/
+#header {
+  padding: 1em;
+}
+#header.map00 {
+  background: #E83F6F;
+}
+#header.map01 {
+  background: #ff8b00;
+}
+#header.map02 {
+  background: #00a4ff;
+}
+#header #logo {
+  height: auto;
+  margin-bottom: 1em;
+  width: 100px;
+}
+@media only screen and (max-width: 1023px) {
+  #header #logo {
+    height: auto;
+    width: 50px;
+  }
+}
+
+/*** Navigation ***/
+/*** Breadcrumbs ***/
+/*** Localmenus ***/
+/*** Side ***/
+/*** Footer ***/
+/******************************
+    Below For Each Page
+******************************/
+/*** / ***/
