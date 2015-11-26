@@ -11,18 +11,18 @@
         <title></title>
         <meta content="" name="description">
         <!-- External files -->
-        <link href="components/css/style.css" rel="stylesheet">
-        <script src="components/js/jquery-1.11.2.min.js"></script>
+        <link href="../components/css/style.css" rel="stylesheet">
+        <script src="../components/js/jquery-1.11.2.min.js"></script>
         <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
-        <script src="components/js/common.js"></script>
-        <script src="components/js/map01.js"></script>
+        <script src="../components/js/common.js"></script>
+        <script src="../components/js/map.js"></script>
         <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
         <![endif]-->
         <!-- Favicon, Thumbnail image -->
-        <link href="components/img/common/favicon.ico" rel="shortcut icon">
-        <link href="components/img/common/favicon_big.png" rel="apple-touch-icon">
+        <link href="../components/img/common/favicon.ico" rel="shortcut icon">
+        <link href="../components/img/common/favicon_big.png" rel="apple-touch-icon">
         <!-- OGP -->
         <meta content="" property="og:title">
         <meta content="" property="og:description">
@@ -32,23 +32,27 @@
         <meta content="" property="og:site_name">
         <noscript><style>.noscript{display:block;}</style></noscript>
     </head>
-    <body>
+    <body onload="initialize();">
         <p class="noscript">このWebサイトを正常にご覧いただくには、お使いのブラウザのJavaScriptを有効にする必要があります。</p>
         <div id="container">
-            <header id="header" class="map01">
+            <header id="header" class="map00">
                 <div class="inner">
-                    <img id="logo" src="components/img/logo.png" alt="logo">
-                    <h1>子連れOKのお店</h1>
+                    <img id="logo" src="../components/img/logo.png" alt="logo">
+                    <h1>危険な道、細い道</h1>
                 </div>
             </header>
             <!-- /#header -->
             <main id="main">
                 <div class="btn">
-                    <a href="map00.html">01</a><a class="current" href="map01.html">02</a><a href="map02.html">03</a>
+                    <a class="current" href="../road/">01</a><a href="../kids/">02</a><a href="../diaper/">03</a>
                 </div>
                 <div id="map_canvas" style="width:100%;height:600px;"></div>
                 <div>
-                    <p>ピンをクリックでお店の詳細がみられます。</p>
+                    <ul>
+                        <li>細い道<span class="color_line c01"></span></li>
+                        <li>舗装されていない道<span class="color_line c02"></span></li>
+                        <li>急な坂道<span class="color_line c03"></span></li>
+                    </ul>
                 </div>
             </main>
             <!-- /#main -->
