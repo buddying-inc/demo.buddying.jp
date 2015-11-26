@@ -1,0 +1,25 @@
+h1 {
+	$font-size: 24px;
+	@include adjust-font-size-to($font-size);
+	color: #fff;
+}
+.linkttl {
+	$font-size: 20px;
+	@include adjust-font-size-to($font-size);
+	color: #000;
+	display: block;
+	text-decoration: none;
+	line-height: 2em;
+	display: block;
+	&:hover {
+		@extend .hover;
+	}
+}
+.txtlink {
+	color: #00A8E8;
+	display: block;
+	@include trailer(.5);
+	&:hover {
+		text-decoration: none;
+	}
+}
