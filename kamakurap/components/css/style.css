@@ -269,6 +269,10 @@ h1 {
   background: #F15946;
 }
 
+.mb2 {
+  margin-bottom: 2em;
+}
+
 /*** Header ***/
 #header {
   padding: 1em;
