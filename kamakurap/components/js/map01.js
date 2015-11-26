@@ -48,7 +48,7 @@ function inicializar() {
 
 function create_maker(latlng, html) {
   //アイコンを作成
-   var icon = new google.maps.MarkerImage('components/img/map_icon.png',
+   var icon = new google.maps.MarkerImage('../components/img/map_icon.png',
     new google.maps.Size(36,47),/*アイコンサイズ設定*/
     new google.maps.Point(0,0)  // origin
     );
