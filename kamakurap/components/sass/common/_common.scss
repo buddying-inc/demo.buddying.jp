@@ -33,17 +33,17 @@
 		background: #565656;
 		color: #fff;
 		display: inline-block;
-		@include border-radius(50%);
+		@include border-radius(5px);
 		text-decoration: none;
 		text-align: center;
 		line-height: 2em;
 		margin: 0 1em 1em 0;
-		height: 30px;
-		width: 30px;
+		padding: 0 10px;
 		&:hover {
 			@extend .hover;
 		}
 		&.current {
+			color: #000;
 			background: #ccc;
 		}
 	}
