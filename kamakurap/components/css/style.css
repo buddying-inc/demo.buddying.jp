@@ -217,17 +217,17 @@ h1 {
   background: #565656;
   color: #fff;
   display: inline-block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
   text-decoration: none;
   text-align: center;
   line-height: 2em;
   margin: 0 1em 1em 0;
-  height: 30px;
-  width: 30px;
+  padding: 0 10px;
 }
 .btn a.current {
+  color: #000;
   background: #ccc;
 }
 
