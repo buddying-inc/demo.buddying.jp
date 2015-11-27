@@ -1,11 +1,38 @@
+function gotoCurrentPosition(map) {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            // 成功処理
+            function (info) {
+                var lat = info.coords.latitude;
+                var lng = info.coords.longitude;
+                var center = new google.maps.LatLng(lat, lng);
+                map.setCenter(center);
+                create_center(center);
+            },
+            // エラー処理
+            function (info) {
+                console.log('現在地取得エラー: ' + info.code);
+                return;
+            }
+        );
+    } else {
+        console.log('本ブラウザではGeolocationが使えません');
+        return;
+    }
+}
+
 function initialize() {
-    var latlng = new google.maps.LatLng(35.318467, 139.551009);
-    var myOptions = {
-        zoom: 18, /*拡大比率*/
-        center: latlng, /*表示枠内の中心点*/
-        mapTypeId: google.maps.MapTypeId.ROADMAP/*表示タイプの指定*/
+    // 初期設定
+    var option = {
+        // ズームレベル
+        zoom: 18,
+        // 中心座標
+        center: new google.maps.LatLng(35.318707, 139.550142),
+        // タイプ
+        mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    var map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
+    map = new google.maps.Map(document.getElementById("map_canvas"), option);
+    gotoCurrentPosition(map);
 
 
 // ポリライン表示
@@ -254,3 +281,19 @@ var poly = new google.maps.Polyline(polyOptions);
 poly.setMap(map);
 
 }
+
+function create_center(latlng) {
+  //アイコンを作成
+   var icon = new google.maps.MarkerImage('../components/img/map_icon_center.png',
+    new google.maps.Size(36,47),/*アイコンサイズ設定*/
+    new google.maps.Point(0,0)  // origin
+    );
+  var markerOptions = {
+    position: latlng,
+    map: map,
+    icon: icon
+  };
+  var marker = new google.maps.Marker(markerOptions);
+}
+
+google.maps.event.addDomListener(window, "load", inicialize);

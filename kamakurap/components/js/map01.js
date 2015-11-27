@@ -13,18 +13,7 @@ function gotoCurrentPosition(map) {
                 var lng = info.coords.longitude;
                 var center = new google.maps.LatLng(lat, lng);
                 map.setCenter(center);
-                function create_maker(latlng, html) {
-                  //アイコンを作成
-                   var icon = new google.maps.MarkerImage('../components/img/map_icon.png',
-                    new google.maps.Size(36,47),/*アイコンサイズ設定*/
-                    new google.maps.Point(0,0)  // origin
-                    );
-                  var markerOptions = {
-                    position: latlng,
-                    map: map,
-                    icon: icon
-                  };
-                }
+                create_center(center);
             },
             // エラー処理
             function (info) {
@@ -102,6 +91,20 @@ function create_maker(latlng, html) {
     gmarkers[i] = marker;
     i++;
     return marker;
+}
+
+function create_center(latlng) {
+  //アイコンを作成
+   var icon = new google.maps.MarkerImage('../components/img/map_icon_center.png',
+    new google.maps.Size(36,47),/*アイコンサイズ設定*/
+    new google.maps.Point(0,0)  // origin
+    );
+  var markerOptions = {
+    position: latlng,
+    map: map,
+    icon: icon
+  };
+  var marker = new google.maps.Marker(markerOptions);
 }
 
 function map_click(i) {
