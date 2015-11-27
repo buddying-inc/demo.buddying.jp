@@ -3,30 +3,6 @@ var infowindow = new google.maps.InfoWindow();
 var gmarkers = [];
 var i = 0;
 
-
-function gotoCurrentPosition(map) {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            // 成功処理
-            function (info) {
-                var lat = info.coords.latitude;
-                var lng = info.coords.longitude;
-                var center = new google.maps.LatLng(lat, lng);
-                map.setCenter(center);
-                create_center(center);
-            },
-            // エラー処理
-            function (info) {
-                console.log('現在地取得エラー: ' + info.code);
-                return;
-            }
-        );
-    } else {
-        console.log('本ブラウザではGeolocationが使えません');
-        return;
-    }
-}
-
 function inicializar() {
     // 初期設定
     var option = {
@@ -39,7 +15,6 @@ function inicializar() {
     };
     map = new google.maps.Map(document.getElementById("map_canvas"), option);
     google.maps.event.addListener(map, "click", function() {infowindow.close();});
-    gotoCurrentPosition(map);
 
     // ポイント01
     var point = new google.maps.LatLng(35.318497, 139.550957);
@@ -91,20 +66,6 @@ function create_maker(latlng, html) {
     gmarkers[i] = marker;
     i++;
     return marker;
-}
-
-function create_center(latlng) {
-  //アイコンを作成
-   var icon = new google.maps.MarkerImage('../components/img/map_icon_center.png',
-    new google.maps.Size(36,47),/*アイコンサイズ設定*/
-    new google.maps.Point(0,0)  // origin
-    );
-  var markerOptions = {
-    position: latlng,
-    map: map,
-    icon: icon
-  };
-  var marker = new google.maps.Marker(markerOptions);
 }
 
 function map_click(i) {
