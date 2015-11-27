@@ -44,6 +44,38 @@ function inicializar() {
     var point = new google.maps.LatLng(35.319018, 139.548781);
     var marker = create_maker(point, "<div class='box'><a class='linkttl' href='http://onaricafe.blogspot.jp/' target='_blank'>onari cafe</a><span class='badge cafe'>カフェ</span><span class='badge atmosphere'>にぎやか</span><a href='#' class='txtlink'>口コミをみる</a></div>");
 
+    
+    var btn = document.createElement('input');
+    btn.type = 'button';
+    btn.value = '決定';
+    btn.style.marginTop = '30px';
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(btn);
+    google.maps.event.addDomListener(btn, 'click', function() {
+        gotoCurrentPosition(map);
+    });
+
+}
+
+function gotoCurrentPosition(map) {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            // 成功処理
+            function (info) {
+                var lat = info.coords.latitude;
+                var lng = info.coords.longitude;
+                var center = new google.maps.LatLng(lat, lng);
+                map.setCenter(center);
+            },
+            // エラー処理
+            function (info) {
+                console.log('現在地取得エラー: ' + info.code);
+                return;
+            }
+        );
+    } else {
+        console.log('本ブラウザではGeolocationが使えません');
+        return;
+    }
 }
 
 function create_maker(latlng, html) {
