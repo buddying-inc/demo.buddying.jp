@@ -1,7 +1,10 @@
 /*** Header ***/
 #header {
 	@extend .clearfix;
+	background: #fff;
+	position: relative;
 	padding: 1em;
+	width: 100%;
 	&.map00 {
 		background: #E83F6F;
 	}

@@ -1,6 +1,28 @@
 /*** Navigation ***/
 #g-nav {
+	font-weight: 400;
+	bottom: 0;
+	right: 2em;
+	position: absolute;
+	@include break-point(tablet) {
+		right: 0;
+		position: relative;
+		width: 100%;
+	}
 	li {
 		@extend .fl;
+		@include border-radius(8px 8px 0 0);
+		color: #fff;
+		background: #00a4ff;
+		margin-left: 1em;
+		padding: $base-line-height * .5 $base-line-height;
+		@include break-point(tablet) {
+			margin-left: 0;
+			width: 11%;
+		}
+	}
+	a {
+		color: #fff;
+		text-decoration: none;
 	}
 }
