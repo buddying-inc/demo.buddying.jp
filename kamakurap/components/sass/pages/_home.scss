@@ -22,13 +22,26 @@
 		}
 		#map_canvas {
 			@extend .fr;
+			@include break-point(tablet) {
+				width: 100%;
+			}
 		}
 	}
 	.badge {
 		color: #000;
 	}
-	.fr {
+	.fl-box {
+		@extend .fl;
+		width: 40%;
+		@include break-point(tablet) {
+			width: 100%;
+		}
+	}
+	.fr-box {
 		@extend .fr;
+		@include break-point(tablet) {
+			width: 100%;
+		}
 	}
 	.flexslider {
 		width: 100%;

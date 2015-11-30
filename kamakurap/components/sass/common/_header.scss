@@ -2,6 +2,7 @@
 #header {
 	@extend .clearfix;
 	background: #fff;
+	@include box-sizing(border-box);
 	position: relative;
 	padding: 1em;
 	width: 100%;

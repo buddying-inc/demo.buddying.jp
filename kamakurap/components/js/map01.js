@@ -9,7 +9,7 @@ function inicializar() {
         // ズームレベル
         zoom: 18,
         // 中心座標
-        center: new google.maps.LatLng(35.318707, 139.550142),
+        center: new google.maps.LatLng(35.311341, 139.546762),
         // タイプ
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
@@ -17,33 +17,8 @@ function inicializar() {
     google.maps.event.addListener(map, "click", function() {infowindow.close();});
 
     // ポイント01
-    var point = new google.maps.LatLng(35.318497, 139.550957);
-    var marker = create_maker(point, "<div class='box'><a class='linkttl' href='http://www.starbucks.co.jp/store/search/detail.php?id=396' target='_blank'>スターバックスコーヒー 鎌倉店</a><span class='badge cafe'>カフェ</span><span class='badge atmosphere'>にぎやか</span><a href='#' class='txtlink'>口コミをみる</a></div>");
-
-    // ポイント02
-    var point = new google.maps.LatLng(35.3191105,139.5507418);
-    var marker = create_maker(point, "<div class='box'><a class='linkttl' href='http://tabelog.com/kanagawa/A1404/A140402/14003290/' target='_blank'>Beck's 鎌倉店</a><span class='badge cafe'>カフェ</span><span class='badge atmosphere'>にぎやか</span><a href='#' class='txtlink'>口コミをみる</a></div>");
-
-    // ポイント03
-    var point = new google.maps.LatLng(35.319472,139.551139);
-    var marker = create_maker(point, "<div class='box'><a class='linkttl' href='http://www.mcdonalds.co.jp/shop/map/map.php?strcode=14655' target='_blank'>マクドナルド 鎌倉店</a><span class='badge cafe'>カフェ</span><span class='badge atmosphere'>にぎやか</span><a href='#' class='txtlink'>口コミをみる</a></div>");
-
-    // ポイント04
-    var point = new google.maps.LatLng(35.319255, 139.548826);
-    var marker = create_maker(point, "<div class='box'><a class='linkttl' href='http://r.gnavi.co.jp/gab0788/' target='_blank'>サンマルクカフェ 鎌倉店</a><span class='badge cafe'>カフェ</span><span class='badge atmosphere'>にぎやか</span><a href='#' class='txtlink'>口コミをみる</a></div>");
-
-    // ポイント05
-    var point = new google.maps.LatLng(35.317489, 139.551321);
-    var marker = create_maker(point, "<div class='box'><a class='linkttl' href='http://cobakaba.com/' target='_blank'>コバカバ</a><span class='badge cafe'>カフェ</span><span class='badge atmosphere'>にぎやか</span><a href='#' class='txtlink'>口コミをみる</a></div>");
-
-    // ポイント06
-    var point = new google.maps.LatLng(35.320036, 139.549231);
-    var marker = create_maker(point, "<div class='box'><a class='linkttl' href='http://www.yelp.co.jp/biz/callejero-%E9%8E%8C%E5%80%89%E5%B8%82' target='_blank'>CALLEJERO</a><span class='badge cafe'>カフェ</span><span class='badge atmosphere'>にぎやか</span><a href='#' class='txtlink'>口コミをみる</a></div>");
-
-    // ポイント07
-    var point = new google.maps.LatLng(35.319018, 139.548781);
-    var marker = create_maker(point, "<div class='box'><a class='linkttl' href='http://onaricafe.blogspot.jp/' target='_blank'>onari cafe</a><span class='badge cafe'>カフェ</span><span class='badge atmosphere'>にぎやか</span><a href='#' class='txtlink'>口コミをみる</a></div>");
-
+    var point = new google.maps.LatLng(35.311341, 139.546762);
+    var marker = create_maker(point, "<div class='box'><a class='linkttl' href='http://uraga-moana.jp/shop/index.html' target='_blank'>お菓子工房 MOANA</a><span class='badge cafe'>カフェ</span><span class='badge atmosphere'>にぎやか</span><a href='#' class='txtlink'>口コミをみる</a></div>");
 }
 
 function create_maker(latlng, html) {
