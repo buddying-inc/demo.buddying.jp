@@ -1,1 +1,63 @@
 /*** / ***/
+.home {
+	background: #00a4ff;
+	position: relative;
+	#header {
+		padding: 0;
+	}
+	.inner {
+		@include break-point(tablet) {
+			width: 80%;
+			padding: 1em 0 0 0;
+		}
+	}
+	.sec01 {
+		color: #fff;
+		margin-bottom: 4em;
+	}
+	.sec02 {
+		background: #fff;
+		a {
+			color: #000;
+		}
+		#map_canvas {
+			@extend .fr;
+		}
+	}
+	.badge {
+		color: #000;
+	}
+	.fr {
+		@extend .fr;
+	}
+	.flexslider {
+		width: 100%;
+		@include break-point(tablet) {
+			margin-top: 2em;
+		}
+	}
+	.slides {
+		height: 400px;
+		overflow: hidden;
+		@include break-point(tablet) {
+			height: 300px;
+			width: 100%;
+		}
+	}
+	.flexslider {
+		width: 600px;
+		@include break-point(tablet) {
+			width: 100%;
+		}
+	}
+	.sns {
+		margin-top: 2em;
+		img {
+			height: auto;
+			width: 30px;
+		}
+	}
+	#map_canvas {
+		margin-top: 2em;
+	}
+}

@@ -15,17 +15,14 @@
 }
 #main {
 	margin: 0 auto;
-	padding: $base-line-height;
-	width: $width;
-	@include break-point(tablet) {
-		width: 85%;
-	}
 }
 .inner {
+	@extend .clearfix;
 	margin: 0 auto;
+	padding: $base-line-height;
 	width: 80%;
 	@include break-point(tablet) {
-		width: 100%;
+		width: 90%;
 	}
 }
 .btn {
@@ -47,6 +44,10 @@
 			background: #ccc;
 		}
 	}
+}
+a {
+	color: #fff;
+	@extend .hover;
 }
 #map_canvas {
 	margin-bottom: 1em;
@@ -80,7 +81,23 @@
 	&.atmosphere {
 		background: #F15946;
 	}
+	&.c01 {
+		background: #F694C1;
+	}
+	&.c02 {
+		background: #FED766;
+	}
+	&.c03 {
+		background: #64B6AC;
+	}
+	&.c04 {
+		background: #fff;
+	}
 }
 .mb2 {
 	margin-bottom: 2em;
+}
+.tar {
+	display: block;
+	text-align: right;
 }
