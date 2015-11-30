@@ -94,11 +94,11 @@ img {
   font-family: Yu Mincho, '游明朝体', 'ヒラギノ明朝 ProN W6', 'HiraMinProN-W6', 'HG明朝E', 'ＭＳ Ｐ明朝', 'MS PMincho', 'MS 明朝', serif;
 }
 
-.fr, .home .sec02 #map_canvas, .home .fr {
+.fr, .home .sec02 #map_canvas, .home .fr-box {
   float: right;
 }
 
-.fl, #g-nav li {
+.fl, #g-nav li, .home .fl-box {
   float: left;
 }
 
@@ -209,13 +209,16 @@ h1 {
 }
 
 .inner {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   margin: 0 auto;
   padding: 21px;
   width: 80%;
 }
 @media only screen and (max-width: 1023px) {
   .inner {
-    width: 90%;
+    width: 100%;
   }
 }
 
@@ -303,6 +306,9 @@ a {
 /*** Header ***/
 #header {
   background: #fff;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   position: relative;
   padding: 1em;
   width: 100%;
@@ -393,8 +399,26 @@ a {
 .home .sec02 a {
   color: #000;
 }
+@media only screen and (max-width: 1023px) {
+  .home .sec02 #map_canvas {
+    width: 100%;
+  }
+}
 .home .badge {
   color: #000;
+}
+.home .fl-box {
+  width: 40%;
+}
+@media only screen and (max-width: 1023px) {
+  .home .fl-box {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 1023px) {
+  .home .fr-box {
+    width: 100%;
+  }
 }
 .home .flexslider {
   width: 100%;

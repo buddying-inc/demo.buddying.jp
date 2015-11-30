@@ -18,11 +18,12 @@
 }
 .inner {
 	@extend .clearfix;
+	@include box-sizing(border-box);
 	margin: 0 auto;
 	padding: $base-line-height;
 	width: 80%;
 	@include break-point(tablet) {
-		width: 90%;
+		width: 100%;
 	}
 }
 .btn {
