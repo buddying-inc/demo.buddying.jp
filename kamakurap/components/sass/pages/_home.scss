@@ -39,6 +39,7 @@
 	}
 	.fr-box {
 		@extend .fr;
+		width: 50%;
 		@include break-point(tablet) {
 			width: 100%;
 		}
@@ -57,12 +58,6 @@
 			width: 100%;
 		}
 	}
-	.flexslider {
-		width: 600px;
-		@include break-point(tablet) {
-			width: 100%;
-		}
-	}
 	.sns {
 		margin-top: 2em;
 		img {
@@ -72,5 +67,7 @@
 	}
 	#map_canvas {
 		margin-top: 2em;
+		height: 380px;
+		width: 100%;
 	}
 }
