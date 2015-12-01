@@ -9,7 +9,7 @@ function inicializar() {
         // ズームレベル
         zoom: 18,
         // 中心座標
-        center: new google.maps.LatLng(35.318707, 139.550142),
+        center: new google.maps.LatLng(35.311341, 139.546762),
         // タイプ
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
