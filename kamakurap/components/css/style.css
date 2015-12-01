@@ -415,6 +415,9 @@ a {
     width: 100%;
   }
 }
+.home .fr-box {
+  width: 50%;
+}
 @media only screen and (max-width: 1023px) {
   .home .fr-box {
     width: 100%;
@@ -438,14 +441,6 @@ a {
     width: 100%;
   }
 }
-.home .flexslider {
-  width: 600px;
-}
-@media only screen and (max-width: 1023px) {
-  .home .flexslider {
-    width: 100%;
-  }
-}
 .home .sns {
   margin-top: 2em;
 }
@@ -455,4 +450,6 @@ a {
 }
 .home #map_canvas {
   margin-top: 2em;
+  height: 380px;
+  width: 100%;
 }
