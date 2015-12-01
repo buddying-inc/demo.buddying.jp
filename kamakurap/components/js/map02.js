@@ -9,7 +9,7 @@ function inicializar() {
         // ズームレベル
         zoom: 18,
         // 中心座標
-        center: new google.maps.LatLng(35.311341, 139.546762),
+        center: new google.maps.LatLng(35.318707, 139.550142),
         // タイプ
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
@@ -17,7 +17,7 @@ function inicializar() {
     google.maps.event.addListener(map, "click", function() {infowindow.close();});
 
 
-        // ポイント01
+    // ポイント00
     var point = new google.maps.LatLng(35.311341, 139.546762);
     var marker = create_maker(point, "<div class='box'><a class='linkttl' href='http://uraga-moana.jp/shop/index.html' target='_blank'>お菓子工房 MOANA</a><span class='badge cafe'>カフェ</span><span class='badge atmosphere'>にぎやか</span><a href='#' class='txtlink'>口コミをみる</a></div>");
 
