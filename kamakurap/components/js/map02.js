@@ -21,6 +21,10 @@ function inicializar() {
     var point = new google.maps.LatLng(35.311341, 139.546762);
     var marker = create_maker(point, "<div class='box'><a class='linkttl' href='http://uraga-moana.jp/shop/index.html' target='_blank'>お菓子工房 MOANA</a><span class='badge cafe'>カフェ</span><span class='badge atmosphere'>にぎやか</span><a href='../' class='txtlink'>お店の詳細</a></div>");
 
+    // ポイント01
+    var point = new google.maps.LatLng(35.313745, 139.539990);
+    var marker = create_maker(point, "<div class='box'><a class='linkttl' href='http://kamakuramarche-un.com/' target='_blank'>鎌倉マルシェアン</a><span class='badge cafe'>カフェ</span><span class='badge atmosphere'>にぎやか</span><a href='../page2.html' class='txtlink'>お店の詳細</a></div>");
+
 }
 
 function create_maker(latlng, html) {
