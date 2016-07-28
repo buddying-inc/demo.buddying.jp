@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>canvas-wave</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="./wave.js"></script>
+        <style>
+            .wrapper {
+                position: relative;
+                width: 100%;
+                height: 500px;
+            }
+            img {
+                width: 50%;
+                height: 100%;
+                float: left;
+            }
+            #canvas {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: 10%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <img src="./hokusai.jpg" alt="">
+            <img src="./hokusai2.jpg" alt="">
+            <canvas id="canvas"></canvas>
+        </div>
+    </body>
+</html>
