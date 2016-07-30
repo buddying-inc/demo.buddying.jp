@@ -2,12 +2,12 @@ window.onload = function() {
     var unit,
         canvas, context, context2,
         height, width, xAxis1, xAxis2, yAxis;
-    var lineWidth = 3;
+    var lineWidth = 6;
 
     function init() {
         canvas = document.getElementById('canvas');
         canvas.width = canvas.clientWidth;
-        canvas.height = 300;
+        canvas.height = canvas.clientHeight;
         context = context2 = canvas.getContext('2d');
 
         height = canvas.height;
@@ -15,9 +15,9 @@ window.onload = function() {
 
         yAxis = 0;
 
-        xAxis1 = height - 10 - 3;
+        xAxis1 = height - 10 - 5;
         xAxis2 = height - 10;
-        unit = 100;
+        unit = 50; // 波の間隔
         draw();
     }
 
@@ -30,7 +30,7 @@ window.onload = function() {
 
         draw.seconds = draw.seconds - .007;
         draw.t = draw.seconds * Math.PI;
-        setTimeout(draw, 50);
+        setTimeout(draw, 100);
     }
     draw.seconds = 0;
     draw.t = 0;
@@ -51,7 +51,7 @@ window.onload = function() {
         // Loop to draw segments (横幅の分、波を描画)
         for (var i = yAxis; i <= width + 10; i += 10) {
             x = t + (-yAxis + i) / unit;
-            y = Math.sin(x) / 10; // 数値変更で波の強さ変更
+            y = Math.sin(x) / 5; // 数値変更で波の強さ変更
             context.lineTo(i, unit * y + xAxis1);
         }
     }
@@ -76,7 +76,7 @@ window.onload = function() {
         // Loop to draw segments (横幅の分、波を描画)
         for (var i = yAxis; i <= width + 10; i += 10) {
             x = t + (-yAxis + i) / unit;
-            y = Math.sin(x) / 10; // 数値変更で波の強さ変更
+            y = Math.sin(x) / 5; // 数値変更で波の強さ変更
             context2.lineTo(i, unit * y + xAxis2);
         }
     }
