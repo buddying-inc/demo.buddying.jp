@@ -2,24 +2,38 @@ window.onload = function() {
     var unit,
         canvas, context, context2,
         height, width, xAxis1, xAxis2, yAxis;
-    var lineWidth = 6;
+    var lineWidth = 10;
 
     function init() {
         canvas = document.getElementById('canvas');
-        canvas.width = canvas.clientWidth;
-        canvas.height = canvas.clientHeight;
         context = context2 = canvas.getContext('2d');
-
-        height = canvas.height;
-        width = canvas.width;
+        var w = canvas.clientWidth;
+        var h = canvas.clientHeight;
+        // retina
+        if (window.devicePixelRatio) {
+            // grab the width and height from canvas
+            // reset the canvas width and height with window.devicePixelRatio applied
+            canvas.setAttribute('width', Math.round(w * window.devicePixelRatio));
+            canvas.setAttribute('height', Math.round(h * window.devicePixelRatio));
+            // force the canvas back to the original size using css
+            canvas.style.width = w+'px';
+            canvas.style.height = h+'px';
+            // set render scaled
+            context.scaleX = context.scaleY = context2.scaleX = context2.scaleY = window.devicePixelRatio;
+            w = w * window.devicePixelRatio;
+            h = h * window.devicePixelRatio;
+        }
+        width = w;
+        height = h;
 
         yAxis = 0;
 
-        xAxis1 = height - 10 - 5;
-        xAxis2 = height - 10;
-        unit = 50; // 波の間隔
+        xAxis1 = height - 20 - 10;
+        xAxis2 = height - 20;
+        unit = 100; // 波の間隔
         draw();
     }
+
 
     function draw() {
         context.clearRect(0, 0, width, height);
