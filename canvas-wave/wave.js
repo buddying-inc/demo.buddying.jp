@@ -1,68 +1,83 @@
 window.onload = function() {
     var unit,
-        canvas, context,
-        height, width, xAxis1, xAxis2, yAxis,
-        heightHarf, heightQuarter,
-        lineWidth = 30;
+        canvas, context, context2,
+        height, width, xAxis1, xAxis2, yAxis;
+    var lineWidth = 3;
 
     function init() {
         canvas = document.getElementById('canvas');
         canvas.width = canvas.clientWidth;
         canvas.height = 300;
-        context = canvas.getContext('2d');
+        context = context2 = canvas.getContext('2d');
 
         height = canvas.height;
         width = canvas.width;
 
         yAxis = 0;
 
-        heightQuarter = Math.floor(height / 4);
-        heightHarf = Math.floor(height / 2);
-        xAxis1 = heightQuarter;
-        xAxis2 = height - heightQuarter;
-        unit = Math.floor(heightQuarter - (lineWidth / 2));
+        xAxis1 = height - 10 - 3;
+        xAxis2 = height - 10;
+        unit = 100;
         draw();
     }
 
     function draw() {
         context.clearRect(0, 0, width, height);
+        context2.clearRect(0, 0, width, height);
 
-        context.strokeStyle = '#fff';
-        context.lineWidth = lineWidth;
-
-        context.beginPath();
-        drawSine1(draw.t);
-        drawSine2(draw.t);
-        context.stroke();
+        drawStroke();
+        drawWave();
 
         draw.seconds = draw.seconds - .007;
         draw.t = draw.seconds * Math.PI;
-        setTimeout(draw, 35);
+        setTimeout(draw, 50);
     }
     draw.seconds = 0;
     draw.t = 0;
 
-    function drawSine1(t) {
-        var x = t;
-        var y = Math.sin(x);
-        context.moveTo(yAxis, (unit * y) + xAxis1);
+    function drawStroke() {
+        context.strokeStyle = '#fff';
+        context.lineWidth = lineWidth;
 
-        for (var i = yAxis - lineWidth; i <= width + lineWidth; i += 10) {
+        context.beginPath(); //パスの開始
+        drawSine1(draw.t);
+        context.stroke();
+    }
+    function drawSine1(t) {
+        var x = t; //時間を横の位置とする
+        var y = Math.sin(x);
+        context.moveTo(yAxis, unit * y + xAxis1); //スタート位置にパスを置く
+
+        // Loop to draw segments (横幅の分、波を描画)
+        for (var i = yAxis; i <= width + 10; i += 10) {
             x = t + (-yAxis + i) / unit;
-            y = Math.sin(x);
-            context.lineTo(i, (unit * y) + xAxis1);
+            y = Math.sin(x) / 10; // 数値変更で波の強さ変更
+            context.lineTo(i, unit * y + xAxis1);
         }
     }
 
-    function drawSine2(t) {
-        var x = t;
-        var y = Math.sin(x);
-        context.moveTo(yAxis, (unit * y) + xAxis2);
+    function drawWave() {
+        context2.fillStyle = '#fff';
 
-        for (var i = yAxis - lineWidth; i <= width + lineWidth; i += 10) {
+        context2.beginPath(); //パスの開始
+        drawSine(draw.t);
+        context2.lineTo(width + 10, height); //パスをCanvasの右下へ
+        context2.lineTo(0, height); //パスをCanvasの左下へ
+        context2.closePath(); //パスを閉じる
+        context2.fill(); //塗りつぶす
+    }
+
+
+    function drawSine(t) {
+        var x = t; //時間を横の位置とする
+        var y = Math.sin(x);
+        context2.moveTo(yAxis, unit*y+xAxis2); //スタート位置にパスを置く
+
+        // Loop to draw segments (横幅の分、波を描画)
+        for (var i = yAxis; i <= width + 10; i += 10) {
             x = t + (-yAxis + i) / unit;
-            y = Math.sin(x);
-            context.lineTo(i, (unit * y) + xAxis2);
+            y = Math.sin(x) / 10; // 数値変更で波の強さ変更
+            context2.lineTo(i, unit * y + xAxis2);
         }
     }
 
