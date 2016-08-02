@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title>canvas-wave</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="./one_wave.js"></script>
         <script src="./wave.js"></script>
         <style>
             #wrapper {
@@ -24,6 +25,16 @@
                 width: 100%;
                 height: 100%;
             }
+            .one-wave {
+                margin-top: 50px;
+                background: #eeeeee;
+                width: 100%;
+                height: 50px;
+            }
+            #one-canvas {
+                width: 100%;
+                height: 100%;
+            }
         </style>
     </head>
     <body>
@@ -31,6 +42,10 @@
             <img src="./hokusai.jpg" alt="">
             <img src="./hokusai2.jpg" alt="">
             <canvas id="canvas"></canvas>
+        </div>
+        <br>
+        <div class="one-wave">
+            <canvas id="one-canvas"></canvas>
         </div>
     </body>
 </html>

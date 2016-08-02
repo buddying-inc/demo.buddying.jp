@@ -1,99 +1,100 @@
-window.onload = function() {
-    var unit,
-        canvas, context, context2,
-        height, width, xAxis1, xAxis2, yAxis;
-    var lineWidth = 10;
+var Wave = function(param) {
+    // TODO マジックナンバー unit, timeの増減, xAxis,
+    var W = this;
+    var canvas = document.getElementById(param.id);
+    var canvasWidth = canvas.clientWidth;
+    var canvasHeight = canvas.clientHeight;
+    var ctx = canvas.getContext('2d');
+    var yAxis = 0;
+    var linexAxis, wavexAxis;
+    var unit = 100;
+    var seconds = 0;
+    var time = 0;
+    var color = param.color || '#ffffff';
+    var lineWidth = param.lineWidth || 30;
 
-    function init() {
-        canvas = document.getElementById('canvas');
-        context = context2 = canvas.getContext('2d');
-        var w = canvas.clientWidth;
-        var h = canvas.clientHeight;
-        // retina
-        if (window.devicePixelRatio) {
+    W.init = function() {
+        W.retinaSupport();
+        wavexAxis = canvasHeight - 30;
+        linexAxis = wavexAxis - Math.floor(lineWidth / 1.5);
+    };
+
+    W.retinaSupport = function() {
+        var pixelRatio = window.devicePixelRatio;
+        if (pixelRatio) {
             // grab the width and height from canvas
-            // reset the canvas width and height with window.devicePixelRatio applied
-            canvas.setAttribute('width', Math.round(w * window.devicePixelRatio));
-            canvas.setAttribute('height', Math.round(h * window.devicePixelRatio));
+            // reset the canvas width and height with pixelRatio applied
+            canvas.setAttribute('width', Math.round(canvasWidth * pixelRatio));
+            canvas.setAttribute('height', Math.round(canvasHeight * pixelRatio));
             // force the canvas back to the original size using css
-            canvas.style.width = w+'px';
-            canvas.style.height = h+'px';
+            canvas.style.width = canvasWidth + 'px';
+            canvas.style.height = canvasHeight + 'px';
             // set render scaled
-            context.scaleX = context.scaleY = context2.scaleX = context2.scaleY = window.devicePixelRatio;
-            w = w * window.devicePixelRatio;
-            h = h * window.devicePixelRatio;
+            ctx.scaleX = ctx.scaleY = pixelRatio;
+            canvasWidth = canvasWidth * pixelRatio;
+            canvasHeight = canvasHeight * pixelRatio;
         }
-        width = w;
-        height = h;
+    };
 
-        yAxis = 0;
+    W.start = function() {
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-        xAxis1 = height - 20 - 10;
-        xAxis2 = height - 20;
-        unit = 100; // 波の間隔
-        draw();
-    }
+        W.drawLine();
+        W.drawWave();
 
+        seconds -= .01; //プラスで<=、マイナスで=>移動、数値変更でスピード変更
+        time = seconds * Math.PI;
+        setTimeout(W.start, 100);
+    };
 
-    function draw() {
-        context.clearRect(0, 0, width, height);
-        context2.clearRect(0, 0, width, height);
+    W.drawLine = function() {
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = lineWidth;
+        W.drawSine(linexAxis);
+        ctx.stroke();
+    };
 
-        drawStroke();
-        drawWave();
+    W.drawWave = function() {
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        W.drawSine(wavexAxis);
+        ctx.lineTo(canvasWidth + 10, canvasHeight);
+        ctx.lineTo(0, canvasHeight);
+        ctx.closePath();
+        ctx.fill();
+    };
 
-        draw.seconds = draw.seconds - .007;
-        draw.t = draw.seconds * Math.PI;
-        setTimeout(draw, 100);
-    }
-    draw.seconds = 0;
-    draw.t = 0;
-
-    function drawStroke() {
-        context.strokeStyle = '#fff';
-        context.lineWidth = lineWidth;
-
-        context.beginPath(); //パスの開始
-        drawSine1(draw.t);
-        context.stroke();
-    }
-    function drawSine1(t) {
-        var x = t; //時間を横の位置とする
+    W.drawSine = function(xAxis) {
+        var x = time;
         var y = Math.sin(x);
-        context.moveTo(yAxis, unit * y + xAxis1); //スタート位置にパスを置く
+        ctx.moveTo(yAxis, unit * y + xAxis);
 
-        // Loop to draw segments (横幅の分、波を描画)
-        for (var i = yAxis; i <= width + 10; i += 10) {
-            x = t + (-yAxis + i) / unit;
-            y = Math.sin(x) / 5; // 数値変更で波の強さ変更
-            context.lineTo(i, unit * y + xAxis1);
+        // TODO 左側の飛び出てくる謎
+        for (var i = yAxis; i <= canvasWidth + 10; i += 10) {
+            x = time + (-yAxis + i) / unit;
+            y = Math.sin(x) / 5; // 数値変更で波の高さ変更
+            ctx.lineTo(i, unit * y + xAxis);
         }
-    }
+    };
 
-    function drawWave() {
-        context2.fillStyle = '#fff';
+    W.init();
+};
 
-        context2.beginPath(); //パスの開始
-        drawSine(draw.t);
-        context2.lineTo(width + 10, height); //パスをCanvasの右下へ
-        context2.lineTo(0, height); //パスをCanvasの左下へ
-        context2.closePath(); //パスを閉じる
-        context2.fill(); //塗りつぶす
-    }
+window.onload = function() {
+    var option = {
+        id: 'canvas',
+        color: '#ffffff',
+        lineWidth: 30,
+    };
+    var wave = new Wave(option);
+    wave.start();
 
-
-    function drawSine(t) {
-        var x = t; //時間を横の位置とする
-        var y = Math.sin(x);
-        context2.moveTo(yAxis, unit*y+xAxis2); //スタート位置にパスを置く
-
-        // Loop to draw segments (横幅の分、波を描画)
-        for (var i = yAxis; i <= width + 10; i += 10) {
-            x = t + (-yAxis + i) / unit;
-            y = Math.sin(x) / 5; // 数値変更で波の強さ変更
-            context2.lineTo(i, unit * y + xAxis2);
-        }
-    }
-
-    init();
+    var option2 = {
+        id: 'one-canvas',
+        color: '#ddd',
+        lineWidth: 10,
+    };
+    var oneWave = new OneWave(option2);
+    oneWave.start();
 };
