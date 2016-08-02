@@ -5,18 +5,16 @@ var Wave = function(param) {
     var canvasWidth = canvas.clientWidth;
     var canvasHeight = canvas.clientHeight;
     var ctx = canvas.getContext('2d');
-    var yAxis = 0;
-    var linexAxis, wavexAxis;
-    var unit = 100;
+    var unit = canvasHeight / 2; // 円の大きさ
     var seconds = 0;
     var time = 0;
-    var color = param.color || '#ffffff';
-    var lineWidth = param.lineWidth || 30;
+    var yAxis = -10;
+    var linexAxis, wavexAxis;
+    var type, color, lineWidth, waveInterval, speed;
 
     W.init = function() {
         W.retinaSupport();
-        wavexAxis = canvasHeight - 30;
-        linexAxis = wavexAxis - Math.floor(lineWidth / 1.5);
+        W.setting(param);
     };
 
     W.retinaSupport = function() {
@@ -36,31 +34,51 @@ var Wave = function(param) {
         }
     };
 
+    W.setting = function(param) {
+        var wave = param.wave;
+        type         = param.type        || 'single';
+        color        = param.color       || '#ffffff';
+        lineWidth    = param.lineWidth   || 20;
+        speed        = wave.speed        || 0.01;
+        waveInterval = wave.interval     || 1;
+        if (wave.direction === 'right') {
+            speed = -speed;
+        }
+        linexAxis = canvasHeight / 2;
+        wavexAxis = linexAxis + lineWidth;
+    };
+
+    W.isWave = function() {
+        return type === 'wave';
+    };
+
     W.start = function() {
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        ctx.strokeStyle = color;
+        ctx.fillStyle = color;
+        ctx.lineWidth = lineWidth;
 
         W.drawLine();
-        W.drawWave();
+        if (W.isWave()) {
+            W.drawWave();
+        }
 
-        seconds -= .01; //プラスで<=、マイナスで=>移動、数値変更でスピード変更
+        seconds = seconds + speed;
         time = seconds * Math.PI;
         setTimeout(W.start, 100);
     };
 
     W.drawLine = function() {
         ctx.beginPath();
-        ctx.strokeStyle = color;
-        ctx.lineWidth = lineWidth;
         W.drawSine(linexAxis);
         ctx.stroke();
     };
 
     W.drawWave = function() {
         ctx.beginPath();
-        ctx.fillStyle = color;
         W.drawSine(wavexAxis);
         ctx.lineTo(canvasWidth + 10, canvasHeight);
-        ctx.lineTo(0, canvasHeight);
+        ctx.lineTo(yAxis, canvasHeight);
         ctx.closePath();
         ctx.fill();
     };
@@ -70,31 +88,42 @@ var Wave = function(param) {
         var y = Math.sin(x);
         ctx.moveTo(yAxis, unit * y + xAxis);
 
-        // TODO 左側の飛び出てくる謎
         for (var i = yAxis; i <= canvasWidth + 10; i += 10) {
-            x = time + (-yAxis + i) / unit;
-            y = Math.sin(x) / 5; // 数値変更で波の高さ変更
+            x = time + (-yAxis + i) / unit / waveInterval;
+            y = Math.sin(x);
             ctx.lineTo(i, unit * y + xAxis);
         }
     };
-
+    
     W.init();
 };
 
 window.onload = function() {
     var option = {
-        id: 'canvas',
-        color: '#ffffff',
-        lineWidth: 30,
+        id       : 'canvas',
+        type     : 'wave',
+        color    : '#fff',
+        lineWidth: 10,
+        wave: {
+            speed    : 0.01,
+            interval : 10,
+            direction: 'right',
+        },
     };
     var wave = new Wave(option);
     wave.start();
 
     var option2 = {
-        id: 'one-canvas',
-        color: '#ddd',
-        lineWidth: 10,
+        id       : 'one-canvas',
+        type     : 'single',
+        color    : '#ddd',
+        lineWidth: 30,
+        wave: {
+            speed    : 0.05,
+            interval : 10,
+            direction: 'left',
+        },
     };
-    var oneWave = new OneWave(option2);
+    var oneWave = new Wave(option2);
     oneWave.start();
 };
