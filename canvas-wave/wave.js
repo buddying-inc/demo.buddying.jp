@@ -10,26 +10,27 @@ var Wave = function(param) {
     var yAxis = -10;
     var linexAxis, wavexAxis;
     var type, color, lineWidth, waveInterval, speed;
+    var waveTimer;
 
     W.init = function() {
-        W.retinaSupport();
+        W.retinaSetting(canvas.clientWidth, canvas.clientHeight);
         W.setting(param);
     };
 
-    W.retinaSupport = function() {
+    W.retinaSetting = function(width, height) {
         var pixelRatio = window.devicePixelRatio;
         if (pixelRatio) {
             // grab the width and height from canvas
             // reset the canvas width and height with pixelRatio applied
-            canvas.setAttribute('width', Math.round(canvasWidth * pixelRatio));
-            canvas.setAttribute('height', Math.round(canvasHeight * pixelRatio));
+            canvas.setAttribute('width', Math.round(width * pixelRatio));
+            canvas.setAttribute('height', Math.round(height * pixelRatio));
             // force the canvas back to the original size using css
-            canvas.style.width = canvasWidth + 'px';
-            canvas.style.height = canvasHeight + 'px';
+            canvas.style.width = width + 'px';
+            canvas.style.height = height + 'px';
             // set render scaled
             ctx.scaleX = ctx.scaleY = pixelRatio;
-            canvasWidth = canvasWidth * pixelRatio;
-            canvasHeight = canvasHeight * pixelRatio;
+            canvasWidth = width * pixelRatio;
+            canvasHeight = height * pixelRatio;
         }
     };
 
@@ -64,7 +65,7 @@ var Wave = function(param) {
 
         seconds = seconds + speed;
         time = seconds * Math.PI;
-        setTimeout(W.start, 100);
+        waveTimer = setTimeout(W.start, 100);
     };
 
     W.drawLine = function() {
@@ -94,35 +95,12 @@ var Wave = function(param) {
         }
     };
 
+    window.addEventListener('resize', function() {
+        clearTimeout(waveTimer);
+        var width = canvas.parentNode.clientWidth;
+        W.retinaSetting(width, canvasHeight);
+        W.start();
+    });
+
     W.init();
-};
-
-window.onload = function() {
-    var option = {
-        id       : 'canvas',
-        type     : 'wave',
-        color    : '#fff',
-        lineWidth: 10,
-        wave: {
-            speed    : 0.01,
-            interval : 10,
-            direction: 'right',
-        },
-    };
-    var wave = new Wave(option);
-    wave.start();
-
-    var option2 = {
-        id       : 'one-canvas',
-        type     : 'single',
-        color    : '#ddd',
-        lineWidth: 5,
-        wave: {
-            speed    : 0.05,
-            interval : 10,
-            direction: 'left',
-        },
-    };
-    var oneWave = new Wave(option2);
-    oneWave.start();
 };
