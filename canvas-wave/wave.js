@@ -1,11 +1,10 @@
 var Wave = function(param) {
-    // TODO マジックナンバー unit, timeの増減, xAxis,
     var W = this;
     var canvas = document.getElementById(param.id);
     var canvasWidth = canvas.clientWidth;
     var canvasHeight = canvas.clientHeight;
     var ctx = canvas.getContext('2d');
-    var unit = canvasHeight / 2; // 円の大きさ
+    var unit = canvasHeight / 2 - param.lineWidth; // 円の大きさ
     var seconds = 0;
     var time = 0;
     var yAxis = -10;
@@ -94,7 +93,7 @@ var Wave = function(param) {
             ctx.lineTo(i, unit * y + xAxis);
         }
     };
-    
+
     W.init();
 };
 
@@ -117,7 +116,7 @@ window.onload = function() {
         id       : 'one-canvas',
         type     : 'single',
         color    : '#ddd',
-        lineWidth: 30,
+        lineWidth: 5,
         wave: {
             speed    : 0.05,
             interval : 10,
