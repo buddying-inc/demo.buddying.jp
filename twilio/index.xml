@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-    <Say>Hello</Say>
+  <Say voice="woman" language="ja-jp">株式会社バディングへようこそ！！</Say>
 </Response>
