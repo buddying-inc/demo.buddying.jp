@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Say voice="woman" language="ja-jp">株式会社バディングへようこそ！！</Say>
+    <Gather action="/cinema_select.php" method="GET">
+          <Say voice="alice" language="ja-JP">
+              シネマロブレへようこそ！上映スケジュールを見たい映画の番号を押して下さい。
+              「シン・ゴジラ」は１を
+              「君の名は」は2を押して下さい。
+          </Say>
+      </Gather>
+      <Say>入力が確認出来ませんでした。さようなら。</Say>
 </Response>
