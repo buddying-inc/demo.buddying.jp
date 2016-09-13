@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-    <Gather action="/cinema_schedule.php?cinema=<?php echo $_GET['Digits'];?>" method="GET">
+    <Gather action="/twilio/cinema_schedule.php?cinema=<?php echo $_GET['Digits'];?>" method="GET">
           <Say voice="alice" language="ja-JP">
               <?php if ($_GET['Digits'] == "1") :?>
               「シン・ゴジラ」ですね。

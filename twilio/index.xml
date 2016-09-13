@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-    <Gather action="/cinema_select.php" method="GET">
+    <Gather action="/twilio/cinema_select.php" method="GET">
           <Say voice="alice" language="ja-JP">
               シネマロブレへようこそ！上映スケジュールを見たい映画の番号を押して下さい。
               「シン・ゴジラ」は１を
