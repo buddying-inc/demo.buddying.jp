@@ -26,7 +26,7 @@
       <Gather action="/twilio/cinema_schedule.php?cinema=<?php echo $_GET['cinema'];?>" method="GET">
             <Say voice="alice" language="ja-JP">
                 日付が正しく認識されませんでした。
-                スケジュールを知りたい日付を4桁で押して、最後に#を押して下さい。
+                スケジュールを知りたい日付を4桁で押して、最後にシャープを押して下さい。
             </Say>
         </Gather>
       <?php endif;?>
