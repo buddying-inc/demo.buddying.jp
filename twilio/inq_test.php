@@ -21,9 +21,11 @@ $rejectNumbers = array(
     </Say>
 </Response>
 <?php else:?>
+<Response>
     <Say voice="alice" language="ja-JP">
         イイクニ のご利用 誠に ありがとうございます。
         お問い合わせ にはお電話 ではお答え 出来ません。
         お手数ですが、サイト記載の メールアドレス へメール頂けますよう お願い申し上げます。
     </Say>
+</Response>
 <?php endif;?>
