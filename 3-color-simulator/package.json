@@ -1,0 +1,19 @@
+{
+  "name": "3-color-simulator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dest/bundle.js",
+  "devDependencies": {
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "reactify": "^1.1.1"
+  },
+  "scripts": {
+    "build": "browserify -t reactify src/js/app.js -o dest/js/bundle.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react-color": "^2.4.2"
+  }
+}
