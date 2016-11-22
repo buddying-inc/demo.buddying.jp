@@ -1,0 +1,491 @@
+@charset "UTF-8";
+/*** Reset CSS ***/
+@import url(https://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
+@import url(https://fonts.googleapis.com/earlyaccess/sawarabimincho.css);
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+html {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+q, blockquote {
+  quotes: none;
+}
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+a img {
+  border: none;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+input,
+textarea {
+  outline: 0;
+}
+
+img {
+  vertical-align: top;
+}
+
+.clearfix, #container, #header {
+  zoom: 1;
+}
+.clearfix:after, #container:after, #header:after {
+  clear: both;
+  content: '';
+  display: block;
+}
+
+.hover {
+  -moz-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+.hover:hover {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+  opacity: 0.7;
+}
+
+.ffg, body {
+  font-family: 'Noto Sans Japanese', '游ゴシック', YuGothic, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+}
+
+.ffm {
+  font-family: "Sawarabi Mincho", Yu Mincho, '游明朝', 'ヒラギノ明朝 ProN W6', 'HiraMinProN-W6', 'HG明朝E', 'ＭＳ Ｐ明朝', 'MS PMincho', 'MS 明朝', serif;
+}
+
+.fr, .right {
+  float: right;
+}
+
+.fl, .left, .col3 div, .col4 div, #g-nav li {
+  float: left;
+}
+
+.tac {
+  text-align: center;
+}
+
+.tal {
+  text-align: left;
+}
+
+.tar {
+  text-align: right;
+}
+
+/*** Typography ***/
+html {
+  font-size: 100%;
+  line-height: 1.5em;
+}
+
+@media only screen and (max-width: 478px) {
+  body {
+    font-size: 0.875em;
+    line-height: 1.71429em;
+  }
+}
+
+strong {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
+
+/*** UI ***/
+/* Lists */
+/* Images */
+/* Buttons */
+/* Forms */
+/* Tables */
+/* Icons */
+/*** Common ***/
+.noscript {
+  background-color: #ffe5e5;
+  border: 1px solid #f00;
+  color: #f00;
+  display: none;
+  font-weight: bold;
+  line-height: 3;
+  text-align: center;
+}
+
+#container {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 24px;
+  width: 1024px;
+}
+@media only screen and (max-width: 1023px) {
+  #container {
+    width: 100%;
+  }
+}
+
+body {
+  -moz-animation: fade-in 1s ease;
+  -webkit-animation: fade-in 1s ease;
+  animation: fade-in 1s ease;
+}
+
+.left {
+  width: 50%;
+}
+@media only screen and (max-width: 1023px) {
+  .left {
+    width: 100%;
+  }
+}
+
+.right {
+  width: 50%;
+}
+@media only screen and (max-width: 1023px) {
+  .right {
+    width: 100%;
+  }
+}
+
+.col3 div, .col4 div {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0 24px;
+}
+
+.col3 div {
+  width: 33.33%;
+}
+@media only screen and (max-width: 1023px) {
+  .col3 div {
+    width: 100%;
+  }
+}
+
+.col4 div {
+  width: 25%;
+}
+@media only screen and (max-width: 1023px) {
+  .col4 div {
+    width: 100%;
+  }
+}
+
+/*** Header ***/
+/*** Navigation ***/
+/*** Breadcrumbs ***/
+/*** Localmenus ***/
+/*** Side ***/
+/*** Footer ***/
+/******************************
+    Below For Each Page
+******************************/
+/*** / ***/
+.home #billboard {
+  width: 100%;
+  height: 100%;
+  background: url('../img/home/billboard01.png?1479456315') no-repeat;
+  background-position: center center;
+  background-size: cover;
+  z-index: 1;
+}
+.home #billboard .anm-catch {
+  font-size: 1.875em;
+  line-height: 1.6em;
+  position: absolute;
+  text-align: center;
+  height: 500px;
+  width: 70px;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  color: #fafafa;
+  z-index: 1000;
+  -moz-animation: fade-in 0.5s linear;
+  -webkit-animation: fade-in 0.5s linear;
+  animation: fade-in 0.5s linear;
+}
+.home #billboard .anm-catch img {
+  height: 100%;
+}
+.home #billboard .anm-catch.fade-in {
+  -moz-animation: fade-y 1.2s ease forwards;
+  -webkit-animation: fade-y 1.2s ease forwards;
+  animation: fade-y 1.2s ease forwards;
+}
+.home #billboard .anm-logo {
+  position: absolute;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  height: 444px;
+  width: 200px;
+  z-index: 1000;
+}
+.home #billboard .anm-logo .lt,
+.home #billboard .anm-logo .lr,
+.home #billboard .anm-logo .lb,
+.home #billboard .anm-logo .ll {
+  background: #fafafa;
+  position: absolute;
+  display: block;
+}
+.home #billboard .anm-logo .lt,
+.home #billboard .anm-logo .lb {
+  height: 1px;
+  width: 0;
+  -moz-transition: all 0.5s ease-in;
+  -o-transition: all 0.5s ease-in;
+  -webkit-transition: all 0.5s ease-in;
+  transition: all 0.5s ease-in;
+}
+.home #billboard .anm-logo .lt.move,
+.home #billboard .anm-logo .lb.move {
+  width: 100%;
+}
+.home #billboard .anm-logo .lr,
+.home #billboard .anm-logo .ll {
+  width: 1px;
+  height: 0;
+  -moz-transition: all 0.5s ease-in;
+  -o-transition: all 0.5s ease-in;
+  -webkit-transition: all 0.5s ease-in;
+  transition: all 0.5s ease-in;
+}
+.home #billboard .anm-logo .lr.move,
+.home #billboard .anm-logo .ll.move {
+  height: 100%;
+}
+.home #billboard .anm-logo .lt {
+  top: 0;
+  left: 0;
+}
+.home #billboard .anm-logo .lb {
+  bottom: 0;
+  right: 0;
+}
+.home #billboard .anm-logo .lr {
+  right: 0;
+  top: 0;
+}
+.home #billboard .anm-logo .ll {
+  left: 0;
+  bottom: 0;
+}
+.home #billboard .anm-logo .catch-text-img {
+  height: auto;
+  width: 24px;
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+}
+.home #billboard .anm-logo .catch-text-img img {
+  width: 100%;
+}
+.home #billboard .anm-logo .catch-text-img.fade-in {
+  -moz-animation: fade-in 3s linear forwards;
+  -webkit-animation: fade-in 3s linear forwards;
+  animation: fade-in 3s linear forwards;
+}
+.home #billboard .anm-logo .anm-logo-img {
+  height: 244px;
+  width: 80px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+}
+.home #billboard .anm-logo .anm-logo-img img {
+  width: 100%;
+}
+.home #billboard .anm-logo .anm-logo-img.fade-in {
+  -moz-animation: fade-in 3s linear forwards;
+  -webkit-animation: fade-in 3s linear forwards;
+  animation: fade-in 3s linear forwards;
+}
+.home #main-movie-area {
+  background: #000;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  z-index: 100;
+}
+.home #main-movie-area.fade-in {
+  -moz-animation: fade-out 5s linear forwards;
+  -webkit-animation: fade-out 5s linear forwards;
+  animation: fade-out 5s linear forwards;
+}
+.home #main-movie-area .homepage-hero-module {
+  border-right: none;
+  border-left: none;
+  position: relative;
+}
+.home #main-movie-area .no-video .video-container video,
+.home #main-movie-area .touch .video-container video {
+  display: none;
+}
+.home #main-movie-area .no-video .video-container .poster,
+.home #main-movie-area .touch .video-container .poster {
+  display: block !important;
+}
+.home #main-movie-area .video-container {
+  position: relative;
+  bottom: 0%;
+  left: 0%;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: #000;
+}
+.home #main-movie-area .video-container .poster img {
+  width: 100%;
+  bottom: 0;
+  position: absolute;
+}
+.home #main-movie-area .video-container .filter {
+  z-index: 100;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+}
+.home #main-movie-area .video-container video {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+}
+.home #main-movie-area .video-container video.fillWidth {
+  width: 100%;
+}
+
+@-moz-keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-moz-keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fade-y {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(-20px);
+  }
+}
+@keyframes fade-y {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(-20px);
+    -ms-transform: translateY(-20px);
+    transform: translateY(-20px);
+  }
+}
