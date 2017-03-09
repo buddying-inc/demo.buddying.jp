@@ -1,0 +1,22 @@
+$base-font-size: 14px;
+$base-line-height: 21px;
+@include establish-baseline;
+
+body {
+	@extend .ffg;
+	p {
+		color: $black;
+		text-rendering: optimizeLegibility;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		-moz-font-feature-settings: 'liga', 'kern';
+	}
+}
+
+strong {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}

@@ -1,0 +1,25 @@
+/* Buttons */
+.btn01 {
+	background: $keyColor;
+	border-radius: 6px;
+	color: $white;
+	display: block;
+	font-weight: 600;
+	text-decoration: none;
+	text-align: center;
+	padding: .6em;
+	width: 70%;
+	margin: 2em auto;
+}
+.btn-fb {
+	background: $keyColor02 image-url('icon-fb@2x.png') 1em center no-repeat;
+	@include background-size(18px);
+	color: $white;
+	@include box-sizing(border-box);
+	border-radius: 6px;
+	text-decoration: none;
+	display: block;
+	width: 90%;
+	margin: 0 auto;
+	padding: 1em 1em 1em 3em;
+}

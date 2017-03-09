@@ -1,0 +1,227 @@
+/*** / ***/
+.home {
+	section {
+		.text-content-area {
+			padding: 1.5em 1em;
+			p {
+				margin-bottom: 1em;
+			}
+		}
+		.ttl02 {
+			@extend .inner;
+			text-align: center;
+			img {
+				@include break-point(mobile) {
+					width: 100%;
+				}
+			}
+		}
+	}
+	.art01 {
+		.sec01 {
+			.img-area01,
+			.img-area02 {
+				background: $white;
+				text-align: center;
+				img {
+					@include break-point(mobile) {
+						width: 100%;
+					}
+				}
+			}
+			.ttl02 {
+				margin-bottom: 1em;
+			}
+			.img-area01 {
+				background: image-url('art01-sec01-01@2x.png') center no-repeat;
+				@include background-size(100%);
+				height: 120px;
+				width: 220px;
+				margin: 0 auto;
+			}
+		}
+		.sec03 {
+			margin-bottom: -3em;
+			@include break-point(pc) {
+				margin-bottom: -4em;
+			}
+			.sec03-01-img {
+				display: block;
+				margin: 0 auto;
+				position: relative;
+				top: -3em;
+				width: 100%;
+				z-index: 0;
+				@include break-point(pc) {
+					top: -4em;
+				}
+			}
+			.img-area {
+				background: image-url('sec01-03-01@2x.png') top center no-repeat;
+				@include background-size(80%);
+				height: 540px;
+				width: $width;
+				@include break-point(tablet) {
+					width: $width;
+					margin: 0 auto;
+				}
+				@include break-point(mobile) {
+					height: 369px;
+					width: 100%;
+				}
+			}
+		}
+		.balloon-a {
+			background: image-url('balloon-a@2x.png') center no-repeat;
+			@include background-size(96% auto);
+			text-align: center;
+			@include box-sizing(border-box);
+			height: 100px;
+			padding-top: 1.2em;
+			font-weight: 600;
+			@include break-point(tablet) {
+				@include background-size(auto 100%);
+			}
+			@include break-point(pc) {
+				height: 110px;
+			}
+		}
+		.balloon-b {
+			background: image-url('balloon-b@2x.png') center no-repeat;
+			@include background-size(96% auto);
+			@include box-sizing(border-box);
+			height: 170px;
+			text-align: center;
+			font-weight: 600;
+			padding-top: 1.5em;
+			position: relative;
+			z-index: 10;
+			@include break-point(tablet) {
+				@include background-size(auto 100%);
+			}
+			@include break-point(pc) {
+				height: 200px;
+				padding-top: 2.5em;
+				@include background-size(80% auto);
+			}
+			p {
+				margin-bottom: 1em;
+			}
+		}
+	}
+	.art02 {
+		.sec01 {
+			margin-bottom: 3em;
+			.ttl02 {
+				margin-bottom: 2em;
+			}
+			.col-wrapper {
+				@extend .inner;
+				.name {
+					$font-size: 18px;
+					@include adjust-font-size-to($font-size);
+					color: $keyColor02;
+					font-weight: 600;
+					display: inline-block;
+					position: relative;
+					&::after {
+						@include pseudo-element;
+						background: $keyColor02;
+						height: 1px;
+						width: 200px;
+						bottom: 5px;
+					}
+					span {
+						font-size: 10px;
+						font-weight: 300;
+						margin-left: 1em;
+					}
+				}
+			}
+			.col2-a {
+				@extend .clearfix;
+				margin-bottom: 2em;
+				.left {
+					@extend .fl;
+					margin-right: 1em;
+					@include break-point(mobile-s) {
+						width: 30%;
+					}
+				}
+			}
+			.col2-b {
+				@extend .clearfix;
+				.right {
+					@extend .fr;
+					margin-left: 1em;
+					@include break-point(mobile-s) {
+						width: 30%;
+					}
+				}
+			}
+		}
+		.sec02 {
+			text-align: center;
+			.ttl02 {
+				margin-bottom: 1.5em;
+			}
+		}
+	}
+	.bnr01-area {
+		background: image-url('bg-pt01@2x.png') repeat;
+		@include background-size(25%);
+		@include box-sizing(border-box);
+		padding: 1em;
+		text-align: center;
+		margin-bottom: 2em;
+		.click-text {
+			display: block;
+			margin: 0 auto;
+		}
+		.bnr01 {
+			@extend .b-shadow;
+			display: inline-block;
+			margin: 1em 0;
+			@include break-point(mobile-s) {
+				img {
+					width: 100%;
+				}
+			}
+		}
+	}
+	.bnr-list {
+		display: inline-block;
+		li {
+			@extend .b-shadow;
+			margin-bottom: 2em;
+			&:last-child {
+				margin-bottom: 4em;
+			}
+			@include break-point(mobile-s) {
+				img {
+					width: 100%;
+				}
+			}
+			&.disable {
+				pointer-events: none;
+				@include opacity(.6);
+			}
+		}
+	}
+	.kamacon-info {
+		background: image-url('bg-pt02@2x.png') no-repeat;
+		@include background-size(cover);
+		@include box-sizing(border-box);
+		padding: 1em;
+		margin-bottom: 2em;
+		color: $white;
+		.kamacon-ttl {
+			$font-size: 18px;
+			@include adjust-font-size-to($font-size);
+			text-align: center;
+		}
+		p {
+			color: $white;
+		}
+	}
+}

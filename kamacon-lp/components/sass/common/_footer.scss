@@ -1,0 +1,16 @@
+/*** Footer ***/
+#footer {
+	background: $bgColor image-url('footer-line@2x.png') top center no-repeat;
+	border-bottom: 8px solid $keyColor;
+	@include background-size(94%);
+	padding-top: 9px;
+	.footer-inner {
+		background: $white;
+		padding: 1em 0;
+	}
+	small {
+		$font-size: 12px;
+		@include adjust-font-size-to($font-size);
+		text-align: center;
+	}
+}
