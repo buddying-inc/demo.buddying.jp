@@ -1,0 +1,68 @@
+/*** Header ***/
+#header {
+	@extend .clearfix;
+	background: $white image-url('header-line@2x.png') top center no-repeat;
+	@include background-size(94%);
+	padding-top: 1em;
+	@include break-point(pc) {
+		background: $white image-url('header-line@2x.png') top center repeat-x;
+		@include background-size(80%);
+	}
+	.header-mv {
+		background: $white image-url('header-mv@2x.png') bottom center no-repeat;
+		text-align: center;
+		height: 470px;
+		@include background-size(auto 100%);
+		@include break-point(mobile) {
+			height: 375px;
+			@include background-size(100%);
+		}
+		.h1-img {
+			width: 253px;
+		}
+		.date {
+			width: 128px;
+		}
+		.by {
+			$font-size: 12px;
+			@include adjust-font-size-to($font-size);
+		}
+		.box {
+			position: absolute;
+			top: 4em;
+			left: 0;
+			right: 0;
+			margin: 0 auto;
+		}
+	}
+}
+#menuBtn {
+	@include box-sizing(border-box);
+	top: 1em;
+	left: 1em;
+	height: 52px;
+	width: 52px;
+	position: absolute;
+	.bar {
+		background: $black;
+		height: 2px;
+		position: absolute;
+		top: 0;
+		width: 26px;
+		&:nth-child(2n) {
+			top: 8px;
+		}
+		&:last-child {
+			top: 16px;
+		}
+	}
+}
+#closedBtn {
+	@extend .fl;
+	background: image-url('icon-closed@2x.png') center no-repeat;
+	@include background-size(15px);
+	@include box-sizing(border-box);
+	margin: 3px 1em 0 0;
+	height: 15px;
+	width: 15px;
+}
