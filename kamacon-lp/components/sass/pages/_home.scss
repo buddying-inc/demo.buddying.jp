@@ -1,20 +1,13 @@
 /*** / ***/
 .home {
-	section {
-		.text-content-area {
-			padding: 1.5em 1em;
-			p {
-				margin-bottom: 1em;
-			}
-		}
-		.ttl02 {
-			@extend .inner;
-			text-align: center;
-			img {
-				@include break-point(mobile) {
-					width: 100%;
-				}
-			}
+	.header-mv {
+		background: $white image-url('header-mv@2x.png') bottom center no-repeat;
+		text-align: center;
+		height: 470px;
+		@include background-size(auto 100%);
+		@include break-point(mobile) {
+			height: 375px;
+			@include background-size(100%);
 		}
 	}
 	.art01 {
@@ -107,121 +100,6 @@
 			p {
 				margin-bottom: 1em;
 			}
-		}
-	}
-	.art02 {
-		.sec01 {
-			margin-bottom: 3em;
-			.ttl02 {
-				margin-bottom: 2em;
-			}
-			.col-wrapper {
-				@extend .inner;
-				.name {
-					$font-size: 18px;
-					@include adjust-font-size-to($font-size);
-					color: $keyColor02;
-					font-weight: 600;
-					display: inline-block;
-					position: relative;
-					&::after {
-						@include pseudo-element;
-						background: $keyColor02;
-						height: 1px;
-						width: 200px;
-						bottom: 5px;
-					}
-					span {
-						font-size: 10px;
-						font-weight: 300;
-						margin-left: 1em;
-					}
-				}
-			}
-			.col2-a {
-				@extend .clearfix;
-				margin-bottom: 2em;
-				.left {
-					@extend .fl;
-					margin-right: 1em;
-					@include break-point(mobile-s) {
-						width: 30%;
-					}
-				}
-			}
-			.col2-b {
-				@extend .clearfix;
-				.right {
-					@extend .fr;
-					margin-left: 1em;
-					@include break-point(mobile-s) {
-						width: 30%;
-					}
-				}
-			}
-		}
-		.sec02 {
-			text-align: center;
-			.ttl02 {
-				margin-bottom: 1.5em;
-			}
-		}
-	}
-	.bnr01-area {
-		background: image-url('bg-pt01@2x.png') repeat;
-		@include background-size(25%);
-		@include box-sizing(border-box);
-		padding: 1em;
-		text-align: center;
-		margin-bottom: 2em;
-		.click-text {
-			display: block;
-			margin: 0 auto;
-		}
-		.bnr01 {
-			@extend .b-shadow;
-			display: inline-block;
-			margin: 1em 0;
-			@include break-point(mobile-s) {
-				img {
-					width: 100%;
-				}
-			}
-		}
-	}
-	.bnr-list {
-		display: inline-block;
-		li {
-			@extend .b-shadow;
-			margin-bottom: 2em;
-			&:last-child {
-				margin-bottom: 4em;
-			}
-			@include break-point(mobile-s) {
-				img {
-					width: 100%;
-				}
-			}
-			&.disable {
-				pointer-events: none;
-				@include opacity(.6);
-			}
-		}
-	}
-	.kamacon-info {
-		background: image-url('bg-pt02@2x.png') no-repeat;
-		@include background-size(cover);
-		@include box-sizing(border-box);
-		padding: 1em;
-		margin-bottom: 2em;
-		color: $white;
-		.kamacon-ttl {
-			$font-size: 18px;
-			@include adjust-font-size-to($font-size);
-			text-align: center;
-		}
-		p {
-			color: $white;
 		}
 	}
 }

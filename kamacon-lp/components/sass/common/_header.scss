@@ -9,14 +9,6 @@
 		@include background-size(80%);
 	}
 	.header-mv {
-		background: $white image-url('header-mv@2x.png') bottom center no-repeat;
-		text-align: center;
-		height: 470px;
-		@include background-size(auto 100%);
-		@include break-point(mobile) {
-			height: 375px;
-			@include background-size(100%);
-		}
 		.h1-img {
 			width: 253px;
 		}
