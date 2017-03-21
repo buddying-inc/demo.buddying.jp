@@ -1,0 +1,71 @@
+/*** / ***/
+.report {
+	.header-mv {
+		background: $white image-url('header-mv02@2x.png') bottom center no-repeat;
+		text-align: center;
+		height: 481px;
+		@include background-size(auto 100%);
+		@include break-point(mobile) {
+			height: 375px;
+			@include background-size(100%);
+		}
+	}
+	.text-content-area {
+		padding: 0 1em;
+		img {
+			display: block;
+			margin: 0 auto;
+			max-width: 100%;
+		}
+	}
+	.ttl02 {
+		margin-bottom: 1.5em;
+	}
+	.sec03 {
+		@include box-sizing(border-box);
+		padding: 1em;
+		img {
+			display: block;
+			margin: 0 auto;
+			max-width: 100%;
+			padding: 1.5em 0;
+		}
+	}
+	.sec05 {
+		margin-bottom: 2em;
+		.text-content-area {
+			margin-bottom: 1em;
+		}
+		img {
+			margin: 0 auto;
+			display: block;
+			max-width: 100%;
+		}
+	}
+	.student,
+	.imaizumi01,
+	.imaizumi02 {
+		margin-bottom: 1em;
+		.name {
+			font-weight: 600;
+		}
+		.bold {
+			font-weight: 600;
+		}
+	}
+	.student {
+		.name {
+			color: #FF5A80;
+		}
+	}
+	.imaizumi01 {
+		.name {
+			color: #00B1FF;
+		}
+	}
+	.imaizumi02 {
+		.name {
+			color: #1ACB50;
+		}
+	}
+}
