@@ -227,6 +227,7 @@ section {
 	li {
 		position: relative;
 		padding-left: 1em;
+		margin-bottom: 1em;
 		&::before {
 			@include pseudo-element;
 			width: 5px;
@@ -236,6 +237,10 @@ section {
 			border-radius: 100%;
 			left: 0;
 			top: 8px;
+		}
+		dt {
+			@extend .fl;
+			margin-right: 1em;
 		}
 	}
 }

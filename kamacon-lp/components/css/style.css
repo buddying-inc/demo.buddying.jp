@@ -97,7 +97,7 @@ img {
   float: right;
 }
 
-.fl, .art02 .sec01 .col2-a .left, #closedBtn, #g-nav li {
+.fl, .art02 .sec01 .col2-a .left, .shop-list li dt, #closedBtn, #g-nav li {
   float: left;
 }
 
@@ -424,6 +424,7 @@ section .ttl02 {
 .shop-list li {
   position: relative;
   padding-left: 1em;
+  margin-bottom: 1em;
 }
 .shop-list li::before {
   position: absolute;
@@ -436,6 +437,9 @@ section .ttl02 {
   border-radius: 100%;
   left: 0;
   top: 8px;
+}
+.shop-list li dt {
+  margin-right: 1em;
 }
 
 /*** Header ***/
