@@ -418,6 +418,26 @@ section .ttl02 {
   word-break: break-all;
 }
 
+.shop-list a {
+  color: #00b1ff;
+}
+.shop-list li {
+  position: relative;
+  padding-left: 1em;
+}
+.shop-list li::before {
+  position: absolute;
+  display: block;
+  content: "";
+  width: 5px;
+  height: 5px;
+  background: #00b1ff;
+  display: block;
+  border-radius: 100%;
+  left: 0;
+  top: 8px;
+}
+
 /*** Header ***/
 #header {
   background: #fff url('../img/header-line@2x.png?1489037377') top center no-repeat;
@@ -651,7 +671,7 @@ section .ttl02 {
 }
 .home .art01 .sec03 .sec03-01-img {
   display: block;
-  margin: 0 auto;
+  margin: 0 auto 1em;
   position: relative;
   top: -3em;
   width: 100%;

@@ -219,3 +219,23 @@ section {
 	color: #00B1FF;
 	word-break: break-all;
 }
+
+.shop-list {
+	a {
+		color: $keyColor;
+	}
+	li {
+		position: relative;
+		padding-left: 1em;
+		&::before {
+			@include pseudo-element;
+			width: 5px;
+			height: 5px;
+			background: $keyColor;
+			display: block;
+			border-radius: 100%;
+			left: 0;
+			top: 8px;
+		}
+	}
+}
