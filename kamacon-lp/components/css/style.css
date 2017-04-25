@@ -442,6 +442,18 @@ section .ttl02 {
   margin-right: 1em;
 }
 
+.thanks-list {
+  margin-bottom: 1em;
+  text-align: center;
+}
+.thanks-list li {
+  display: inline-block;
+}
+.thanks-list li.special {
+  display: block;
+  font-weight: 600;
+}
+
 /*** Header ***/
 #header {
   background: #fff url('../img/header-line@2x.png?1489037377') top center no-repeat;
