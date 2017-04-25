@@ -244,3 +244,15 @@ section {
 		}
 	}
 }
+
+.thanks-list {
+	margin-bottom: 1em;
+	text-align: center;
+	li {
+		display: inline-block;
+		&.special {
+			display: block;
+			font-weight: 600;
+		}
+	}
+}
