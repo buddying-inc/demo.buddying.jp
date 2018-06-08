@@ -1,0 +1,44 @@
+#k-20th-aniv {
+  height: 50px;
+}
+
+.k20th-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 99999;
+  opacity: 1;
+  visibility: visible;
+  transition: all .3s ease;
+}
+.k20th-modal[aria-hidden="true"] {
+  z-index: -1;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.k20th-modal__overlay {
+  z-index: 5;
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  background: rgba(0,0,0,.5);
+}
+
+.k20th-modal__container {
+  z-index: 10;
+  position: relative;
+  max-width: 600px;
+  max-height: 800px;
+  width: 80%;
+  height: 80%;
+  background: #fff;
+}
