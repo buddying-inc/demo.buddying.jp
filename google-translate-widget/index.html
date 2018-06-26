@@ -28,7 +28,60 @@
             <p>こんばんは</p>
             <p>おやすみなさい</p>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, est optio a tenetur soluta nulla veritatis. Animi, praesentium fugiat dolorum ut laboriosam eum, voluptatem doloremque consectetur similique culpa quos repudiandae.</p>
+            <img id="img" src="//placehold.it/300?text=ja" alt="ja">
     </div>
     <a href="https://translate.google.com/manager/website/?hl=ja">https://translate.google.com/manager/website/?hl=ja</a>
+    <div id="translationDetector" style="display:none;">Japan</div>
+    <script>
+    window.addEventListener('load', function() {
+        var img = document.getElementById('img');
+        var defaultLang = 'ja';
+
+        // 参考: https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
+        // Select the node that will be observed for mutations
+        var targetNode = document.getElementById('translationDetector');
+        // Options for the observer (which mutations to observe)
+        var config = { attributes: true, childList: true, subtree: true };
+        // Callback function to execute when mutations are observed
+        var callback = function(mutationsList) {
+            var lang = getCurrentLang();
+            if (lang) {
+                img.src = '//placehold.it/300?text=' + lang
+            } else {
+                img.src = '//placehold.it/300?text=' + defaultLang
+            }
+        };
+        // Create an observer instance linked to the callback function
+        var observer = new MutationObserver(callback);
+        // Start observing the target node for configured mutations
+        observer.observe(targetNode, config);
+    })
+
+    /**
+     * @return {value | null} 見つかればその配列 なければ null
+     */ 
+    function getTransCookie() {
+        var array = document.cookie.split(';');
+        var key = 'googtrans';
+        var result = array.find(function(value) {
+            var pair = value.split('=');
+            return key === pair[0].trim();
+        });
+        return result;
+    }
+
+    /**
+     * 現在の言語設定を取得する
+     * @return {string | undefined} 見つかればその値 なければ undefined
+     */
+    function getCurrentLang() {
+        var transCookie = getTransCookie()
+        if (transCookie) {
+            return transCookie.split('=')[1].trim().slice('/ja/'.length);
+        } else {
+            return undefined;
+        }
+    }
+    </script>
 </body>
 </html>
