@@ -1,0 +1,16 @@
+{
+  "name": "twitter-search-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack --mode=development -w"
+  },
+  "devDependencies": {
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0"
+  },
+  "dependencies": {
+    "twitter-node-client": "^0.0.6"
+  }
+}
