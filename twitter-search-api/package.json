@@ -11,6 +11,6 @@
     "webpack-cli": "^3.1.0"
   },
   "dependencies": {
-    "twitter-node-client": "^0.0.6"
+    "axios": "^0.18.0"
   }
 }

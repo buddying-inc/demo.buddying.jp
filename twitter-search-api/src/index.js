@@ -1,18 +1,22 @@
-import { Twitter } from 'twitter-node-client'
+const axios = require('axios');
 
-var error = function (err, response, body) {
-    console.log('ERROR [%s]', err);
-    console.log(response, body)
+const consumerKey = 'sTTwitqY3BkZy7lICeRrvzR13';
+const consumerSecret = 'PQBVI5qDoNVyahmfRHkFuQD0jOigIAoHG1PIaYkaW1IN79gxq9';
+const base64 = btoa(unescape(encodeURI(consumerKey) + ':' + encodeURI(consumerSecret)))
+
+const options = {
+  method: 'POST',
+  headers: { 
+    'Authorization': 'Basic ' + base64,
+    'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+  },
+  data: 'grant_type=client_credentials',
+  url: 'https://api.twitter.com/oauth2/token',
+  withCredentials: true,
 };
-var success = function (data) {
-    console.log('Data [%s]', data);
-};
-
-var config = {
-    "consumerKey": "BHMosaWd5gd5Tuh6XjclenAnl",
-    "consumerSecret": "q2N0k29qE8FVaHXeNBGdbmSqdBZFnMqOmiZtXjYPhwbD9Hmvv9",
-}
-
-var twitter = new Twitter(config);
-
-twitter.getSearch({'q':'#haiku','count': 10}, error, success);
+axios(options).then(function (response) {
+  console.log(response);
+})
+.catch(function (error) {
+  console.log(error);
+});
