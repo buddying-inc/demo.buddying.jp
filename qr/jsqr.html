@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsQR</title>
+    <script src="https://benadida.com/dist/jsQR.js"></script>
+</head>
+<body>
+<video id="v" autoplay></video>
+<canvas id="c" width="400" height="300"></canvas>
+<script>
+    (function(){
+        // Flow
+        // Video -> Image -> jsQR -> Text
+
+        const $video = document.getElementById('v');
+
+        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+            .then(stream => {
+                //var decoded = jsQR.decodeQRFromImage(data, width, height);
+                $video.srcObject = stream;
+            })
+            .catch(err => {
+                alert(`${err.name} ${err.message}`)
+            });
+
+        function capture(){
+            var video = document.getElementById('v');
+            var canvas = document.getElementById('c');
+            var ctx    = canvas.getContext('2d');
+            var width  = video.offsetWidth;
+            var height = video.offsetHeight;
+            canvas.setAttribute('width' , width);
+            canvas.setAttribute('height', height);
+            ctx.drawImage(video, 0, 0, width, height);
+        }
+    })();
+</script>
+</body>
+</html>
