@@ -4,13 +4,26 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script>
-        const URL = 'https://note.com/hix_pharmacist/rss'
-        const PARSE_XML = function (xmlDocument) {
-            console.log(xmlDocument);
-        };
-        fetch(URL)
+        (function () {
+            const URL = 'https://note.com/hix_pharmacist/rss'
+            const PARSE_XML = function (xmlDocument) {
+                console.log(xmlDocument);
+            };
+            fetch(URL)
             .then(response => response.text())
             .then(xmlData => PARSE_XML(xmlData))
+        })();
+    </script>
+    <script>
+        (function () {
+            const URL = 'http://demo.buddying.jp/note-rss/rss.php'
+            const PARSE_XML = function (xmlDocument) {
+                console.log(xmlDocument);
+            };
+            fetch(URL)
+            .then(response => response.text())
+            .then(xmlData => PARSE_XML(xmlData))
+        })();
     </script>
 </head>
 <body>

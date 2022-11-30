@@ -2,6 +2,18 @@
 
 header('Content-Type: application/xml; charset=utf-8');
 
+$allowOrigins = array(
+    'http://localhost:63342',
+    'http://demo.buddying.jp'
+);
+
+if (! in_array($_SERVER['HTTP_ORIGIN'], $allowOrigins, true)) {
+    return;
+}
+
+header('Content-Type: application/xml; charset=utf-8');
+header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
+
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'https://note.com/hix_pharmacist/rss.xml');
 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
