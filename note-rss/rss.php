@@ -1,13 +1,12 @@
 <?php
 
-header('Content-Type: application/xml; charset=utf-8');
-
 $allowOrigins = array(
     'http://localhost:63342',
     'http://demo.buddying.jp'
 );
 
-if (! in_array($_SERVER['HTTP_ORIGIN'], $allowOrigins, true)) {
+$origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : null;
+if ($origin !== null && ! in_array($origin, $allowOrigins, true)) {
     return;
 }
 

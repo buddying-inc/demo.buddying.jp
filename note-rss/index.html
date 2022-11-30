@@ -18,15 +18,34 @@
         (function () {
             const URL = 'http://demo.buddying.jp/note-rss/rss.php'
             const PARSE_XML = function (xmlDocument) {
-                console.log(xmlDocument);
-            };
-            fetch(URL, {mode: 'cors'})
-            .then(response => response.text())
-            .then(xmlData => PARSE_XML(xmlData))
-        })();
+                const parser = new DOMParser()
+                const dom = parser.parseFromString(xmlDocument, 'application/xml')
+                const items = dom.documentElement.getElementsByTagName('item')
+
+                const elem = document.getElementById('rss-view');
+
+                for (let i = 0; i < items.length; i++) {
+                    let title = items[i].getElementsByTagName('title')[0].textContent
+                    let link = items[i].getElementsByTagName('link')[0].textContent
+
+                    let anchor = document.createElement('a');
+                    anchor.setAttribute('href', link);
+                    anchor.setAttribute('target', '_blank');
+                    anchor.textContent = title;
+
+                    let list = document.createElement('li');
+                    list.appendChild(anchor);
+
+                    elem.appendChild(list);
+                }
+
+                console.log(dom)
+            }
+            fetch(URL).then(response => response.text()).then(xmlData => PARSE_XML(xmlData))
+        })()
     </script>
 </head>
 <body>
-<div id="rss"></div>
+<ul id="rss-view"></ul>
 </body>
 </html>
