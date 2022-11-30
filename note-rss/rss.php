@@ -2,7 +2,8 @@
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'https://note.com/hix_pharmacist/');
-$rss = curl_exec($ch);
-curl_close($ch);
+curl_setopt($ch, CURLOPT_HEADER, 0);
 
-echo $rss;
+curl_exec($ch);
+
+curl_close($ch);
