@@ -9,7 +9,7 @@
         //     const PARSE_XML = function (xmlDocument) {
         //         console.log(xmlDocument);
         //     };
-        //     fetch(URL)
+        //     fetch(URL, {mode: 'cors'})
         //     .then(response => response.text())
         //     .then(xmlData => PARSE_XML(xmlData))
         // })();
@@ -20,7 +20,7 @@
             const PARSE_XML = function (xmlDocument) {
                 console.log(xmlDocument);
             };
-            fetch(URL)
+            fetch(URL, {mode: 'cors'})
             .then(response => response.text())
             .then(xmlData => PARSE_XML(xmlData))
         })();
