@@ -38,8 +38,6 @@
 
                     elem.appendChild(list);
                 }
-
-                console.log(dom)
             }
             fetch(URL).then(response => response.text()).then(xmlData => PARSE_XML(xmlData))
         })()
