@@ -35,7 +35,6 @@
                     subtree: true // 子孫ノードも監視対象に含める
                 });
 
-                console.log(document.location.hash);
                 if (document.location.hash !== '') {
                     let page = document.location.hash.substring(1);
                     jq('.page-item.number').eq(page - 1).trigger('click');
