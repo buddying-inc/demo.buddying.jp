@@ -17,7 +17,6 @@
                 const target = document.getElementsByClassName('pagination-container');
                 const observer = new MutationObserver(function (mutations) {
                     let el = mutations[0].target;
-                    console.log(el);
 
                     jq.each(jq('.page-item.number .page-link'), function (index, el) {
                         jq(el).attr('href', '#' + (index + 1))
@@ -41,6 +40,10 @@
                 }
             });
 
+            jq(window).on('hashchange', function () {
+                let page = document.location.hash.substring(1);
+                jq('.page-item.number').eq(page - 1).trigger('click');
+            });
         })(jQuery);
     </script>
 </head>
