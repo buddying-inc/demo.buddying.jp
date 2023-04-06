@@ -37,12 +37,24 @@
                 if (document.location.hash !== '') {
                     let page = document.location.hash.substring(1);
                     jq('.page-item.number').eq(page - 1).trigger('click');
+                } else {
+                    jq('.page-item.number').eq(0).trigger('click');
                 }
+                jq.each(jq('.page-item.number .page-link'), function (index, el) {
+                    jq(el).attr('href', '#' + (index + 1))
+                });
+                jq('.page-link').on('click', function (el) {
+                    history.pushState('', '', jq(this).attr('href'));
+                });
             });
 
             jq(window).on('hashchange', function () {
-                let page = document.location.hash.substring(1);
-                jq('.page-item.number').eq(page - 1).trigger('click');
+                if (document.location.hash !== '') {
+                    let page = document.location.hash.substring(1);
+                    jq('.page-item.number').eq(page - 1).trigger('click');
+                } else {
+                    jq('.page-item.number').eq(0).trigger('click');
+                }
             });
         })(jQuery);
     </script>
