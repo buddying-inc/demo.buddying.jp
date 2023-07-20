@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            let soundId = null;
+            const sound = new Howl({
+                src: ['bgm.mp3'],
+                preload: true,
+                autoplay: true,
+                loop: true,
+                onload: function () {
+                    document.querySelector('[data-sound-on]').removeAttribute('disabled')
+
+                    if (sessionStorage.getItem('bgm-autoplay') === 'false') {
+                        sound.stop()
+                    }
+                },
+                onplay: function () {
+                    if (sessionStorage.getItem('bgm-autoplay') === 'false') {
+                        document.querySelector('[data-sound-on]').removeAttribute('disabled')
+                        document.querySelector('[data-sound-off]').setAttribute('disabled', 'disabled')
+                        return
+                    }
+
+                    document.querySelector('[data-sound-on]').setAttribute('disabled', 'disabled')
+                    document.querySelector('[data-sound-off]').removeAttribute('disabled')
+                }
+            })
+
+            document.querySelector('[data-sound-off]').addEventListener('click', function () {
+                sound.stop()
+                sessionStorage.setItem('bgm-autoplay', 'false')
+                document.querySelector('[data-sound-off]').setAttribute('disabled', 'disabled')
+                document.querySelector('[data-sound-on]').removeAttribute('disabled')
+            })
+
+            document.querySelector('[data-sound-on]').addEventListener('click', function () {
+                sound.play()
+                sessionStorage.removeItem('bgm-autoplay')
+                document.querySelector('[data-sound-off]').removeAttribute('disabled')
+                document.querySelector('[data-sound-on]').setAttribute('disabled', 'disabled')
+            })
+        })
+    </script>
+</head>
+<body>
+<button type="button" data-sound-off disabled="disabled">OFF</button>
+<button type="button" data-sound-on disabled="disabled">ON</button>
+</body>
+</html>
