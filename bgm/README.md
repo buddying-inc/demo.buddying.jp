@@ -7,7 +7,7 @@ flowchart
     id4("音楽を停止し<br>ON/OFFボタンを停止状態にする")
     id5("ON/OFFボタンを再生状態にする")
     id6("ページ読み込みから0.1秒後")
-    id7("SessionStorage が OFF ではないのに音楽が停止状態であれば<br>ON/OFFボタンを停止中状態にする")
+    id7("音楽が停止状態であれば<br>ON/OFFボタンを停止中状態にする")
     id8("画面のどこかをタッチ")
     id9("SessionStorage に OFF がなければ音楽を再生し<br>ON/OFFボタンを再生状態にする")
     
