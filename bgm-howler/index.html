@@ -6,7 +6,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
-            let soundId = null;
+            let soundId = null
             const sound = new Howl({
                 src: ['bgm.mp3'],
                 preload: true,
@@ -14,8 +14,17 @@
                 loop: true,
                 onload: function () {
                     if (sessionStorage.getItem('bgm-autoplay') !== 'false') {
-                        sound.play()
+                        soundId = sound.play()
                     }
+
+                    setTimeout(function () {
+                        console.log(sound.playing(soundId))
+                        if (! sound.playing(soundId)) {
+                            // 自動再生できていない場合
+                            document.querySelector('[data-sound-off]').setAttribute('disabled', 'disabled')
+                            document.querySelector('[data-sound-on]').removeAttribute('disabled')
+                        }
+                    }, 100);
                 },
                 onplay: function () {
                     if (sessionStorage.getItem('bgm-autoplay') === 'false') {
@@ -26,18 +35,18 @@
 
                     document.querySelector('[data-sound-off]').removeAttribute('disabled')
                     document.querySelector('[data-sound-on]').setAttribute('disabled', 'disabled')
-                }
+                },
             })
 
             document.querySelector('[data-sound-off]').addEventListener('click', function () {
-                sound.stop()
+                sound.stop(soundId)
                 sessionStorage.setItem('bgm-autoplay', 'false')
                 document.querySelector('[data-sound-off]').setAttribute('disabled', 'disabled')
                 document.querySelector('[data-sound-on]').removeAttribute('disabled')
             })
 
             document.querySelector('[data-sound-on]').addEventListener('click', function () {
-                sound.play()
+                soundId = sound.play()
                 sessionStorage.removeItem('bgm-autoplay')
                 document.querySelector('[data-sound-off]').removeAttribute('disabled')
                 document.querySelector('[data-sound-on]').setAttribute('disabled', 'disabled')
