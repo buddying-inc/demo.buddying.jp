@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function playBgm () {
+            const audio = document.getElementById('bgm');
+            audio.muted = false;
+            audio.play();
+
+            sessionStorage.removeItem('bgm-autoplay');
+        }
+
+        function stopBgm () {
+            const audio = document.getElementById('bgm');
+            audio.muted = true;
+            audio.pause();
+
+            sessionStorage.setItem('bgm-autoplay', 'false');
+        }
+
+        function started() {
+            const autoplay = sessionStorage.getItem('bgm-autoplay');
+            if (autoplay === 'false') {
+                stopBgm();
+                return;
+            }
+
+            document.getElementById('a').style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+
+<audio id="bgm" preload="auto" onplay="started()" autoplay loop>
+    <source src="./bgm.mp3" type="audio/mpeg">
+</audio>
+<button onclick="stopBgm()" type="button">OFF</button>
+<button onclick="playBgm()" type="button">ON</button>
+<p id="a" style="display: none;">再生が開始されました</p>
+<p>このページはBGMが自動再生されます。OFF をクリックすると次回ページ読み込み時に適用されます。</p>
+</body>
+</html>
