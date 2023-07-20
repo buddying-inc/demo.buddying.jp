@@ -10,24 +10,22 @@
             const sound = new Howl({
                 src: ['bgm.mp3'],
                 preload: true,
-                autoplay: true,
+                autoplay: false,
                 loop: true,
                 onload: function () {
-                    document.querySelector('[data-sound-on]').removeAttribute('disabled')
-
-                    if (sessionStorage.getItem('bgm-autoplay') === 'false') {
-                        sound.stop()
+                    if (sessionStorage.getItem('bgm-autoplay') !== 'false') {
+                        sound.play()
                     }
                 },
                 onplay: function () {
                     if (sessionStorage.getItem('bgm-autoplay') === 'false') {
-                        document.querySelector('[data-sound-on]').removeAttribute('disabled')
                         document.querySelector('[data-sound-off]').setAttribute('disabled', 'disabled')
+                        document.querySelector('[data-sound-on]').removeAttribute('disabled')
                         return
                     }
 
-                    document.querySelector('[data-sound-on]').setAttribute('disabled', 'disabled')
                     document.querySelector('[data-sound-off]').removeAttribute('disabled')
+                    document.querySelector('[data-sound-on]').setAttribute('disabled', 'disabled')
                 }
             })
 
