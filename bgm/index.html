@@ -4,41 +4,75 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script>
-        function playBgm () {
-            const audio = document.getElementById('bgm');
-            audio.muted = false;
-            audio.play();
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelector('#bgm').addEventListener('play', function () {
+                if (sessionStorage.getItem('bgm-autoplay') === 'false') {
+                    const audio = document.getElementById('bgm')
+                    audio.muted = true
+                    audio.pause()
 
-            sessionStorage.removeItem('bgm-autoplay');
-        }
+                    document.querySelector('[data-sound-off]').setAttribute('disabled', 'disabled')
+                    document.querySelector('[data-sound-on]').removeAttribute('disabled')
+                    return
+                }
 
-        function stopBgm () {
-            const audio = document.getElementById('bgm');
-            audio.muted = true;
-            audio.pause();
+                document.querySelector('[data-sound-off]').removeAttribute('disabled')
+                document.querySelector('[data-sound-on]').setAttribute('disabled', 'disabled')
+                document.getElementById('a').style.display = 'block'
+            })
 
-            sessionStorage.setItem('bgm-autoplay', 'false');
-        }
+            document.addEventListener('click', function () {
+                if (sessionStorage.getItem('bgm-autoplay') !== 'false') {
+                    const audio = document.getElementById('bgm')
+                    if (audio.paused) {
+                        audio.play()
+                    }
+                }
+            })
 
-        function started() {
-            const autoplay = sessionStorage.getItem('bgm-autoplay');
-            if (autoplay === 'false') {
-                stopBgm();
-                return;
-            }
+            document.querySelector('[data-sound-off]').addEventListener('click', function () {
+                const audio = document.getElementById('bgm')
+                audio.muted = true
+                audio.pause()
 
-            document.getElementById('a').style.display = 'block';
-        }
+                sessionStorage.setItem('bgm-autoplay', 'false')
+
+                document.querySelector('[data-sound-off]').setAttribute('disabled', 'disabled')
+                document.querySelector('[data-sound-on]').removeAttribute('disabled')
+            })
+
+            document.querySelector('[data-sound-on]').addEventListener('click', function () {
+                const audio = document.getElementById('bgm')
+                audio.muted = false
+                audio.play()
+
+                sessionStorage.removeItem('bgm-autoplay')
+
+                document.querySelector('[data-sound-off]').removeAttribute('disabled')
+                document.querySelector('[data-sound-on]').setAttribute('disabled', 'disabled')
+            })
+
+            setTimeout(function () {
+                const audio = document.getElementById('bgm')
+                console.log(audio.paused)
+                if (audio.paused) {
+                    // 自動再生できていない場合
+                    document.querySelector('[data-sound-off]').setAttribute('disabled', 'disabled')
+                    document.querySelector('[data-sound-on]').removeAttribute('disabled')
+                }
+            }, 100)
+        })
     </script>
 </head>
 <body>
 
-<audio id="bgm" preload="auto" onplay="started()" autoplay loop>
+<audio id="bgm" preload="auto" autoplay loop>
     <source src="./bgm.mp3" type="audio/mpeg">
 </audio>
-<button onclick="stopBgm()" type="button">OFF</button>
-<button onclick="playBgm()" type="button">ON</button>
-<p id="a" style="display: none;">再生が開始されました</p>
-<p>このページはBGMが自動再生されます。OFF をクリックすると次回ページ読み込み時に適用されます。</p>
+<button type="button" data-sound-off disabled="disabled">OFF</button>
+<button type="button" data-sound-on disabled="disabled">ON</button>
+<p id="a" style="color: lightgreen; display: none;">再生が開始されました</p>
+<p>このページはBGMが自動再生されます。自動再生できない場合は毎回 ON をクリックしてください。OFF をクリックすると次回ページ読み込み時に適用されます。</p>
+<p>自動再生を許可する方法はブラウザ毎に異なります。</p>
 </body>
 </html>
