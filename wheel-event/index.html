@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wheel event</title>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        let scale = 1;
+        document.getElementById('body').addEventListener('wheel', (event) => {
+          document.getElementById('property').innerHTML =
+            'WheelEvent.deltaX: ' + event.deltaX + '<br>' +
+            'WheelEvent.deltaY: ' + event.deltaY + '<br>' +
+            'WheelEvent.deltaZ: ' + event.deltaZ + '<br>' +
+            'WheelEvent.deltaMode: ' + event.deltaMode + '<br>' +
+            'WheelEvent.wheelDeltaX: ' + event.wheelDeltaX + '<br>' +
+            'WheelEvent.wheelDeltaY : ' + event.wheelDeltaY
+        })
+      })
+    </script>
+</head>
+<body id="body" style="height: 100vh; background-color: #efefef;">
+<p><a href="https://developer.mozilla.org/ja/docs/Web/API/Element/wheel_event">https://developer.mozilla.org/ja/docs/Web/API/Element/wheel_event</a></p>
+<p id="property"></p>
+</body>
+</html>
