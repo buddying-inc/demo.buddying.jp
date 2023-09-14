@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      }
+
+      function success (pos) {
+        const crd = pos.coords
+
+        document.getElementById('text').innerHTML =
+          'Your current position is:' +
+          `<br>Latitude : ${crd.latitude}` +
+          `<br>Longitude: ${crd.longitude}` +
+          `<br>More or less ${crd.accuracy} meters.`
+      }
+
+      function error (err) {
+        alert(`ERROR(${err.code}): ${err.message}`)
+      }
+
+      navigator.geolocation.getCurrentPosition(success, error, options)
+    </script>
+</head>
+<body>
+<div id="text"></div>
+</body>
+</html>
