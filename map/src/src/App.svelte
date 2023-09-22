@@ -17,7 +17,7 @@
   // "http://localhost:5173/" で動かす場合は FireFox を使う.
 
   const loader = new Loader({
-    apiKey: 'AIzaSyBKAhsJm3xXsa_dVhNeUV8Vfy5T4KF4Rcw',
+    apiKey: import.meta.env.VITE_GOOGLEM_MAP_API_KEY,
     version: 'weekly',
     libraries: ['maps', 'marker'],
     language: 'ja',
