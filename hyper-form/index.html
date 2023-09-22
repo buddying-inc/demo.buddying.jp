@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HyperForm</title>
+    <style>
+        .honeypod{
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 0;
+            width: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+<form method="post" action="https://hyperform.jp/api/UL13ZbGt">
+    <div>
+        <label>お名前</label>
+        <input type="text" name="お名前" placeholder="例）山田太郎" required>
+    </div>
+    <div>
+        <label>メールアドレス</label>
+        <input type="email" name="email" placeholder="例）example@example.com" required>
+    </div>
+    <div>
+        <label>お問い合わせ内容</label>
+        <textarea name="お問い合わせ内容" required></textarea>
+    </div>
+    <button type="submit">送信</button>
+    <input type='text' name="___hpc___" class="honeypod">
+</form>
+</body>
+</html>
