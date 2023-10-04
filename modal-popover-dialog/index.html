@@ -10,9 +10,17 @@
 <ul>
     <li>最上位レイヤー内の他のすべての要素の上に現れる</li>
     <li>親要素の <code>position</code> や <code>overflow</code> のスタイル付けの影響を受けない</li>
+    <li>通常は背景は変わらない。 <code>backdrop</code> 擬似フィルターを使いスタイルを適用できる</li>
 </ul>
 <button popovertarget="popover">OPEN</button>
 <div popover id="popover">HELLO WORLD!</div>
+<style>
+    #popover::backdrop {
+        background: rgba(190, 190, 190, 0.5);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(1px);
+    }
+</style>
 
 <h1><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/dialog" target="_blank">Dialog</a></h1>
 <ul>
