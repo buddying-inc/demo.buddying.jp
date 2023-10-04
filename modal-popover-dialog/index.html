@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modal・Popover・Dialog</title>
+</head>
+<body>
+
+<h1><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Global_attributes/popover" target="_blank">Popover</a></h1>
+<ul>
+    <li>最上位レイヤー内の他のすべての要素の上に現れる</li>
+    <li>親要素の <code>position</code> や <code>overflow</code> のスタイル付けの影響を受けない</li>
+</ul>
+<button popovertarget="popover">OPEN</button>
+<div popover id="popover">HELLO WORLD!</div>
+
+<h1><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/dialog" target="_blank">Dialog</a></h1>
+<ul>
+    <li><code>.show()</code> または <code>.showModal()</code> メソッドを使用して表示</li>
+    <li><code>.show()</code> で開いた場合、他の要素を操作できる。</li>
+    <li><code>.showModal()</code> で開いた場合、他の要素を操作できない。</li>
+</ul>
+<dialog id="dialog" open>
+    <p>Greetings, one and all!</p>
+    <form method="dialog">
+        <button>OK</button>
+    </form>
+</dialog>
+<button id="dialog_open1">OPEN (show)</button>
+<button id="dialog_open2">OPEN (showModal)</button>
+<script>
+  document.getElementById('dialog_open1').addEventListener('click', () => {
+    const dialog = document.getElementById('dialog')
+    dialog.show()
+  })
+
+  document.getElementById('dialog_open2').addEventListener('click', () => {
+    const dialog = document.getElementById('dialog')
+    dialog.showModal()
+  })
+</script>
+
+<h1>Modal</h1>
+<ul>
+    <li>他のダイアログの最も上に表示</li>
+    <li>ダイアログの外の操作はブロックされ、ダイアログの外のコンテンツは不活性にレンダリング</li>
+    <li>文字列で値の受け渡しができる</li>
+</ul>
+<dialog id="modal">
+    <form method="dialog">
+        <label>NAME:<input type="text" name="modal_name" id="modal_name"></label>
+        <button id="modal_cancel">Cancel</button>
+        <button id="modal_confirm">Confirm</button>
+    </form>
+</dialog>
+<button id="modal_open">OPEN</button>
+<script>
+  document.getElementById('modal_open').addEventListener('click', () => {
+    const dialog = document.getElementById('modal')
+    dialog.showModal()
+  })
+
+  document.getElementById('modal_confirm').addEventListener('click', (ev) => {
+    ev.preventDefault()
+
+    const dialog = document.getElementById('modal')
+    dialog.close(document.getElementById('modal_name').value)
+  })
+
+  document.getElementById('modal_cancel').addEventListener('click', () => {
+    const dialog = document.getElementById('modal')
+    dialog.close()
+  })
+
+  document.getElementById('modal').addEventListener('close', (ev) => {
+    console.log(ev.currentTarget.returnValue)
+    document.getElementById('modal').returnValue = ''
+  })
+</script>
+
+</body>
+</html>
