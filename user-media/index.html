@@ -4,6 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
+    <style>
+        body {
+            background-color: #d2d2d7;
+            display: grid;
+            justify-content: center;
+        }
+        .box {
+            width: 100%;
+            max-width: 800px;
+        }
+        video {
+            width: 100%;
+            border-radius: 10px;
+        }
+        button {
+            display: block;
+        }
+        canvas {
+            width: 100%;
+            margin-top: 1rem;
+        }
+    </style>
     <script>
       navigator.mediaDevices.getUserMedia({
         audio: false,
@@ -41,8 +63,10 @@
     </script>
 </head>
 <body>
-<video id="video"></video>
-<button id="button">Take photo</button>
-<canvas id="canvas"></canvas>
+<div class="box">
+    <video id="video"></video>
+    <button id="button">Take photo</button>
+    <canvas id="canvas"></canvas>
+</div>
 </body>
 </html>
