@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <style>
+        body {
+            background-color: #d2d2d7;
+            display: grid;
+            justify-content: center;
+        }
+        .box {
+            width: 100%;
+            max-width: 800px;
+        }
+        video {
+            width: 100%;
+            border-radius: 10px;
+        }
+        button {
+            display: block;
+        }
+        canvas {
+            width: 100%;
+            margin-top: 1rem;
+        }
+    </style>
+    <script>
+      navigator.mediaDevices.getUserMedia({
+        audio: false,
+        video: {
+          width: { min: 1024, ideal: 1280, max: 1920 },
+          height: { min: 576, ideal: 720, max: 1080 },
+          facingMode: { exact: 'environment' },
+        }, // or "true" or "{ width: 1280, height: 720 }" or "{ width: { min: 1280 }, height: { min: 720 } }"
+      }).then((stream) => {
+        console.log(stream)
+
+        const video = document.getElementById('video')
+        video.srcObject = stream
+        video.onloadedmetadata = () => {
+          video.play()
+        }
+      }).catch((err) => {
+        console.error(`${err.name}: ${err.message}`)
+      })
+
+      document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('button').addEventListener('click', (ev) => {
+          const video = document.getElementById('video')
+
+          const canvas = document.getElementById('canvas')
+          canvas.setAttribute('width', video.videoWidth);
+          canvas.setAttribute('height', video.videoHeight);
+
+          const context = canvas.getContext('2d')
+          context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight)
+
+          ev.preventDefault()
+        })
+      })
+    </script>
+</head>
+<body>
+<div class="box">
+    <video id="video"></video>
+    <button id="button">Take photo</button>
+    <canvas id="canvas"></canvas>
+</div>
+</body>
+</html>
