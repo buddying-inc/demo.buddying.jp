@@ -32,14 +32,16 @@
 </script>
 
 <main>
-    <p>属性指定なし</p>
+    <h2>属性指定なし</h2>
     <input type="file" on:change={handleImage}>
 
-    <p><code>accept="image/*" && capture="environment"</code></p>
+    <h2><code>accept="image/*" && capture="environment"</code></h2>
     <input type="file" name="file" capture="environment" accept="image/*" required on:change={handleImage} />
 
-    <p><code>accept="image/*" && capture="user"</code></p>
-    <input type="file" name="file" capture="environment" accept="image/*" required on:change={handleImage} />
+    <h2><code>accept="image/*" && capture="user"</code></h2>
+    <input type="file" name="file" capture="user" accept="image/*" required on:change={handleImage} />
+
+    <hr>
 
     <img src="" bind:this={preview} alt=""/>
     <div bind:this={description}></div>
