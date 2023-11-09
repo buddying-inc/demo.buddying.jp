@@ -32,7 +32,15 @@
 </script>
 
 <main>
+    <p>属性指定なし</p>
     <input type="file" on:change={handleImage}>
+
+    <p><code>accept="image/*" && capture="environment"</code></p>
+    <input type="file" name="file" capture="environment" accept="image/*" required on:change={handleImage} />
+
+    <p><code>accept="image/*" && capture="user"</code></p>
+    <input type="file" name="file" capture="environment" accept="image/*" required on:change={handleImage} />
+
     <img src="" bind:this={preview} alt=""/>
     <div bind:this={description}></div>
 </main>
