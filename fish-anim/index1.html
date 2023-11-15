@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fish Animation</title>
+    <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const width = 960; // window.innerWidth;
+        const height = 540; // window.innerHeight;
+
+        const fishes = [];
+
+        // レンダラーの作成
+        // -> WebGLのレンダリングをする
+        const renderer = new THREE.WebGLRenderer({
+          canvas: document.querySelector("#sea")
+        });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(window.devicePixelRatio);
+
+        // シーンの作成
+        // -> オブジェクトや光源などの置き場
+        const scene = new THREE.Scene();
+
+        // カメラの作成
+        // その視点から見えるものがレンダラーを介してcanvas要素へ描画される
+        const camera = new THREE.PerspectiveCamera(
+          45, // 画角
+          width / height, // アスペクト比
+          1, // 描画開始距離
+          10000 // 描画終了距離
+        );
+        camera.position.set(
+          0, // X座標
+          0, // Y座標
+          1000 // Z座標
+        );
+
+        // 魚のジオメトリ（形状）の作成
+        const fishGeometry = new THREE.BoxGeometry(
+          300, // 幅
+          300, // 高さ
+          300 // 奥行き
+        );
+        // 魚のマテリアル（素材）の作成
+        // MeshBasicMaterial: ライティングを考慮しないマテリアル
+        // MeshNormalMaterial: ノーマルのカラーをRGBで可視化するマテリアル
+        // MeshLambertMaterial: 光沢感のないマットな質感を表現できるマテリアル
+        // MeshPhongMaterial: 光沢感のある質感を表現できるマテリアル
+        // MeshToonMaterial: アニメのようなトゥーンシェーディングを実現できるマテリアル
+        // MeshStandardMaterial: 物理ベースレンダリングのマテリアル。光の反射や散乱など現実の物理現象を再現する。
+        const fishMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
+        // 魚のメッシュの作成
+        const fishMesh = new THREE.Mesh(fishGeometry, fishMaterial);
+        // シーンに魚を追加
+        scene.add(fishMesh);
+
+        fishes.push(fishMesh);
+
+        // 平行光源の作成
+        const light = new THREE.DirectionalLight(0xffffff, 2);
+        light.position.set(1, 1, 1); // ライトの方向
+        // シーンにライトを追加
+        scene.add(light);
+
+        // アニメーションの関数
+        const animate = () => {
+          requestAnimationFrame(animate);
+
+          for (let i = 0; i < fishes.length; i++) {
+            // 魚を回転させるアニメーション
+            fishes[i].rotation.x += 0.01;
+            fishes[i].rotation.y += 0.01;
+          }
+
+          renderer.render(scene, camera);
+        };
+
+        // ウィンドウのリサイズ時の処理
+        window.addEventListener('resize', () => {
+          camera.aspect = width / height;
+          camera.updateProjectionMatrix();
+          renderer.setSize(width, height);
+        });
+
+        // FIXME: メッシュ同士が食い込まないように衝突判定をする必要がある
+        document.getElementById('button').addEventListener('click', () => {
+          const fishGeometry = new THREE.BoxGeometry(300, 300, 300);
+          const fishMaterial = new THREE.MeshPhongMaterial({ color: 0x0000ff });
+          const fishMesh = new THREE.Mesh(fishGeometry, fishMaterial);
+          fishMesh.position.x = 100;
+          scene.add(fishMesh);
+          fishes.push(fishMesh);
+        })
+
+        // アニメーションの開始
+        animate();
+      });
+
+      // TODO: メッシュをランダムに動かす
+      // TODO: 魚ジオメトリの作成
+    </script>
+</head>
+<body>
+<canvas id="sea"></canvas>
+<button id="button">Add fish</button>
+</body>
+</html>
