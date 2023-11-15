@@ -6,24 +6,39 @@
     <title>Title</title>
     <style>
         body {
-            background-color: #d2d2d7;
+            background-color: rgba(250, 250, 252, 0.8);
             display: grid;
             justify-content: center;
         }
+
         .box {
             width: 100%;
-            max-width: 800px;
+            max-width: 720px;
         }
+
         video {
             width: 100%;
             border-radius: 10px;
         }
+
         button {
             display: block;
         }
+
         canvas {
             width: 100%;
             margin-top: 1rem;
+        }
+
+        .flash {
+            animation: flash 1s ease infinite alternate;
+            animation-iteration-count: 1;
+        }
+
+        @keyframes flash {
+            10% {
+                opacity: 0;
+            }
         }
     </style>
     <script>
@@ -31,7 +46,7 @@
         audio: false,
         video: {
           width: { min: 1024, ideal: 1280, max: 1920 },
-          height: { min: 576, ideal: 720, max: 1080 },
+          height: { min: 1024, ideal: 1280, max: 1920 },
           facingMode: { exact: 'environment' },
         }, // or "true" or "{ width: 1280, height: 720 }" or "{ width: { min: 1280 }, height: { min: 720 } }"
       }).then((stream) => {
@@ -50,12 +65,16 @@
         document.getElementById('button').addEventListener('click', (ev) => {
           const video = document.getElementById('video')
 
+          video.classList.add('flash')
+
           const canvas = document.getElementById('canvas')
-          canvas.setAttribute('width', video.videoWidth);
-          canvas.setAttribute('height', video.videoHeight);
+          canvas.setAttribute('width', video.videoWidth)
+          canvas.setAttribute('height', video.videoHeight)
 
           const context = canvas.getContext('2d')
           context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight)
+
+          setTimeout(() => { video.classList.remove('flash') }, 1000)
 
           ev.preventDefault()
         })
@@ -64,8 +83,11 @@
 </head>
 <body>
 <div class="box">
+    <h2>Video</h2>
     <video id="video" autoplay muted playsinline></video>
     <button id="button">Take photo</button>
+
+    <h2>Photo</h2>
     <canvas id="canvas"></canvas>
 </div>
 </body>
