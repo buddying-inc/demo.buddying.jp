@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte'
+  import pinUrl from './assets/pin.png'
 
   // api-key
   // https://console.cloud.google.com/apis/credentials/key/d9c58b3d-7029-42e5-aa29-b24fbd65b7b4?authuser=0&hl=ja&project=my-project-1513125814088
@@ -44,6 +45,9 @@
         origin: new google.maps.LatLng(35.319016, 139.550416), // 鎌倉駅
         destination: new google.maps.LatLng(35.337227, 139.545194), // 北鎌倉駅
         travelMode: google.maps.DirectionsTravelMode.DRIVING, // 移動手段（WALKING はベータ版）
+        avoidFerries: false, // フェリーを利用しない
+        avoidHighways: false, // 主要高速道路を除外
+        avoidTolls: false, // 有料区間を除外
       }
       directionsService = new DirectionsService()
       directionsService.route(directionRequest, (response, status) => {
@@ -51,13 +55,14 @@
           return
         }
 
+        // https://developers.google.com/maps/documentation/javascript/reference/directions?hl=ja#DirectionsRendererOptions
         const directionRendererOptions = {
           map: map, // 描画先の地図
-          draggable: true, // ドラッグ可
+          directions: response,
+          draggable: false, // ドラッグ可
           preserveViewport: true, // centerの座標、ズームレベルで表示
         }
         directionsRenderer = new DirectionsRenderer(directionRendererOptions)
-        directionsRenderer.setDirections(response)
         console.log(response)
       })
     })
