@@ -83,23 +83,25 @@
             note.innerText = 'min: ' + input.min + ' max: ' + input.max + ' step: ' + input.step + ' value: ' +
               input.value
 
-            // interact('#video-container').gesturable({
-            //   onmove: (event) => {
-            //     const note = document.getElementById('gesture-note')
-            //     note.innerText = 'ds: ' + event.ds + ' scale: ' + event.scale + ' da: ' + event.da + ' xxx: ' + (event.ds >= 0 ? '+' : '-')
-            //
-            //     if (event.ds >= 0) {
-            //       // if (input.max >= input.value + input.step) {
-            //         input.value += input.step
-            //       // }
-            //     } else {
-            //       // if (input.min <= input.value - input.step) {
-            //         input.value -= input.step
-            //       // }
-            //     }
-            //     input.dispatchEvent(new Event('input'))
-            //   },
-            // })
+            interact('#video-container').gesturable({
+              onmove: (event) => {
+                const note = document.getElementById('gesture-note')
+                note.innerText = 'ds: ' + event.ds + ' scale: ' + event.scale + ' da: ' + event.da + ' xxx: ' + (event.ds >= 0 ? '+' : '-')
+
+                if (event.ds >= 0) {
+                  // if (input.max >= input.value + input.step) {
+                    input.value += input.step
+                  // }
+                } else {
+                  // if (input.min <= input.value - input.step) {
+                    input.value -= input.step
+                  // }
+                }
+
+                console.log(input.value)
+                input.dispatchEvent(new Event('input'))
+              },
+            })
           } else {
             const note = document.getElementById('range-note')
             note.innerText = 'Zoom not supported'
@@ -133,7 +135,7 @@
 <div class="box">
     <h2>Video</h2>
     <div id="video-container" style="touch-action: none;">
-        <video id="video" autoplay muted playsinline style="touch-action: none;"></video>
+        <video id="video" autoplay muted playsinline></video>
     </div>
     <input type="range" id="range" style="display: none;">
     <p id="range-note"></p>
