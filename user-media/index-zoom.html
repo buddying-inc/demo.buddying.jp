@@ -85,6 +85,9 @@
 
             interact('#video-container').gesturable({
               onmove: function (event) {
+                const note = document.getElementById('gesture-note')
+                note.innerText = 'ds: ' + event.ds + ' scale: ' + event.scale + ' da: ' + event.da
+
                 if (event.ds > 0) {
                   input.value += input.step
                   if (input.value > input.max) {
@@ -136,6 +139,7 @@
     </div>
     <input type="range" id="range" style="display: none;">
     <p id="range-note"></p>
+    <p id="gesture-note"></p>
     <button id="button">Take photo</button>
 
     <h2>Photo</h2>
