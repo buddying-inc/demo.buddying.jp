@@ -2,8 +2,9 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
     <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
     <style>
         body {
             background-color: rgba(250, 250, 252, 0.8);
@@ -81,6 +82,15 @@
             input.style.display = 'block'
             note.innerText = 'min: ' + input.min + ' max: ' + input.max + ' step: ' + input.step + ' value: ' +
               input.value
+
+            interact('#video-container').gesturable({
+              onmove: function (event) {
+                note.innerText = event.ds
+              },
+            })
+          } else {
+            const note = document.getElementById('range-note')
+            note.innerText = 'Zoom not supported'
           }
         }
       }).catch((err) => {
@@ -110,7 +120,9 @@
 <body>
 <div class="box">
     <h2>Video</h2>
-    <video id="video" autoplay muted playsinline></video>
+    <div id="video-container">
+        <video id="video" autoplay muted playsinline></video>
+    </div>
     <input type="range" id="range" style="display: none">
     <p id="range-note"></p>
     <button id="button">Take photo</button>
