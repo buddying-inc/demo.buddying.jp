@@ -83,8 +83,18 @@
             note.innerText = 'min: ' + input.min + ' max: ' + input.max + ' step: ' + input.step + ' value: ' +
               input.value
 
+            let lastExecutionTime = 0
+            const minInterval = 200  // 200ミリ秒ごとに処理を許可
+
             interact('#video-container').gesturable({
               onmove: (event) => {
+                const currentTime = Date.now()
+                if (currentTime - lastExecutionTime < minInterval) {
+                  return
+                }
+
+                lastExecutionTime = currentTime
+
                 const note = document.getElementById('gesture-note')
                 note.innerText = 'ds: ' + event.ds + ' scale: ' + event.scale + ' da: ' + event.da
 
