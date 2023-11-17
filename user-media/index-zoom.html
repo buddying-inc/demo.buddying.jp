@@ -84,22 +84,22 @@
               input.value
 
             interact('#video-container').gesturable({
-              onmove: function (event) {
+              onmove: (event) => {
                 const note = document.getElementById('gesture-note')
                 note.innerText = 'ds: ' + event.ds + ' scale: ' + event.scale + ' da: ' + event.da
 
                 if (event.ds >= 0) {
                   input.value += input.step
-                  if (input.value > input.max) {
+                  if (input.value >= input.max) {
                     input.value = input.max
                   }
                 } else {
                   input.value -= input.step
-                  if (input.value < input.min) {
+                  if (input.value <= input.min) {
                     input.value = input.min
                   }
                 }
-                input.dispatchEvent(new Event('input'))
+                // input.dispatchEvent(new Event('input'))
               },
             })
           } else {
