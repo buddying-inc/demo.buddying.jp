@@ -68,14 +68,19 @@
           const settings = videoTrack.getSettings()
           if (('zoom' in capabilities) && ('zoom' in settings)) {
             const input = document.getElementById('range')
+            const note = document.getElementById('range-note')
             input.min = capabilities.zoom.min
             input.max = capabilities.zoom.max
             input.step = capabilities.zoom.step
             input.value = settings.zoom
             input.addEventListener('input', async () => {
               await videoTrack.applyConstraints({ advanced: [{ zoom: input.value }] })
+              note.innerText = 'min: ' + input.min + ' max: ' + input.max + ' step: ' + input.step + ' value: ' +
+                input.value
             })
             input.style.display = 'block'
+            note.innerText = 'min: ' + input.min + ' max: ' + input.max + ' step: ' + input.step + ' value: ' +
+              input.value
           }
         }
       }).catch((err) => {
@@ -107,6 +112,7 @@
     <h2>Video</h2>
     <video id="video" autoplay muted playsinline></video>
     <input type="range" id="range" style="display: none">
+    <p id="range-note"></p>
     <button id="button" style="display: none">Take photo</button>
 
     <h2>Photo</h2>
