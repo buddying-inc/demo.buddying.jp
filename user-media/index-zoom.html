@@ -87,10 +87,16 @@
               onmove: function (event) {
                 if (event.ds > 0) {
                   input.value += input.step
+                  if (input.value > input.max) {
+                    input.value = input.max
+                  }
                 } else {
                   input.value -= input.step
+                  if (input.value < input.min) {
+                    input.value = input.min
+                  }
                 }
-                input.dispatchEvent(new Event('click'))
+                input.dispatchEvent(new Event('input'))
               },
             })
           } else {
