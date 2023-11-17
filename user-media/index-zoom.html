@@ -72,7 +72,7 @@
             const note = document.getElementById('range-note')
             input.min = capabilities.zoom.min
             input.max = capabilities.zoom.max
-            input.step = capabilities.zoom.step || 0.1 // capabilities.zoom.step は undefined
+            input.step = capabilities.zoom.step || 0.5 // capabilities.zoom.step は undefined
             input.value = settings.zoom
             input.addEventListener('input', async () => {
               await videoTrack.applyConstraints({ advanced: [{ zoom: input.value }] })
@@ -83,23 +83,23 @@
             note.innerText = 'min: ' + input.min + ' max: ' + input.max + ' step: ' + input.step + ' value: ' +
               input.value
 
-            interact('#video-container').gesturable({
-              onmove: (event) => {
-                const note = document.getElementById('gesture-note')
-                note.innerText = 'ds: ' + event.ds + ' scale: ' + event.scale + ' da: ' + event.da + ' xxx: ' + (event.ds >= 0 ? '+' : '-')
-
-                if (event.ds >= 0) {
-                  // if (input.max >= input.value + input.step) {
-                    input.value += input.step
-                  // }
-                } else {
-                  // if (input.min <= input.value - input.step) {
-                    input.value -= input.step
-                  // }
-                }
-                input.dispatchEvent(new Event('input'))
-              },
-            })
+            // interact('#video-container').gesturable({
+            //   onmove: (event) => {
+            //     const note = document.getElementById('gesture-note')
+            //     note.innerText = 'ds: ' + event.ds + ' scale: ' + event.scale + ' da: ' + event.da + ' xxx: ' + (event.ds >= 0 ? '+' : '-')
+            //
+            //     if (event.ds >= 0) {
+            //       // if (input.max >= input.value + input.step) {
+            //         input.value += input.step
+            //       // }
+            //     } else {
+            //       // if (input.min <= input.value - input.step) {
+            //         input.value -= input.step
+            //       // }
+            //     }
+            //     input.dispatchEvent(new Event('input'))
+            //   },
+            // })
           } else {
             const note = document.getElementById('range-note')
             note.innerText = 'Zoom not supported'
