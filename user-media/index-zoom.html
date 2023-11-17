@@ -75,7 +75,7 @@
             input.addEventListener('input', async () => {
               await videoTrack.applyConstraints({ advanced: [{ zoom: input.value }] })
             })
-            input.style.display = 'none'
+            input.style.display = 'block'
           }
         }
       }).catch((err) => {
