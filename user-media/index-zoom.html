@@ -89,14 +89,12 @@
                 note.innerText = 'ds: ' + event.ds + ' scale: ' + event.scale + ' da: ' + event.da + ' xxx: ' + (event.ds >= 0 ? '+' : '-')
 
                 if (event.ds >= 0) {
-                  input.value += input.step
-                  if (input.value >= input.max) {
-                    input.value = input.max
+                  if (input.max >= input.value + input.step) {
+                    input.value += input.step
                   }
                 } else {
-                  input.value -= input.step
-                  if (input.value <= input.min) {
-                    input.value = input.min
+                  if (input.min <= input.value - input.step) {
+                    input.value -= input.step
                   }
                 }
                 input.dispatchEvent(new Event('input'))
