@@ -94,10 +94,9 @@
                   }
                 } else {
                   if (input.min <= input.value - input.step) {
-                    input.value -= input.step
+                    // input.value -= input.step
                   }
                 }
-                note.innerText = input.value
                 input.dispatchEvent(new Event('input'))
               },
             })
