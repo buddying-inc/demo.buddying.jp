@@ -90,7 +90,9 @@
 
                 if (event.ds >= 0) {
                   // if (input.max >= input.value + input.step) {
+                    console.log('before: ' + input.value)
                     input.value += input.step
+                    console.log('after: ' + input.value)
                   // }
                 } else {
                   // if (input.min <= input.value - input.step) {
@@ -98,7 +100,6 @@
                   // }
                 }
 
-                console.log(input.value)
                 input.dispatchEvent(new Event('input'))
               },
             })
