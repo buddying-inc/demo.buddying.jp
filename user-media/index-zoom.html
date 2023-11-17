@@ -88,7 +88,7 @@
                 const note = document.getElementById('gesture-note')
                 note.innerText = 'ds: ' + event.ds + ' scale: ' + event.scale + ' da: ' + event.da + ' xxx: ' + (event.ds >= 0 ? '+' : '-')
 
-                if (event.ds >= 0) {
+                if ((event.ds + 1) > 0) {
                   if (input.max >= input.value + input.step) {
                     input.value += input.step
                   }
