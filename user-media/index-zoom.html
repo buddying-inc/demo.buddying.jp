@@ -86,7 +86,7 @@
             interact('#video-container').gesturable({
               onmove: (event) => {
                 const note = document.getElementById('gesture-note')
-                note.innerText = 'ds: ' + event.ds + ' scale: ' + event.scale + ' da: ' + event.da
+                note.innerText = 'ds: ' + event.ds + ' scale: ' + event.scale + ' da: ' + event.da + ' xxx: ' + (event.ds >= 0 ? '+' : '-')
 
                 if (event.ds >= 0) {
                   input.value += input.step
@@ -99,7 +99,7 @@
                     input.value = input.min
                   }
                 }
-                // input.dispatchEvent(new Event('input'))
+                input.dispatchEvent(new Event('input'))
               },
             })
           } else {
