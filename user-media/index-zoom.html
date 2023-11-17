@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <style>
+        body {
+            background-color: rgba(250, 250, 252, 0.8);
+            display: grid;
+            justify-content: center;
+        }
+
+        .box {
+            width: 100%;
+            max-width: 720px;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        button {
+            display: block;
+        }
+
+        canvas {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .flash {
+            animation: flash 1s ease infinite alternate;
+            animation-iteration-count: 1;
+        }
+
+        @keyframes flash {
+            10% {
+                opacity: 0;
+            }
+        }
+    </style>
+    <script>
+      const supports = navigator.mediaDevices.getSupportedConstraints()
+
+      navigator.mediaDevices.getUserMedia({
+        audio: false,
+        video: {
+          width: { min: 1024, ideal: 1280, max: 1920 },
+          height: { min: 1024, ideal: 1280, max: 1920 },
+          facingMode: { exact: 'environment' },
+          zoom: ('zoom' in supports),
+        }, // or "true" or "{ width: 1280, height: 720 }" or "{ width: { min: 1280 }, height: { min: 720 } }"
+      }).then((stream) => {
+        console.log(stream)
+
+        const video = document.getElementById('video')
+        video.srcObject = stream
+        video.onloadedmetadata = () => {
+          video.play()
+        }
+
+        if ('zoom' in supports) {
+          // https://web.dev/articles/camera-pan-tilt-zoom?hl=ja
+          const [videoTrack] = stream.getVideoTracks()
+          const capabilities = videoTrack.getCapabilities()
+          const settings = videoTrack.getSettings()
+          if (('zoom' in capabilities) && ('zoom' in settings)) {
+            const input = document.getElementById('range')
+            input.min = capabilities.zoom.min
+            input.max = capabilities.zoom.max
+            input.step = capabilities.zoom.step
+            input.value = settings.zoom
+            input.addEventListener('input', async () => {
+              await videoTrack.applyConstraints({ advanced: [{ zoom: input.value }] })
+            })
+            input.style.display = 'none'
+          }
+        }
+      }).catch((err) => {
+        console.error(`${err.name}: ${err.message}`)
+      })
+
+      document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('button').addEventListener('click', (ev) => {
+          const video = document.getElementById('video')
+
+          video.classList.add('flash')
+
+          const canvas = document.getElementById('canvas')
+          canvas.setAttribute('width', video.videoWidth)
+          canvas.setAttribute('height', video.videoHeight)
+
+          const context = canvas.getContext('2d')
+          context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight)
+
+          setTimeout(() => { video.classList.remove('flash') }, 1000)
+
+          ev.preventDefault()
+        })
+      })
+    </script>
+</head>
+<body>
+<div class="box">
+    <h2>Video</h2>
+    <video id="video" autoplay muted playsinline></video>
+    <input type="range" id="range">
+    <button id="button" style="display: none">Take photo</button>
+
+    <h2>Photo</h2>
+    <canvas id="canvas"></canvas>
+</div>
+</body>
+</html>
