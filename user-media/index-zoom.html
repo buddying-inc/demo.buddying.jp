@@ -92,12 +92,12 @@
                   // if (input.max >= input.value + input.step) {
                     console.log('step: ' + input.step)
                     console.log('before: ' + input.value)
-                    input.value += input.step
+                    input.value = parseFloat(input.value) + parseFloat(input.step)
                     console.log('after: ' + input.value)
                   // }
                 } else {
                   // if (input.min <= input.value - input.step) {
-                    input.value -= input.step
+                  input.value = parseFloat(input.value) - parseFloat(input.step)
                   // }
                 }
 
