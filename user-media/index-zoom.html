@@ -85,7 +85,11 @@
 
             interact('#video-container').gesturable({
               onmove: function (event) {
-                note.innerText = event.ds
+                if (event.ds > 0) {
+                  input.value += input.step
+                } else {
+                  input.value -= input.step
+                }
               },
             })
           } else {
