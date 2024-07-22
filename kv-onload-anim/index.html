@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        main {
+            width: 100%;
+            max-width: 1928px;
+            min-width: 375px;
+            margin: 0 auto;
+        }
+
+        .kv-wrapper {
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        .kv-wrapper img {
+            width: 100%;
+        }
+
+        .kv-wrapper .box {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+        }
+
+        .kv-wrapper .box.left {
+            opacity: 0;
+            left: calc(27% * -1);
+            bottom: 10%;
+            filter: blur(5px);
+            transition: opacity ease-in-out 1s, left 1s, filter ease-in 1s;
+        }
+
+        .kv-wrapper .box.left.anim {
+            opacity: 1;
+            left: 0;
+            filter: blur(0);
+        }
+
+        .kv-wrapper .box.right {
+            opacity: 0;
+            right: calc(27% * -1);
+            bottom: 10%;
+            filter: blur(5px);
+            transition: opacity ease-in-out 1s, right 1s, filter ease-in 1s;
+        }
+
+        .kv-wrapper .box.right.anim {
+            opacity: 1;
+            right: 0;
+            filter: blur(0);
+        }
+    </style>
+    <script>
+      function loadImage (url) {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => resolve(img);
+          img.onerror = (err) => reject(err);
+          img.src = url;
+        });
+      }
+
+      function sleep (sec) {
+        return new Promise((resolve) => setTimeout(resolve, sec));
+      }
+
+      document.addEventListener('DOMContentLoaded', async () => {
+        const elLeft = document.querySelector('.kv-wrapper .box.left');
+        const elRight = document.querySelector('.kv-wrapper .box.right');
+
+        const elLeftImage = elLeft.querySelector('img');
+        const elRightImage = elRight.querySelector('img');
+
+        await Promise.all([
+          loadImage(elLeftImage.dataset.src),
+          loadImage(elRightImage.dataset.src),
+          sleep(2000),
+        ]);
+
+        elLeftImage.setAttribute('src', elLeftImage.dataset.src);
+        elRightImage.setAttribute('src', elRightImage.dataset.src);
+
+        elLeft.classList.add('anim');
+        elRight.classList.add('anim');
+      });
+    </script>
+</head>
+<body>
+<main>
+    <div class="kv-wrapper">
+        <img src="bg.png" alt="key visual background image">
+        <div class="box left" style="background-color: deeppink">
+            <img src="" data-src="logo.png" alt="left image on key visual" loading="lazy">
+        </div>
+        <div class="box right" style="background-color: greenyellow">
+            <img src="" data-src="logo.png" alt="right image on key visual" loading="lazy">
+        </div>
+    </div>
+</main>
+</body>
+</html>
