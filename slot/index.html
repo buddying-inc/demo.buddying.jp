@@ -32,6 +32,11 @@
             pointer-events: auto;
         }
 
+        .slot .slot__reel.slot__reel--stopped .slot__reel-output {
+            cursor: default;
+            pointer-events: none;
+        }
+
         .slot .slot__reel .slot__reel-output span {
             pointer-events: none;
             padding-left: 20px;
@@ -185,8 +190,15 @@
         });
 
         if (hasAll) {
+          elReels.forEach(elReel => {
+            elReel.classList.add('slot__reel--stopped');
+          });
+
           const elResult = document.querySelector('[name="result"]');
           elResult.value = texts.join(' ');
+
+          const elButton = document.querySelector('.js-slot-button');
+          elButton.removeAttribute('disabled');
 
           return;
         }
@@ -208,6 +220,6 @@
     </div>
 </div>
 <output name="result"><!-- REEL TEXTS --></output>
-<button type="button" class="js-slot-button">START!</button>
+<button type="button" class="js-slot-button" disabled="disabled">START!</button>
 </body>
 </html>
