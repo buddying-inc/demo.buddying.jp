@@ -96,9 +96,6 @@
           promises.push(p);
         });
 
-        const elResult = document.querySelector('[name="result"]');
-        elResult.value = '';
-
         Promise.all(promises).then((/** @type HTMLElement[] */ elReels) => {
           const texts = [];
           const url = new URL(location);
@@ -111,6 +108,7 @@
             url.searchParams.set(elReel.dataset.name, elText.dataset.id);
           });
 
+          const elResult = document.querySelector('[name="result"]');
           elResult.value = texts.join(' ');
 
           history.pushState({}, '', url);
@@ -119,23 +117,40 @@
 
       document.addEventListener('DOMContentLoaded', () => {
         const url = new URL(location);
-        if (url.searchParams.has('reel1') && url.searchParams.has('reel2') && url.searchParams.has('reel3')) {
-          const elReels = document.querySelectorAll('.js-reel');
-          elReels.forEach(elReel => {
-            const elOutput = elReel.querySelector('.js-output');
-            const reelName = elReel.dataset.name;
-            const contents = contentMap[reelName];
-            const id = url.searchParams.get(reelName);
-            contents.forEach((content) => {
-              if (content.id !== id) {
-                return;
-              }
 
-              const elText = elOutput.querySelector('.js-text');
-              elText.dataset.id = content.id;
-              elText.textContent = content.text;
-            });
+        let hasAll = true;
+        const texts = [];
+
+        const elReels = document.querySelectorAll('.js-reel');
+        elReels.forEach(elReel => {
+          const reelName = elReel.dataset.name;
+
+          if (! url.searchParams.has(reelName)) {
+            hasAll = false;
+
+            return;
+          }
+
+          const id = url.searchParams.get(reelName);
+
+          const elOutput = elReel.querySelector('.js-output');
+          const contents = contentMap[reelName];
+          contents.forEach((content) => {
+            if (content.id !== id) {
+              return;
+            }
+
+            texts.push(content.text);
+
+            const elText = elOutput.querySelector('.js-text');
+            elText.dataset.id = content.id;
+            elText.textContent = content.text;
           });
+        });
+
+        if (hasAll) {
+          const elResult = document.querySelector('[name="result"]');
+          elResult.value = texts.join(' ');
 
           return;
         }
