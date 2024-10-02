@@ -69,7 +69,7 @@
             elReel.classList.add('slot__reel--stopped');
           }, { once: true, passive: true });
 
-          const contents = contentMap[elOutput.dataset.name];
+          const contents = contentMap[elReel.dataset.name];
           const maxIndex = contents.length;
           let index = 0;
 
@@ -108,7 +108,7 @@
             const elText = elOutput.querySelector('.js-text');
             texts.push(elText.textContent);
 
-            url.searchParams.set(elOutput.dataset.name, elText.dataset.id);
+            url.searchParams.set(elReel.dataset.name, elText.dataset.id);
           });
 
           elResult.value = texts.join(' ');
@@ -123,8 +123,9 @@
           const elReels = document.querySelectorAll('.js-reel');
           elReels.forEach(elReel => {
             const elOutput = elReel.querySelector('.js-output');
-            const contents = contentMap[elOutput.dataset.name];
-            const id = url.searchParams.get(elOutput.dataset.name);
+            const reelName = elReel.dataset.name;
+            const contents = contentMap[reelName];
+            const id = url.searchParams.get(reelName);
             contents.forEach((content) => {
               if (content.id !== id) {
                 return;
@@ -145,14 +146,14 @@
 </head>
 <body>
 <div class="slot">
-    <div class="slot__reel js-reel">
-        <div class="slot__reel-output js-output" data-name="reel1"><span class="js-text"><!-- REEL1 --></span></div>
+    <div class="slot__reel js-reel" data-name="reel1">
+        <div class="slot__reel-output js-output"><span class="js-text"><!-- REEL1 --></span></div>
     </div>
-    <div class="slot__reel js-reel">
-        <div class="slot__reel-output js-output" data-name="reel2"><span class="js-text"><!-- REEL2 --></span></div>
+    <div class="slot__reel js-reel" data-name="reel2">
+        <div class="slot__reel-output js-output"><span class="js-text"><!-- REEL2 --></span></div>
     </div>
-    <div class="slot__reel js-reel">
-        <div class="slot__reel-output js-output" data-name="reel3"><span class="js-text"><!-- REEL3 --></span></div>
+    <div class="slot__reel js-reel" data-name="reel3">
+        <div class="slot__reel-output js-output"><span class="js-text"><!-- REEL3 --></span></div>
     </div>
 </div>
 <output name="result"><!-- REEL TEXTS --></output>
