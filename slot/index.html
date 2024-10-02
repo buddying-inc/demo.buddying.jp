@@ -115,7 +115,19 @@
         });
       }
 
+      function restartSlot () {
+        const elResult = document.querySelector('[name="result"]');
+        elResult.value = '';
+
+        startSlot();
+      }
+
       document.addEventListener('DOMContentLoaded', () => {
+        const elButton = document.querySelector('.js-slot-button');
+        elButton.addEventListener('click', () => {
+          restartSlot();
+        });
+
         const url = new URL(location);
 
         let hasAll = true;
@@ -172,5 +184,6 @@
     </div>
 </div>
 <output name="result"><!-- REEL TEXTS --></output>
+<button type="button" class="js-slot-button">START!</button>
 </body>
 </html>
