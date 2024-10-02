@@ -52,7 +52,8 @@
         ],
       };
 
-      function start (/** @type {HTMLOutputElement} */ elReel) {
+      function start (/** @type {HTMLElement} */ elReel) {
+        // NOTE: リール自身のテキストを書き換えると Safari でクリックイベントが反応しないので リールの子要素のテキストを変更
         const elText = elReel.querySelector('.js-text');
 
         return new Promise(async (resolve) => {
