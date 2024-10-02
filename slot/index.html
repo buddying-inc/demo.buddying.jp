@@ -76,7 +76,7 @@
           const timerId = setInterval(() => {
             if (clicked) {
               clearInterval(timerId);
-              resolve();
+              resolve(elReel);
 
               return;
             }
@@ -95,14 +95,16 @@
           promises.push(p);
         });
 
-        Promise.all(promises).then(() => {
+        const elResult = document.querySelector('[name="result"]');
+        elResult.value = '';
+
+        Promise.all(promises).then((/** @type HTMLElement[] */ elReels) => {
           const texts = [];
           elReels.forEach(elReel => {
             const elText = elReel.querySelector('.js-text');
             texts.push(elText.textContent);
           });
 
-          const elResult = document.querySelector('[name="result"]');
           elResult.value = texts.join(' ');
         });
       });
@@ -111,15 +113,15 @@
 <body>
 <div class="slot">
     <div class="slot__reel js-reel">
-        <div class="slot__reel-output js-output" data-name="reel1"><span class="js-text"></span></div>
+        <div class="slot__reel-output js-output" data-name="reel1"><span class="js-text"><!-- REEL1 --></span></div>
     </div>
     <div class="slot__reel js-reel">
-        <div class="slot__reel-output js-output" data-name="reel2"><span class="js-text"></span></div>
+        <div class="slot__reel-output js-output" data-name="reel2"><span class="js-text"><!-- REEL2 --></span></div>
     </div>
     <div class="slot__reel js-reel">
-        <div class="slot__reel-output js-output" data-name="reel3"><span class="js-text"></span></div>
+        <div class="slot__reel-output js-output" data-name="reel3"><span class="js-text"><!-- REEL3 --></span></div>
     </div>
 </div>
-<output name="result"></output>
+<output name="result"><!-- REEL TEXTS --></output>
 </body>
 </html>
