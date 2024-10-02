@@ -111,13 +111,24 @@
           const elResult = document.querySelector('[name="result"]');
           elResult.value = texts.join(' ');
 
+          const elButton = document.querySelector('.js-slot-button');
+          elButton.removeAttribute('disabled');
+
           history.pushState({}, '', url);
         });
       }
 
       function restartSlot () {
+        const elReels = document.querySelectorAll('.js-reel');
+        elReels.forEach(elReel => {
+          elReel.classList.remove('slot__reel--stopped');
+        });
+
         const elResult = document.querySelector('[name="result"]');
         elResult.value = '';
+
+        const elButton = document.querySelector('.js-slot-button');
+        elButton.setAttribute('disabled', 'disabled');
 
         startSlot();
       }
