@@ -137,13 +137,18 @@
         elReels.forEach(elReel => {
           const reelName = elReel.dataset.name;
 
-          if (! url.searchParams.has(reelName)) {
+          if (
+            ! url.searchParams.has(reelName) ||
+            ! (reelName in contentMap)
+          ) {
             hasAll = false;
 
             return;
           }
 
           const id = url.searchParams.get(reelName);
+
+          let foundedId = false;
 
           const elOutput = elReel.querySelector('.js-output');
           const contents = contentMap[reelName];
@@ -152,12 +157,20 @@
               return;
             }
 
+            foundedId = true;
+
             texts.push(content.text);
 
             const elText = elOutput.querySelector('.js-text');
             elText.dataset.id = content.id;
             elText.textContent = content.text;
           });
+
+          if (foundedId) {
+            return;
+          }
+
+          hasAll = false;
         });
 
         if (hasAll) {
