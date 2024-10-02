@@ -40,23 +40,23 @@
     <script>
       const contentMap = {
         reel1: [
-          { id: 1, text: 'Hell' },
-          { id: 2, text: 'Good bye ' },
-          { id: 3, text: 'Good afternoon' },
+          { id: '1', text: 'Hell' },
+          { id: '2', text: 'Good bye ' },
+          { id: '3', text: 'Good afternoon' },
         ],
         reel2: [
-          { id: 1, text: 'Tom' },
-          { id: 2, text: 'Joe' },
-          { id: 3, text: 'Pool' },
+          { id: '1', text: 'Tom' },
+          { id: '2', text: 'Joe' },
+          { id: '3', text: 'Pool' },
         ],
         reel3: [
-          { id: 1, text: ':)' },
-          { id: 2, text: ':(' },
-          { id: 3, text: ':-D' },
+          { id: '1', text: ':)' },
+          { id: '2', text: ':(' },
+          { id: '3', text: ':-D' },
         ],
       };
 
-      function start (/** @type {HTMLElement} */ elReel) {
+      function startReel (/** @type {HTMLElement} */ elReel) {
         const elOutput = elReel.querySelector('.js-output');
         // NOTE: リール自身のテキストを書き換えると Safari でクリックイベントが反応しないので リールの子要素のテキストを変更
         const elText = elOutput.querySelector('.js-text');
@@ -81,17 +81,18 @@
               return;
             }
 
+            elText.dataset.id = contents[index].id;
             elText.textContent = contents[index].text;
             index = (index + 1) % maxIndex;
           }, 80);
         });
       }
 
-      document.addEventListener('DOMContentLoaded', () => {
+      function startSlot () {
         const promises = [];
         const elReels = document.querySelectorAll('.js-reel');
         elReels.forEach(elReel => {
-          const p = start(elReel);
+          const p = startReel(elReel);
           promises.push(p);
         });
 
@@ -100,13 +101,45 @@
 
         Promise.all(promises).then((/** @type HTMLElement[] */ elReels) => {
           const texts = [];
+          const url = new URL(location);
+
           elReels.forEach(elReel => {
-            const elText = elReel.querySelector('.js-text');
+            const elOutput = elReel.querySelector('.js-output');
+            const elText = elOutput.querySelector('.js-text');
             texts.push(elText.textContent);
+
+            url.searchParams.set(elOutput.dataset.name, elText.dataset.id);
           });
 
           elResult.value = texts.join(' ');
+
+          history.pushState({}, '', url);
         });
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const url = new URL(location);
+        if (url.searchParams.has('reel1') && url.searchParams.has('reel2') && url.searchParams.has('reel3')) {
+          const elReels = document.querySelectorAll('.js-reel');
+          elReels.forEach(elReel => {
+            const elOutput = elReel.querySelector('.js-output');
+            const contents = contentMap[elOutput.dataset.name];
+            const id = url.searchParams.get(elOutput.dataset.name);
+            contents.forEach((content) => {
+              if (content.id !== id) {
+                return;
+              }
+
+              const elText = elOutput.querySelector('.js-text');
+              elText.dataset.id = content.id;
+              elText.textContent = content.text;
+            });
+          });
+
+          return;
+        }
+
+        startSlot();
       });
     </script>
 </head>
