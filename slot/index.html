@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .slot {
+            border: 3px solid black;
+        }
+
+        .slot .slot__reel {
+            border: 3px solid black;
+            padding: 5px;
+            margin: 20px;
+            min-height: 1rem;
+            background-color: yellowgreen;
+        }
+
+        .slot .slot__reel.slot__reel--stopped {
+            border-color: yellowgreen;
+        }
+
+        .slot .slot__reel .slot__reel-output {
+            background-color: greenyellow;
+            margin: 0;
+            padding: 20px 0;
+            width: 100%;
+            display: inline-block;
+            -webkit-user-select: none;
+            user-select: none;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+
+        .slot .slot__reel .slot__reel-output span {
+            pointer-events: none;
+            padding-left: 20px;
+        }
+    </style>
+    <script>
+      const contentMap = {
+        reel1: [
+          { id: 1, text: 'Hell' },
+          { id: 2, text: 'Good bye ' },
+          { id: 3, text: 'Good afternoon' },
+        ],
+        reel2: [
+          { id: 1, text: 'Tom' },
+          { id: 2, text: 'Joe' },
+          { id: 3, text: 'Pool' },
+        ],
+        reel3: [
+          { id: 1, text: ':)' },
+          { id: 2, text: ':(' },
+          { id: 3, text: ':-D' },
+        ],
+      };
+
+      function start (/** @type {HTMLElement} */ elReel) {
+        const elOutput = elReel.querySelector('.js-output');
+        // NOTE: リール自身のテキストを書き換えると Safari でクリックイベントが反応しないので リールの子要素のテキストを変更
+        const elText = elOutput.querySelector('.js-text');
+
+        return new Promise(async (resolve) => {
+          let clicked = false;
+
+          elOutput.addEventListener('click', () => {
+            clicked = true;
+            elReel.classList.add('slot__reel--stopped');
+          }, { once: true, passive: true });
+
+          const contents = contentMap[elOutput.dataset.name];
+          const maxIndex = contents.length;
+          let index = 0;
+
+          const timerId = setInterval(() => {
+            if (clicked) {
+              clearInterval(timerId);
+              resolve();
+
+              return;
+            }
+
+            elText.textContent = contents[index].text;
+            index = (index + 1) % maxIndex;
+          }, 80);
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const promises = [];
+        const elReels = document.querySelectorAll('.js-reel');
+        elReels.forEach(elReel => {
+          const p = start(elReel);
+          promises.push(p);
+        });
+
+        Promise.all(promises).then(() => {
+          const texts = [];
+          elReels.forEach(elReel => {
+            const elText = elReel.querySelector('.js-text');
+            texts.push(elText.textContent);
+          });
+
+          const elResult = document.querySelector('[name="result"]');
+          elResult.value = texts.join(' ');
+        });
+      });
+    </script>
+</head>
+<body>
+<div class="slot">
+    <div class="slot__reel js-reel">
+        <div class="slot__reel-output js-output" data-name="reel1"><span class="js-text"></span></div>
+    </div>
+    <div class="slot__reel js-reel">
+        <div class="slot__reel-output js-output" data-name="reel2"><span class="js-text"></span></div>
+    </div>
+    <div class="slot__reel js-reel">
+        <div class="slot__reel-output js-output" data-name="reel3"><span class="js-text"></span></div>
+    </div>
+</div>
+<output name="result"></output>
+</body>
+</html>
