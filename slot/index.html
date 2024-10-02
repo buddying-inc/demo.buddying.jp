@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .slot {
+            border: 3px solid black;
+        }
+
+        .slot .slot__reel {
+            border: 3px solid black;
+            padding: 10px;
+            margin: 20px;
+            min-height: 1rem;
+            background-color: yellowgreen;
+        }
+
+        .slot .slot__reel .slot__reel-output {
+            background-color: greenyellow;
+            width: 100%;
+            display: inline-block;
+            -webkit-user-select: none;
+            user-select: none;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+    </style>
+    <script>
+      const contentMap = {
+        reel1: [
+          { id: 1, text: 'Hell' },
+          { id: 2, text: 'Good bye ' },
+          { id: 3, text: 'Good afternoon' },
+        ],
+        reel2: [
+          { id: 1, text: 'Tom' },
+          { id: 2, text: 'Joe' },
+          { id: 3, text: 'Pool' },
+        ],
+        reel3: [
+          { id: 1, text: ':)' },
+          { id: 2, text: ':(' },
+          { id: 3, text: ':-D' },
+        ],
+      };
+
+      function start (/** @type {HTMLOutputElement} */ elReel) {
+        return new Promise(async (resolve) => {
+          let clicked = false;
+
+          // TODO: Safari だけ文字の上でクリックしても反応しない... アニメーションを止めるとクリックできる
+          elReel.addEventListener('click', () => {
+            clicked = true;
+          }, { once: true, passive: true });
+
+          const contents = contentMap[elReel.dataset.name];
+          const maxIndex = contents.length;
+          let index = 0;
+
+          const timerId = setInterval(() => {
+            if (clicked) {
+              clearInterval(timerId);
+              resolve();
+
+              return;
+            }
+
+            elReel.textContent = contents[index].text;
+            index = (index + 1) % maxIndex;
+          }, 80);
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const elReels = document.querySelectorAll('[data-name^="reel"]');
+        elReels.forEach(elReel => start(elReel));
+      });
+    </script>
+</head>
+<body>
+<div class="slot">
+    <div class="slot__reel">
+        <p class="slot__reel-output" data-name="reel1"></p>
+    </div>
+    <div class="slot__reel">
+        <p class="slot__reel-output" data-name="reel2"></p>
+    </div>
+    <div class="slot__reel">
+        <p class="slot__reel-output" data-name="reel3"></p>
+    </div>
+</div>
+</body>
+</html>
