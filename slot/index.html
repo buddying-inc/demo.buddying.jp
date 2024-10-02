@@ -10,7 +10,7 @@
 
         .slot .slot__reel {
             border: 3px solid black;
-            padding: 10px;
+            padding: 5px;
             margin: 20px;
             min-height: 1rem;
             background-color: yellowgreen;
@@ -18,12 +18,19 @@
 
         .slot .slot__reel .slot__reel-output {
             background-color: greenyellow;
+            margin: 0;
+            padding: 20px 0;
             width: 100%;
             display: inline-block;
             -webkit-user-select: none;
             user-select: none;
             cursor: pointer;
             pointer-events: auto;
+        }
+
+        .slot .slot__reel .slot__reel-output span {
+            pointer-events: none;
+            padding-left: 20px;
         }
     </style>
     <script>
@@ -46,10 +53,11 @@
       };
 
       function start (/** @type {HTMLOutputElement} */ elReel) {
+        const elText = elReel.querySelector('.js-text');
+
         return new Promise(async (resolve) => {
           let clicked = false;
 
-          // TODO: Safari だけ文字の上でクリックしても反応しない... アニメーションを止めるとクリックできる
           elReel.addEventListener('click', () => {
             clicked = true;
           }, { once: true, passive: true });
@@ -66,29 +74,45 @@
               return;
             }
 
-            elReel.textContent = contents[index].text;
+            elText.textContent = contents[index].text;
             index = (index + 1) % maxIndex;
           }, 80);
         });
       }
 
       document.addEventListener('DOMContentLoaded', () => {
+        const promises = [];
         const elReels = document.querySelectorAll('[data-name^="reel"]');
-        elReels.forEach(elReel => start(elReel));
+        elReels.forEach(elReel => {
+          const p = start(elReel);
+          promises.push(p);
+        });
+
+        Promise.all(promises).then(() => {
+          const texts = [];
+          elReels.forEach(elReel => {
+            const elText = elReel.querySelector('.js-text');
+            texts.push(elText.textContent);
+          });
+
+          const elResult = document.querySelector('[name="result"]');
+          elResult.value = texts.join(' ');
+        });
       });
     </script>
 </head>
 <body>
 <div class="slot">
     <div class="slot__reel">
-        <p class="slot__reel-output" data-name="reel1"></p>
+        <div class="slot__reel-output" data-name="reel1"><span class="js-text"></span></div>
     </div>
     <div class="slot__reel">
-        <p class="slot__reel-output" data-name="reel2"></p>
+        <div class="slot__reel-output" data-name="reel2"><span class="js-text"></span></div>
     </div>
     <div class="slot__reel">
-        <p class="slot__reel-output" data-name="reel3"></p>
+        <div class="slot__reel-output" data-name="reel3"><span class="js-text"></span></div>
     </div>
 </div>
+<output name="result"></output>
 </body>
 </html>
