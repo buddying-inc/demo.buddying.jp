@@ -13,6 +13,17 @@ export default {
       format: 'esm',
     },
   ],
+  watch: {
+    // buildDelay: 100,
+    // chokidar: { usePolling: true },
+    clearScreen: true,
+    // exclude: [],
+    include: [
+      'src/styles/**.*',
+      'src/templates/**.*',
+    ],
+    // skipWrite: true,
+  },
   plugins: [
     {
       name: 'ejs-compiler',
