@@ -4,6 +4,9 @@ import { glob } from 'glob';
 import path from 'path';
 import sass from 'rollup-plugin-sass';
 
+// if (process.env.ROLLUP_WATCH) {
+// }
+
 export default {
   input: 'main.js',
   context: 'window',
@@ -14,15 +17,15 @@ export default {
     },
   ],
   watch: {
-    // buildDelay: 100,
+    // buildDelay: 0,
     // chokidar: { usePolling: true },
-    clearScreen: true,
+    // clearScreen: true,
     // exclude: [],
     include: [
       'src/styles/**.*',
       'src/templates/**.*',
     ],
-    // skipWrite: true,
+    // skipWrite: false,
   },
   plugins: [
     {
