@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SPLASH</title>
+    <!-- スプラッシュで使用するファイルは preload -->
+    <link rel="preload" href="https://www.sample-videos.com/img/Sample-png-image-100kb.png" as="image">
+    <link rel="preload" href="splash.css" as="style" />
+    <link rel="preload" href="splash.js" as="script" />
+    <link rel="stylesheet" href="splash.css" />
+    <script src="splash.js"></script>
+    <!-- 全体で使うファイルは "通常読み込み" または "遅延読み込み" -->
+    <link rel="stylesheet" href="main.css" />
+    <script src="main.js" defer></script>
+</head>
+<body>
+<div class="splash splash--hidden js-splash">
+    <div class="splash__content">
+        <p>This is splash screen.</p>
+        <img src="https://www.sample-videos.com/img/Sample-png-image-100kb.png" alt="" decoding="async">
+    </div>
+</div>
+<main>
+    <h1>HELLO WORLD</h1>
+    <img src="" data-src="https://www.sample-videos.com/img/Sample-jpg-image-1mb.jpg" alt="1MB image" class="img js-required-in-first-view">
+    <img src="" data-src="https://www.sample-videos.com/img/Sample-jpg-image-2mb.jpg" alt="2MB image" class="img js-required-in-first-view">
+    <!-- ファーストビューに収まらない画像は "遅延読み込み" -->
+    <img src="https://www.sample-videos.com/img/Sample-jpg-image-5mb.jpg" alt="5MB image" loading="lazy" class="img">
+    <img src="https://www.sample-videos.com/img/Sample-jpg-image-10mb.jpg" alt="10MB image" loading="lazy" class="img">
+</main>
+</body>
+</html>
