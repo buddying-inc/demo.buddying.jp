@@ -12,37 +12,55 @@
       elSplash.dataset.loading = '1';
     }
 
-    const loadImagePromises = [];
+    const splashPromises = [];
+
+    // NOTE: スプラッシュ画面を最低5秒表示
+    splashPromises.push(new Promise((resolve) => {
+      setTimeout(() => {
+        console.info('Splash 5sec timer.');
+        resolve();
+      }, 5000);
+    }))
+
+    // NOTE: スプラッシュ画面が解除されたときに最低限表示しておきたい画像の遅延読み込み
     const elImages = document.querySelectorAll('img[data-src].js-required-in-first-view');
     elImages.forEach(elImage => {
       const promise = loadImagePromise(elImage);
-      loadImagePromises.push(promise);
+      splashPromises.push(promise);
     });
 
-    Promise.all(loadImagePromises).then(
-      (/** @type HTMLImageElement[] */ elImages) => {
-        if (elSplash.dataset.loading === '1') {
-          elSplash.classList.add('splash--hidden');
-          elSplash.dataset.loading = '0';
-          callback();
+    // NOTE: 全てのプロミスが完了したらスプラッシュ画面を解除
+    Promise.all(splashPromises).then(
+      () => {
+        if (elSplash.dataset.loading !== '1') {
+          return;
         }
-      },
-    );
 
-    // NOTE: 5秒で強制的にスプラッシュ表示を解除
-    setTimeout(() => {
-      if (elSplash.dataset.loading === '1') {
+        console.info('Splash promise ended :)');
         elSplash.classList.add('splash--hidden');
         elSplash.dataset.loading = '0';
         callback();
+      },
+    );
+
+    // NOTE: 6秒で強制的にスプラッシュ表示を解除
+    setTimeout(() => {
+      if (elSplash.dataset.loading !== '1') {
+        return;
       }
-    }, 5000);
+
+      console.info('Splash force end :(');
+      elSplash.classList.add('splash--hidden');
+      elSplash.dataset.loading = '0';
+      callback();
+    }, 6000);
   }
 
   function loadImagePromise (/** @type {HTMLImageElement} */ elImage) {
     return new Promise(async (resolve, reject) => {
       const image = new Image();
       image.onload = () => {
+        console.info(elImage.dataset.src + ' is loaded!');
         elImage.setAttribute('src', elImage.dataset.src);
         elImage.removeAttribute('data-src');
         resolve(elImage);
