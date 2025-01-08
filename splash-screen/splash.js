@@ -29,6 +29,9 @@
       splashPromises.push(promise);
     });
 
+    // NOTE: スプラッシュアニメーションを開始
+    startAnimation();
+
     // NOTE: 全てのプロミスが完了したらスプラッシュ画面を解除
     Promise.all(splashPromises).then(
       () => {
@@ -54,6 +57,11 @@
       elSplash.dataset.loading = '0';
       callback();
     }, 6000);
+  }
+
+  function startAnimation () {
+    console.info('Start animation...');
+    // FIXME:
   }
 
   function loadImagePromise (/** @type {HTMLImageElement} */ elImage) {

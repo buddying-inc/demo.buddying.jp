@@ -17,6 +17,7 @@ body {
 }
 
 .splash .splash__content {
+    position: relative;
 }
 
 .splash--hidden {
