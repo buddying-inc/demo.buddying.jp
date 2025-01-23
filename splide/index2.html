@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const verticalSplide = new Splide('.splide.js-vertical', {
+          type: 'loop',
+          // autoplay: true,
+          resetProgress: false,
+          arrows: false,
+          interval: 4000,
+          direction: 'ttb',
+          wheelSleep: 1000,
+          height: 1000,
+          // heightRatio: 1.5
+        });
+        verticalSplide.mount();
+
+        const horizontalSplide = new Splide('.splide.js-horizontal', {
+          type: 'loop',
+          // autoplay: true,
+          resetProgress: false,
+          arrows: false,
+          interval: 4000,
+          // direction: 'ttb',
+          // wheelSleep: 1000,
+          // heightRatio: 1.5
+        });
+        horizontalSplide.mount();
+      });
+    </script>
+</head>
+<body id="app" class="bg-slate-50 text-slate-700 tracking-wide selection:bg-fuchsia-300 selection:text-fuchsia-900">
+<section class="splide js-vertical">
+    <div class="splide__track">
+        <ul class="splide__list">
+            <li class="splide__slide">
+                <h2 class="text-lg font-bold">DISCOVERED が UNION とコラボレーションコレクションを発表！渋谷 PARCO にて 12 月 27 日(金)から POP UP SHOP もオープン</h2>
+                <section class="splide js-horizontal">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            <li class="splide__slide">
+                                <img src="https://placehold.jp/30/ffcc00/ffffff/300x300.png?text=placeholder+image" alt="" class="w-full">
+                            </li>
+                            <li class="splide__slide">
+                                <img src="https://placehold.jp/30/dd6699/ffffff/300x300.png?text=placeholder+image" alt="" class="w-full">
+                            </li>
+                            <li class="splide__slide">
+                                <img src="https://placehold.jp/30/aaff00/ffffff/300x300.png?text=placeholder+image" alt="" class="w-full">
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <p class="mb-5">木村多津也と吉田早苗によるファッションブランド「ディスカバード（DISCOVERED）」 から、長年にわたり DISCOVERED のスタイルに共鳴し続けてきた Chris Gibbs （クリス・ギブス）との特別なコラボレーションが発表されました。</p>
+                <p class="mb-5">今回のコラボレーションでは、DISCOVERED が得意とする解体されたウェアを特徴的なステッチ ワークで再構築する手法を採用しており、革新的でありながらも親しみやすいアイテムを 展開します。</p>
+            </li>
+            <li class="splide__slide">
+                <h2 class="text-lg font-bold">DISCOVERED が UNION とコラボレーションコレクションを発表！渋谷 PARCO にて 12 月 27 日(金)から POP UP SHOP もオープン</h2>
+                <p>画面2（ページ区切り2）</p>
+                <img src="https://placehold.jp/30/eeaabb/ffffff/300x350.png?text=placeholder+image" alt="" class="w-full">
+                <p>さらに、ベイエリア出身のラッパーLarry June（ラリー・ジューン）を起用したエディトリアルも登場し、彼の独自のスタイルとコラボレーションアイテムとの融合にも注目です。</p>
+            </li>
+            <li class="splide__slide">
+                <h2 class="text-lg font-bold">DISCOVERED が UNION とコラボレーションコレクションを発表！渋谷 PARCO にて 12 月 27 日(金)から POP UP SHOP もオープン</h2>
+                <p>画面3（ページ区切り3）</p>
+                <img src="https://placehold.jp/30/aaaabb/ffffff/300x350.png?text=placeholder+image" alt="" class="w-full">
+                <p>UNION LOOPING DAMAGE CUTSEWN<br>COL：BLACK / ECRU<br>¥31,900</p>
+            </li>
+        </ul>
+    </div>
+</section>
+</body>
+</html>
