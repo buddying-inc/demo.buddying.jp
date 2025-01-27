@@ -21,11 +21,33 @@
         });
         splide.mount();
       });
+
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelector('.js-scroll-next').addEventListener('click', function() {
+          const container = document.querySelector('.js-scroll-container');
+          const items = document.querySelectorAll('.js-scroll-item');
+          const currentScroll = container.scrollTop;
+          let nextScroll = 0;
+
+          for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            if (item.offsetTop > currentScroll) {
+              nextScroll = item.offsetTop;
+              break;
+            }
+          }
+
+          container.scrollTo({
+            top: nextScroll,
+            behavior: 'smooth'
+          });
+        });
+      });
     </script>
 </head>
-<body id="app" class="bg-slate-50 text-slate-700 tracking-wide selection:bg-fuchsia-300 selection:text-fuchsia-900">
-<div class="bg-white snap-y snap-mandatory h-dvh w-full md:max-w-4xl overflow-scroll mx-auto">
-    <div class="snap-start snap-always min-h-dvh w-full scroll-mb-10">
+<body id="app" class="bg-slate-50 text-slate-700 tracking-wide selection:bg-fuchsia-300 selection:text-fuchsia-900 relative">
+<div class="bg-white snap-y snap-mandatory h-dvh w-full md:max-w-4xl overflow-scroll mx-auto js-scroll-container">
+    <div class="snap-start snap-always min-h-dvh w-full scroll-mb-10 js-scroll-item">
         <h2 class="text-lg font-bold p-2">DISCOVERED が UNION とコラボレーションコレクションを発表！渋谷 PARCO にて 12 月 27 日(金)から POP UP SHOP もオープン</h2>
         <section class="splide js-horizontal md:mx-auto md:max-w-md">
             <div class="splide__track">
@@ -45,7 +67,7 @@
         <p class="mb-5 p-2">木村多津也と吉田早苗によるファッションブランド「ディスカバード（DISCOVERED）」 から、長年にわたり DISCOVERED のスタイルに共鳴し続けてきた Chris Gibbs （クリス・ギブス）との特別なコラボレーションが発表されました。</p>
         <p class="mb-5 p-2">今回のコラボレーションでは、DISCOVERED が得意とする解体されたウェアを特徴的なステッチ ワークで再構築する手法を採用しており、革新的でありながらも親しみやすいアイテムを 展開します。</p>
     </div>
-    <div class="snap-start snap-always min-h-dvh w-full scroll-mb-10">
+    <div class="snap-start snap-always min-h-dvh w-full scroll-mb-10 js-scroll-item">
         <hr class="border-t-1 my-3">
         <h2 class="text-lg font-bold p-2">DISCOVERED が UNION とコラボレーションコレクションを発表！渋谷 PARCO にて 12 月 27 日(金)から POP UP SHOP もオープン</h2>
         <p class="mb-5 p-2">画面2（ページ区切り2）</p>
@@ -56,7 +78,7 @@
         <p class="mb-5 p-2">さらに、ベイエリア出身のラッパーLarry June（ラリー・ジューン）を起用したエディトリアルも登場し、彼の独自のスタイルとコラボレーションアイテムとの融合にも注目です。</p>
         <p class="mb-5 p-2">さらに、ベイエリア出身のラッパーLarry June（ラリー・ジューン）を起用したエディトリアルも登場し、彼の独自のスタイルとコラボレーションアイテムとの融合にも注目です。</p>
     </div>
-    <div class="snap-start snap-always min-h-dvh w-full scroll-mb-10">
+    <div class="snap-start snap-always min-h-dvh w-full scroll-mb-10 js-scroll-item">
         <hr class="border-t-1 my-3">
         <h2 class="text-lg font-bold p-2">DISCOVERED が UNION とコラボレーションコレクションを発表！渋谷 PARCO にて 12 月 27 日(金)から POP UP SHOP もオープン</h2>
         <p class="mb-5 p-2">画面3（ページ区切り3）</p>
@@ -66,5 +88,6 @@
         <p class="mb-5 p-2">UNION LOOPING DAMAGE CUTSEWN<br>COL：BLACK / ECRU<br>¥31,900</p>
     </div>
 </div>
+<button type="button" class="absolute bottom-0 right-0 js-scroll-next bg-blue-50/30 text-blue-300 text-sm font-bold backdrop-blur-sm p-2 rounded-tl-lg">↓</button>
 </body>
 </html>
