@@ -44,6 +44,68 @@
         });
       });
     </script>
+
+    <script>
+      // モーダルダイアログを動的に作成
+      function createModal() {
+        const dialog = document.createElement('dialog');
+        dialog.id = 'dynamicModal';
+
+        // 閉じるボタン
+        const closeButton = document.createElement('button');
+        closeButton.className = 'close';
+        closeButton.innerHTML = '&times;';
+        closeButton.setAttribute('aria-label', '閉じる');
+
+        // モーダル内の画像
+        const modalImage = document.createElement('img');
+        modalImage.className = 'modal-content';
+        modalImage.alt = '拡大画像';
+
+        // ダイアログに要素を追加
+        dialog.appendChild(closeButton);
+        dialog.appendChild(modalImage);
+
+        // 閉じるボタンのイベントリスナー
+        closeButton.addEventListener('click', () => {
+          dialog.close();
+        });
+
+        // 背景クリックで閉じる
+        dialog.addEventListener('click', (event) => {
+          if (event.target === dialog) {
+            dialog.close();
+          }
+        });
+
+        // ESCキーで閉じる
+        dialog.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') {
+            dialog.close();
+          }
+        });
+
+        // ドキュメントにダイアログを追加
+        document.body.appendChild(dialog);
+
+        return dialog;
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        // モーダルを初期化
+        const modal = createModal();
+        const modalImage = modal.querySelector('.modal-content');
+
+        // .js-clickable .js-thumbnail をクリックしたときの処理
+        document.querySelectorAll('.js-clickable .js-thumbnail').forEach(img => {
+          img.addEventListener('click', function() {
+            modalImage.src = this.src; // クリックされた画像のsrcをモーダルに設定
+            modal.showModal(); // モーダルを表示
+          });
+        });
+      });
+    </script>
+
 </head>
 <body id="app" class="bg-slate-50 text-slate-700 tracking-wide selection:bg-fuchsia-300 selection:text-fuchsia-900">
 <div class="relative">
@@ -82,13 +144,52 @@
             <p class="mb-5 p-2">さらに、ベイエリア出身のラッパーLarry June（ラリー・ジューン）を起用したエディトリアルも登場し、彼の独自のスタイルとコラボレーションアイテムとの融合にも注目です。</p>
             <p class="mb-5 p-2">さらに、ベイエリア出身のラッパーLarry June（ラリー・ジューン）を起用したエディトリアルも登場し、彼の独自のスタイルとコラボレーションアイテムとの融合にも注目です。</p>
         </div>
-        <div class="snap-start snap-always w-full scroll-mb-10 js-scroll-item"><!-- min-h-dvh は入れない! -->
+        <div class="snap-start snap-always min-h-dvh w-full scroll-mb-10 js-scroll-item">
             <hr class="border-t-1">
             <div class="md:mx-auto md:max-w-md">
                 <img src="https://placehold.jp/30/aaaabb/ffffff/300x350.png?text=placeholder+image" alt="" class="w-full">
             </div>
             <p class="mb-5 p-2 font-bold">記事本文：PAGE BREAK3</p>
             <p class="mb-5 p-2">UNION LOOPING DAMAGE CUTSEWN<br>COL：BLACK / ECRU<br>¥31,900</p>
+        </div>
+        <div class="snap-start snap-always w-full scroll-mb-10 js-scroll-item"><!-- フッター前のブロックには min-h-dvh を入れない! -->
+            <hr class="border-t-1">
+            <table class="border-separate border-spacing-5 md:border-spacing-10 mx-auto w-full md:max-w-lg">
+                <tbody>
+                <tr>
+                    <td class="w-24 md:w-48">
+                        <div class="js-clickable">
+                            <img src="https://placehold.jp/30/aaaabb/ffffff/500x500.png?text=PRODUCT1" alt="" class="w-full js-thumbnail">
+                        </div>
+                    </td>
+                    <td>
+                        <p class="text-sm">UNION LOOPING DAMAGE CUTSEWN この T シャツは胸元に刺繡が入り</p>
+                        <p class="text-sm">●●●●●●●●●●●●●●●● ●●●●●●●●●●●●●●●● ●●●●●●●●●●●●●●●● ●●●●●●●●●●●●●●●● ●●●●●●●●●●●●●●●●</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="w-24 md:w-48">
+                        <div class="js-clickable">
+                            <img src="https://placehold.jp/30/aaaabb/ffffff/500x500.png?text=PRODUCT2" alt="" class="w-full js-thumbnail">
+                        </div>
+                    </td>
+                    <td>
+                        <p class="text-sm">UNION LOOPING DAMAGE CUTSEWN この T シャツは胸元に刺繡が入り</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="w-24 md:w-48">
+                        <div class="js-clickable">
+                            <img src="https://placehold.jp/30/aaaabb/ffffff/500x500.png?text=PRODUCT3" alt="" class="w-full js-thumbnail">
+                        </div>
+                    </td>
+                    <td>
+                        <p class="text-sm">UNION LOOPING DAMAGE CUTSEWN この T シャツは胸元に刺繡が入り</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p class="mb-5 p-2 font-bold">記事本文：PAGE BREAK4</p>
         </div>
         <div class="snap-end snap-always h-full w-full scroll-mb-10">
             <div class="bg-gray-50">
