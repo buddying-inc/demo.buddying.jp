@@ -23,20 +23,29 @@
       });
 
       document.addEventListener('DOMContentLoaded', () => {
+        // '.js-scroll-next'クラスが付いた要素がクリックされたときのイベントリスナーを設定
         document.querySelector('.js-scroll-next').addEventListener('click', function() {
+          // スクロールするコンテナ要素を取得
           const container = document.querySelector('.js-scroll-container');
+          // コンテナ内のスクロール対象のアイテム要素をすべて取得
           const items = document.querySelectorAll('.js-scroll-item');
+          // 現在のスクロール位置を取得
           const currentScroll = container.scrollTop;
+          // 次のスクロール位置を初期化
           let nextScroll = 0;
 
+          // すべてのアイテムをループして、現在のスクロール位置より下にある最初のアイテムを見つける
           for (let i = 0; i < items.length; i++) {
             const item = items[i];
+            // アイテムの上端が現在のスクロール位置より下にあるか確認
             if (item.offsetTop > currentScroll) {
+              // 次のスクロール位置をそのアイテムの上端に設定
               nextScroll = item.offsetTop;
-              break;
+              break; // 最初に見つかったアイテムでループを終了
             }
           }
 
+          // コンテナを次のスクロール位置までスムーズにスクロール
           container.scrollTo({
             top: nextScroll,
             behavior: 'smooth'
