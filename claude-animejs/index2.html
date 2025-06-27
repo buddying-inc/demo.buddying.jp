@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>写真上から徐々に出現アニメーション</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(45deg, #1e3c72, #2a5298);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .controls {
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      background: linear-gradient(45deg, #ff6b6b, #feca57);
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      color: white;
+      border-radius: 25px;
+      cursor: pointer;
+      margin: 0 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .photo-container {
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      background: #333;
+    }
+
+    .photo {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+      /* 初期状態: 完全に隠す */
+      clip-path: inset(100% 0 0 0);
+    }
+
+    .photo-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%);
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+      opacity: 0;
+    }
+
+    .photo-title {
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .single-photo {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .method-selector {
+      margin-bottom: 20px;
+    }
+
+    .method-selector label {
+      color: white;
+      margin-right: 15px;
+      cursor: pointer;
+    }
+
+    .method-selector input[type="radio"] {
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="controls">
+    <h1 style="color: white; margin-bottom: 20px;">写真上から徐々に出現アニメーション</h1>
+
+    <div class="method-selector">
+      <label><input type="radio" name="method" value="clipPath" checked> Clip Path（下から上へふわっと）</label>
+      <label><input type="radio" name="method" value="slideDown"> Height変化（コンテナ拡張 + ふわっと）</label>
+      <label><input type="radio" name="method" value="curtain"> スローワイプ（ゆっくりふわっと）</label>
+    </div>
+
+    <button class="btn" onclick="animateSingle()">単体写真アニメーション</button>
+    <button class="btn" onclick="animateGrid()">複数写真アニメーション</button>
+    <button class="btn" onclick="resetPhotos()">リセット</button>
+  </div>
+
+  <!-- 単体写真 -->
+  <div class="photo-container single-photo" id="singlePhoto">
+    <img class="photo" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=300&fit=crop" alt="美しい風景">
+    <div class="photo-overlay">
+      <h3 class="photo-title">美しい山の風景</h3>
+    </div>
+  </div>
+
+  <!-- 複数写真グリッド -->
+  <div class="photo-grid">
+    <div class="photo-container">
+      <img class="photo" src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=300&h=300&fit=crop" alt="森">
+      <div class="photo-overlay">
+        <h3 class="photo-title">深い森</h3>
+      </div>
+    </div>
+    <div class="photo-container">
+      <img class="photo" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop" alt="山">
+      <div class="photo-overlay">
+        <h3 class="photo-title">雪山</h3>
+      </div>
+    </div>
+    <div class="photo-container">
+      <img class="photo" src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=300&h=300&fit=crop" alt="湖">
+      <div class="photo-overlay">
+        <h3 class="photo-title">静かな湖</h3>
+      </div>
+    </div>
+    <div class="photo-container">
+      <img class="photo" src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=300&h=300&fit=crop" alt="野原">
+      <div class="photo-overlay">
+        <h3 class="photo-title">緑の野原</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function getSelectedMethod() {
+    return document.querySelector('input[name="method"]:checked').value;
+  }
+
+  function resetPhotos() {
+    // 全ての写真を初期状態に戻す
+    anime.set('.photo', {
+      clipPath: 'inset(0px 0px 100% 0px)', // 下から隠す状態
+      opacity: 0, // 透明状態
+      translateY: 20, // 少し下に
+      scale: 1.05, // 少し大きく
+      WebkitMask: 'none',
+      mask: 'none'
+    });
+    anime.set('.photo-container', {
+      height: 'auto',
+      overflow: 'hidden'
+    });
+    anime.set('.photo-overlay', {
+      opacity: 0
+    });
+  }
+
+  function animatePhoto(target, delay = 0) {
+    const method = getSelectedMethod();
+
+    switch(method) {
+      case 'clipPath':
+        // Clip Path方式: 画像の下部から上部に向かって徐々に見える + ふわっと表示
+        anime.set(target, {
+          clipPath: 'inset(0px 0px 100% 0px)', // 下から隠す
+          opacity: 0,
+          translateY: 20, // 少し下から
+          scale: 1.05 // 少し大きく
+        });
+
+        // opacityとtranslateY、scaleをゆっくりアニメーション
+        anime({
+          targets: target,
+          opacity: [0, 1],
+          translateY: [20, 0],
+          scale: [1.05, 1],
+          duration: 1600, // clip-pathとほぼ同時間
+          delay: delay,
+          easing: 'easeOutQuint' // よりソフトなイージング
+        });
+
+        // clip-pathを同時にアニメーション
+        anime({
+          targets: target,
+          clipPath: ['inset(0px 0px 100% 0px)', 'inset(0px 0px 0% 0px)'], // 下から上へ表示
+          duration: 1800,
+          delay: delay,
+          easing: 'easeOutQuart',
+          complete: function() {
+            anime({
+              targets: target.parentElement.querySelector('.photo-overlay'),
+              opacity: [0, 1],
+              duration: 800,
+              easing: 'easeOutQuart'
+            });
+          }
+        });
+        break;
+
+      case 'slideDown':
+        // 高さベース方式: heightを0から100%に変化
+        const container = target.parentElement;
+        anime.set(container, {
+          height: '0px',
+          overflow: 'hidden'
+        });
+        anime.set(target, {
+          clipPath: 'inset(0% 0 0 0)',
+          opacity: 0,
+          translateY: 0
+        });
+        anime({
+          targets: container,
+          height: ['0px', '300px'],
+          duration: 2000,
+          delay: delay,
+          easing: 'easeOutQuart'
+        });
+        anime({
+          targets: target,
+          opacity: [0, 1],
+          duration: 2000,
+          delay: delay,
+          easing: 'easeOutQuart',
+          complete: function() {
+            anime({
+              targets: target.parentElement.querySelector('.photo-overlay'),
+              opacity: [0, 1],
+              duration: 600,
+              easing: 'easeOutQuart'
+            });
+          }
+        });
+        break;
+
+      case 'curtain':
+        // スローワイプ方式: 下から上へゆっくり + ふわっと
+        anime.set(target, {
+          clipPath: 'inset(0 0 100% 0)', // 下から隠す
+          opacity: 0,
+          translateY: 0
+        });
+        anime({
+          targets: target,
+          clipPath: ['inset(0 0 100% 0)', 'inset(0% 0 0 0)'], // 下から上へ
+          opacity: [0, 1],
+          duration: 2500,
+          delay: delay,
+          easing: 'easeInOutQuart',
+          complete: function() {
+            anime({
+              targets: target.parentElement.querySelector('.photo-overlay'),
+              opacity: [0, 1],
+              duration: 800,
+              easing: 'easeOutQuart'
+            });
+          }
+        });
+        break;
+    }
+  }
+
+  function animateSingle() {
+    resetPhotos();
+    const photo = document.querySelector('#singlePhoto .photo');
+    animatePhoto(photo);
+  }
+
+  function animateGrid() {
+    resetPhotos();
+    const photos = document.querySelectorAll('.photo-grid .photo');
+
+    photos.forEach((photo, index) => {
+      // 各写真を少しずつ遅延させて表示
+      animatePhoto(photo, index * 200);
+    });
+  }
+
+  // 初期状態設定
+  resetPhotos();
+</script>
+</body>
+</html>

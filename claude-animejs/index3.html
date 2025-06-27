@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スクロール連動ズームアニメーション</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .hero-section {
+      height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .hero-content {
+      text-align: center;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .content-section {
+      padding: 4rem 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .content-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .content-section p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      color: #666;
+    }
+
+    .spacer {
+      height: 50vh;
+    }
+
+    .image-container {
+      position: relative;
+      width: 100%;
+      height: 60vh;
+      overflow: hidden;
+      margin: 4rem 0;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .zoom-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.2);
+      transition: none;
+    }
+
+    .image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+              45deg,
+              rgba(102, 126, 234, 0.3),
+              rgba(118, 75, 162, 0.3)
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      opacity: 0;
+    }
+
+    .overlay-text {
+      text-align: center;
+      transform: translateY(20px);
+    }
+
+    .overlay-text h3 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .overlay-text p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .footer-section {
+      height: 50vh;
+      background: #2c3e50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+<section class="hero-section">
+  <div class="hero-content">
+    <h1>スクロール連動アニメーション</h1>
+    <p>下にスクロールして画像のズーム効果を体験してください</p>
+  </div>
+</section>
+
+<section class="content-section">
+  <h2>パフォーマンス最適化されたアニメーション</h2>
+  <p>このアニメーションは以下の技術で最適化されています：</p>
+  <p><strong>• Intersection Observer API</strong> - 要素の可視性を効率的に監視</p>
+  <p><strong>• requestAnimationFrame</strong> - スムーズな60FPSアニメーション</p>
+  <p><strong>• 条件付きイベント処理</strong> - 必要な時のみスクロール監視を開始</p>
+  <p>通常のscrollイベントリスナーと比較して、CPUとGPUの負荷を大幅に削減しています。</p>
+</section>
+
+<div class="spacer"></div>
+
+<div class="image-container" id="zoomImage">
+  <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop&crop=center"
+       alt="Beautiful landscape"
+       class="zoom-image">
+  <div class="image-overlay">
+    <div class="overlay-text">
+      <h3>美しい風景</h3>
+      <p>スクロールでズーム効果を体験</p>
+    </div>
+  </div>
+</div>
+
+<section class="content-section">
+  <h2>スムーズなアニメーション体験</h2>
+  <p>上の画像は、画面に入った瞬間から約20%ズームされた状態で表示され、スクロールが進むにつれて通常サイズ（100%）に近づいていきます。</p>
+  <p>この技術は、モダンなWebサイトでよく使用されるパララックス効果やスクロール連動アニメーションの基礎となっています。</p>
+</section>
+
+<div class="spacer"></div>
+
+<section class="footer-section">
+  <div>
+    <h2>アニメーション完了</h2>
+    <p>anime.js とモダンなWeb API を活用した最適化されたスクロールアニメーション</p>
+  </div>
+</section>
+
+<script>
+  class ScrollZoomController {
+    constructor() {
+      this.imageContainer = document.getElementById('zoomImage');
+      this.zoomImage = this.imageContainer.querySelector('.zoom-image');
+      this.overlay = this.imageContainer.querySelector('.image-overlay');
+      this.overlayText = this.overlay.querySelector('.overlay-text');
+
+      this.isAnimating = false;
+      this.animationId = null;
+
+      this.init();
+    }
+
+    init() {
+      // Intersection Observer で要素の可視性を監視
+      const observer = new IntersectionObserver(
+              (entries) => {
+                entries.forEach(entry => {
+                  if (entry.isIntersecting) {
+                    this.startAnimation();
+                  } else {
+                    this.stopAnimation();
+                  }
+                });
+              },
+              {
+                threshold: 0,
+                rootMargin: '-10% 0px -10% 0px'
+              }
+      );
+
+      observer.observe(this.imageContainer);
+
+      // 初期アニメーション（オーバーレイテキスト）
+      this.initializeOverlay();
+    }
+
+    initializeOverlay() {
+      anime({
+        targets: this.overlayText,
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 1000,
+        easing: 'easeOutQuart',
+        delay: 500
+      });
+    }
+
+    startAnimation() {
+      if (this.isAnimating) return;
+
+      this.isAnimating = true;
+
+      // オーバーレイのフェードイン
+      anime({
+        targets: this.overlay,
+        opacity: [0, 0.9],
+        duration: 800,
+        easing: 'easeOutQuart'
+      });
+
+      // スクロール監視開始（passive リスナー使用）
+      this.animateZoom();
+    }
+
+    stopAnimation() {
+      this.isAnimating = false;
+
+      if (this.animationId) {
+        cancelAnimationFrame(this.animationId);
+        this.animationId = null;
+      }
+
+      // オーバーレイのフェードアウト
+      anime({
+        targets: this.overlay,
+        opacity: 0,
+        duration: 400,
+        easing: 'easeOutQuart'
+      });
+    }
+
+    animateZoom() {
+      if (!this.isAnimating) return;
+
+      const rect = this.imageContainer.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // 要素の可視範囲を計算
+      const elementTop = rect.top;
+      const elementHeight = rect.height;
+
+      // スクロール進行度を計算（0-1の範囲）
+      let progress = 0;
+
+      if (elementTop <= windowHeight && elementTop + elementHeight >= 0) {
+        // 要素が画面内にある場合の進行度計算
+        const visibleTop = Math.max(0, windowHeight - elementTop);
+        const visibleHeight = Math.min(elementHeight, visibleTop);
+        progress = Math.min(1, visibleHeight / (elementHeight * 0.8));
+      }
+
+      // スケール値を計算（1.2 から 1.0 へ）
+      const scale = 1.2 - (progress * 0.2);
+
+      // anime.js でスムーズなアニメーション
+      anime({
+        targets: this.zoomImage,
+        scale: scale,
+        duration: 50,
+        easing: 'linear'
+      });
+
+      // 次のフレームで再実行
+      this.animationId = requestAnimationFrame(() => this.animateZoom());
+    }
+  }
+
+  // DOMContentLoaded後に初期化
+  document.addEventListener('DOMContentLoaded', () => {
+    new ScrollZoomController();
+  });
+</script>
+</body>
+</html>
