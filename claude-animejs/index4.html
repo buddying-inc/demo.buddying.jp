@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HELLO アニメーションボタン比較</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 40px;
+        }
+
+        .comparison-section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        /* 共通ボタンスタイル */
+        .hello-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 16px 24px;
+            background: #fff;
+            color: #333;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin: 10px;
+            min-width: 140px;
+            justify-content: space-between;
+        }
+
+        .hello-button:hover {
+            box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
+        }
+
+        .button-text {
+            margin-right: 12px;
+        }
+
+        /* CSS版のアニメーション */
+        .css-version .arrow-icon {
+            font-size: 16px;
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .css-version:hover .arrow-icon {
+            transform: translateX(20px);
+        }
+
+        /* anime.js版（transitionを無効化） */
+        .anime-version .arrow-icon {
+            font-size: 16px;
+            display: inline-block;
+            transition: none;
+        }
+
+        .pros-cons {
+            text-align: left;
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .pros-cons h4 {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+
+        .pros-cons.cons h4 {
+            color: #f44336;
+        }
+
+        .code-example {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            text-align: left;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>CSS vs anime.js 比較</h1>
+
+    <div class="comparison-section">
+        <h2 class="section-title">🎨 CSS Transition版（推奨）</h2>
+        <a href="#" class="hello-button css-version">
+            <span class="button-text">HELLO</span>
+            <span class="arrow-icon">→</span>
+        </a>
+
+        <div class="code-example">
+            .arrow-icon {
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+
+            .hello-button:hover .arrow-icon {
+            transform: translateX(20px);
+            }
+        </div>
+
+        <div class="pros-cons">
+            <h4>✅ メリット</h4>
+            <ul>
+                <li>軽量（外部ライブラリ不要）</li>
+                <li>シンプルで理解しやすい</li>
+                <li>パフォーマンスが良い</li>
+                <li>メンテナンス性が高い</li>
+                <li>読み込み時間が早い</li>
+            </ul>
+        </div>
+
+        <div class="pros-cons cons">
+            <h4>❌ デメリット</h4>
+            <ul>
+                <li>複雑なアニメーションには限界がある</li>
+                <li>イージングの選択肢が少ない</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="comparison-section">
+        <h2 class="section-title">⚡ anime.js版</h2>
+        <a href="#" class="hello-button anime-version" id="animeButton">
+            <span class="button-text">HELLO</span>
+            <span class="arrow-icon">→</span>
+        </a>
+
+        <div class="code-example">
+            button.addEventListener('mouseenter', () => {
+            anime({
+            targets: arrow,
+            translateX: '20px',
+            duration: 300,
+            easing: 'easeOutCubic'
+            });
+            });
+        </div>
+
+        <div class="pros-cons">
+            <h4>✅ メリット</h4>
+            <ul>
+                <li>複雑なアニメーションに対応</li>
+                <li>豊富なイージングオプション</li>
+                <li>細かい制御が可能</li>
+                <li>チェーンアニメーションが簡単</li>
+            </ul>
+        </div>
+
+        <div class="pros-cons cons">
+            <h4>❌ デメリット</h4>
+            <ul>
+                <li>外部ライブラリが必要（14KB）</li>
+                <li>シンプルなアニメーションにはオーバーエンジニアリング</li>
+                <li>読み込み時間が増加</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="comparison-section">
+        <h2 class="section-title">🤔 いつanime.jsを使うべき？</h2>
+        <div style="text-align: left; max-width: 600px; margin: 0 auto;">
+            <h4 style="color: #4CAF50;">CSS Transitionで十分な場合：</h4>
+            <ul>
+                <li>ホバー時の単純な移動・回転・拡大縮小</li>
+                <li>フェードイン・フェードアウト</li>
+                <li>色の変化</li>
+                <li><strong>今回のような矢印の移動</strong></li>
+            </ul>
+
+            <h4 style="color: #f44336;">anime.jsが必要な場合：</h4>
+            <ul>
+                <li>複数の要素の連続アニメーション</li>
+                <li>パス（SVG）に沿った動き</li>
+                <li>複雑なタイムライン制御</li>
+                <li>数値の段階的変化（カウントアップなど）</li>
+                <li>物理演算的な動き</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+  // anime.js版のイベントリスナー
+  const animeButton = document.getElementById('animeButton');
+  const arrow = animeButton.querySelector('.arrow-icon');
+  let hoverAnimation;
+  let leaveAnimation;
+
+  animeButton.addEventListener('mouseenter', () => {
+    if (leaveAnimation) {
+      leaveAnimation.pause();
+    }
+
+    hoverAnimation = anime({
+      targets: arrow,
+      translateX: '20px',
+      duration: 300,
+      easing: 'easeOutCubic'
+    });
+  });
+
+  animeButton.addEventListener('mouseleave', () => {
+    if (hoverAnimation) {
+      hoverAnimation.pause();
+    }
+
+    leaveAnimation = anime({
+      targets: arrow,
+      translateX: '0px',
+      duration: 250,
+      easing: 'easeOutQuart'
+    });
+  });
+
+  // クリック防止（デモ用）
+  document.querySelectorAll('.hello-button').forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+    });
+  });
+</script>
+</body>
+</html>
