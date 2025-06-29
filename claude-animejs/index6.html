@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マウス追従Contactボタン</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        .spacer-text {
+            height: 1000px;
+            background: linear-gradient(45deg, #e3f2fd, #f3e5f5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: #666;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 50px 0;
+        }
+
+        .image-container {
+            position: relative;
+            width: 1000px;
+            height: 1200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-image:
+                    radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        .contact-anchor {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            width: 230px;
+            height: 230px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.1s ease-out;
+            box-shadow:
+                    0 0 60px rgba(255, 255, 255, 0.4),
+                    0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            z-index: 10;
+        }
+
+        .contact-text {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .arrow-icon {
+            font-size: 32px;
+            transform: rotate(-45deg);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-anchor:hover .arrow-icon {
+            transform: rotate(-45deg) scale(1.1);
+        }
+
+
+
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+<div class="spacer-text">
+    <h1>マウス追従 Contact ボタンのデモ</h1>
+    <p>下の画像エリアにマウスを入れると、Contactボタンがマウスに追従し、鼓動アニメーションが開始されます。</p>
+    <p>画像エリアから出ると、アニメーションは停止しますが、ボタンの位置はそのまま保持されます。</p>
+    <div style="margin-top: 200px;">
+        <p style="font-size: 18px;">スクロールして下の画像エリアでテストしてください ↓</p>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="image-container" id="imageContainer">
+        <a href="#contact" class="contact-anchor" id="contactAnchor">
+            <div class="contact-text">Contact</div>
+            <div class="arrow-icon">↗</div>
+        </a>
+        <div class="custom-cursor" id="customCursor"></div>
+    </div>
+</div>
+
+<script>
+  const imageContainer = document.getElementById('imageContainer');
+  const contactAnchor = document.getElementById('contactAnchor');
+  const customCursor = document.getElementById('customCursor');
+
+  let isMouseInside = false;
+  let heartbeatAnimation = null;
+  let mouseX = 0;
+  let mouseY = 0;
+
+  // マウスの位置を取得
+  imageContainer.addEventListener('mousemove', (e) => {
+    const rect = imageContainer.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+
+    // カスタムカーソルの位置更新
+    customCursor.style.left = e.clientX - 10 + 'px';
+    customCursor.style.top = e.clientY - 10 + 'px';
+
+    if (isMouseInside) {
+      // アンカータグをマウスに追従させる（中心を基準に）
+      const newX = mouseX - 115; // 230px / 2 = 115px
+      const newY = mouseY - 115;
+
+      // 境界内に制限
+      const maxX = imageContainer.clientWidth - 230;
+      const maxY = imageContainer.clientHeight - 230;
+
+      const constrainedX = Math.max(0, Math.min(newX, maxX));
+      const constrainedY = Math.max(0, Math.min(newY, maxY));
+
+      contactAnchor.style.left = constrainedX + 'px';
+      contactAnchor.style.top = constrainedY + 'px';
+    }
+  });
+
+  // 画像エリアにマウスが入った時
+  imageContainer.addEventListener('mouseenter', () => {
+    isMouseInside = true;
+    customCursor.style.opacity = '1';
+
+    // アンカーの白背景の鼓動アニメーションを開始
+    heartbeatAnimation = anime({
+      targets: contactAnchor,
+      scale: [1, 1.08, 1],
+      duration: 1000,
+      easing: 'easeInOutSine',
+      loop: true,
+      direction: 'normal'
+    });
+  });
+
+  // 画像エリアからマウスが出た時
+  imageContainer.addEventListener('mouseleave', () => {
+    isMouseInside = false;
+    customCursor.style.opacity = '0';
+
+    // 鼓動アニメーションを停止
+    if (heartbeatAnimation) {
+      heartbeatAnimation.pause();
+      anime({
+        targets: contactAnchor,
+        scale: 1,
+        duration: 300,
+        easing: 'easeOutQuad'
+      });
+    }
+  });
+
+  // アンカータグのホバー効果
+  contactAnchor.addEventListener('mouseenter', () => {
+    anime({
+      targets: contactAnchor,
+      scale: 1.1,
+      duration: 300,
+      easing: 'easeOutBack'
+    });
+  });
+
+  contactAnchor.addEventListener('mouseleave', () => {
+    anime({
+      targets: contactAnchor,
+      scale: 1,
+      duration: 300,
+      easing: 'easeOutBack'
+    });
+  });
+
+  // 初期状態でカスタムカーソルを非表示
+  customCursor.style.opacity = '0';
+</script>
+</body>
+</html>
