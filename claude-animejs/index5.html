@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スクロール連動グローバルメニュー</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* グローバルメニュー */
+        .global-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: none; /* anime.jsに任せる */
+        }
+
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .menu-nav {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .menu-nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 10px 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .menu-nav a:hover {
+            color: #007bff;
+        }
+
+        .menu-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #007bff;
+            transition: width 0.3s ease;
+        }
+
+        .menu-nav a:hover::after {
+            width: 100%;
+        }
+
+        /* メインコンテンツ */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .content-section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            .menu-nav {
+                gap: 20px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .content-section {
+                padding: 50px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="global-menu" id="globalMenu">
+    <div class="menu-container">
+        <a href="#" class="logo">Logo</a>
+        <nav>
+            <ul class="menu-nav">
+                <li><a href="#home">ホーム</a></li>
+                <li><a href="#about">会社概要</a></li>
+                <li><a href="#services">サービス</a></li>
+                <li><a href="#portfolio">実績</a></li>
+                <li><a href="#contact">お問い合わせ</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="hero" id="home">
+        <div>
+            <h1>Welcome to Our Website</h1>
+            <p>スクロールしてメニューの動作を確認してください</p>
+        </div>
+    </section>
+
+    <section class="content-section" id="about">
+        <h2>About Us</h2>
+        <p>私たちは革新的なソリューションを提供する企業です。お客様のニーズに合わせた最適なサービスを提供いたします。</p>
+        <p>下にスクロールするとメニューがフェードアウトし、上にスクロールして停止すると2秒後にフェードインします。</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </section>
+
+    <section class="content-section" id="services">
+        <h2>Our Services</h2>
+        <p>私たちのサービスは幅広い分野にわたります。Webデザイン、アプリケーション開発、マーケティング支援など、総合的なデジタルソリューションを提供しています。</p>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+        <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+    </section>
+
+    <section class="content-section" id="portfolio">
+        <h2>Portfolio</h2>
+        <p>これまでに手がけた様々なプロジェクトをご紹介します。クライアント様の要望に応じて、オーダーメイドのソリューションを提供してきました。</p>
+        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
+        <p>Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p>
+        <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
+    </section>
+
+    <section class="content-section" id="contact">
+        <h2>Contact</h2>
+        <p>お気軽にお問い合わせください。お客様のプロジェクトについて詳しくお聞かせいただき、最適な提案をさせていただきます。</p>
+        <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
+        <p>Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
+        <p>Et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
+    </section>
+</main>
+
+<script>
+  // スクロールメニューコントローラーのファクトリー関数
+  const createScrollMenuController = (menuSelector = '#globalMenu') => {
+    // プライベート変数（クロージャーで管理）
+    const state = {
+      menu: document.querySelector(menuSelector),
+      lastScrollY: window.scrollY,
+      isMenuVisible: true,
+      fadeInTimer: null,
+      scrollDirection: null,
+      isAnimating: false,
+      throttleTimer: null,
+      throttleDelay: 16 // ~60fps
+    };
+
+    // アニメーション関数
+    const animateMenu = ({ opacity, translateY, duration, easing, onComplete }) => {
+      anime({
+        targets: state.menu,
+        opacity,
+        translateY,
+        duration,
+        easing,
+        complete: onComplete
+      });
+    };
+
+    // メニュー表示
+    const showMenu = () => {
+      if (state.isMenuVisible || state.isAnimating) return;
+
+      state.isAnimating = true;
+      state.isMenuVisible = true;
+
+      animateMenu({
+        opacity: [0, 1],
+        translateY: [-20, 0],
+        duration: 400,
+        easing: 'easeOutExpo',
+        onComplete: () => {
+          state.isAnimating = false;
+        }
+      });
+    };
+
+    // メニュー非表示
+    const hideMenu = () => {
+      if (!state.isMenuVisible || state.isAnimating) return;
+
+      state.isAnimating = true;
+      state.isMenuVisible = false;
+
+      // フェードインタイマーをクリア
+      if (state.fadeInTimer) {
+        clearTimeout(state.fadeInTimer);
+        state.fadeInTimer = null;
+      }
+
+      animateMenu({
+        opacity: [1, 0],
+        translateY: [0, -20],
+        duration: 300,
+        easing: 'easeInExpo',
+        onComplete: () => {
+          state.isAnimating = false;
+        }
+      });
+    };
+
+    // スクロール方向変更時の処理
+    const handleDirectionChange = () => {
+      if (state.scrollDirection === 'down' && state.isMenuVisible) {
+        hideMenu();
+      }
+      // 上スクロール時の処理はhandleScrollで管理
+    };
+
+    // スクロール処理
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollDelta = currentScrollY - state.lastScrollY;
+
+      // スクロール方向を判定
+      if (Math.abs(scrollDelta) > 5) { // 5px以上の移動で方向を判定
+        const newDirection = scrollDelta > 0 ? 'down' : 'up';
+
+        if (newDirection !== state.scrollDirection) {
+          state.scrollDirection = newDirection;
+          handleDirectionChange();
+        }
+      }
+
+      state.lastScrollY = currentScrollY;
+
+      // フェードインタイマーをクリア（スクロール中はタイマーリセット）
+      if (state.fadeInTimer) {
+        clearTimeout(state.fadeInTimer);
+        state.fadeInTimer = null;
+      }
+
+      // 上スクロール時のフェードイン処理（2秒後）
+      if (state.scrollDirection === 'up' && !state.isMenuVisible) {
+        state.fadeInTimer = setTimeout(showMenu, 2000);
+      }
+    };
+
+    // throttle付きスクロールイベントリスナー
+    const throttledScrollHandler = () => {
+      if (state.throttleTimer) return;
+
+      state.throttleTimer = setTimeout(() => {
+        handleScroll();
+        state.throttleTimer = null;
+      }, state.throttleDelay);
+    };
+
+    // 初期化
+    const init = () => {
+      if (!state.menu) {
+        console.warn(`Menu element not found: ${menuSelector}`);
+        return;
+      }
+
+      // スクロールイベントをthrottleで制御
+      window.addEventListener('scroll', throttledScrollHandler, { passive: true });
+
+      // 初期状態でメニューを表示
+      showMenu();
+    };
+
+    // 公開API
+    return {
+      init,
+      showMenu,
+      hideMenu,
+      destroy: () => {
+        window.removeEventListener('scroll', throttledScrollHandler);
+        if (state.fadeInTimer) {
+          clearTimeout(state.fadeInTimer);
+        }
+        if (state.throttleTimer) {
+          clearTimeout(state.throttleTimer);
+        }
+      }
+    };
+  };
+
+  // ページ読み込み完了後に初期化
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuController = createScrollMenuController();
+    menuController.init();
+  });
+
+  // スムーズスクロール（オプション）
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+</script>
+</body>
+</html>
