@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スクロール連動Splideスライダー</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .top-section {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .bottom-section {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* スライダーセクション */
+        .slider-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slider-title {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        /* Splideコンテナ */
+        .splide {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .splide__track {
+            padding: 0 150px; /* 隣のスライドが見えるようにパディング */
+        }
+
+        .splide__slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide-content {
+            width: 500px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s ease;
+            color: #333;
+            transform: scale(0.9);
+            opacity: 0.7;
+        }
+
+        .slide-content:hover {
+            transform: scale(0.95) translateY(-10px);
+        }
+
+        /* アクティブなスライドのスタイル */
+        .splide__slide.is-active .slide-content {
+            transform: scale(1);
+            opacity: 1;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .splide__slide.is-active .slide-number {
+            color: #ff6b6b;
+            text-shadow: 0 2px 10px rgba(255, 107, 107, 0.3);
+        }
+
+        .slide-number {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .slide-text {
+            font-size: 1.5rem;
+            text-align: center;
+            padding: 0 30px;
+        }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            .splide__track {
+                padding: 0 50px;
+            }
+
+            .slide-content {
+                width: 300px;
+                height: 250px;
+            }
+
+            .slide-number {
+                font-size: 2.5rem;
+            }
+
+            .slide-text {
+                font-size: 1rem;
+            }
+        }
+
+        /* デバッグ用（開発時のみ表示） */
+        .debug-info {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            min-width: 200px;
+        }
+
+        .debug-info div {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+<!-- デバッグ情報 -->
+<div class="debug-info">
+    <div>現在のスライド: <span id="current-slide">1</span></div>
+    <div>制御状態: <span id="current-marker">-</span></div>
+</div>
+
+<div class="container">
+    <!-- トップセクション -->
+    <div class="section top-section">
+        <h1>スクロール連動スライダーデモ</h1>
+    </div>
+
+    <!-- 上側の地点マーカー（A-E） -->
+    <!-- マーカーは削除してスライダーエリアの表示度で制御 -->
+
+    <!-- スライダー制御開始エリア -->
+    <div class="slider-control-start">
+        <div class="section" style="background: rgba(0, 0, 0, 0.1);">
+            <h2>スライダー制御開始エリア</h2>
+        </div>
+    </div>
+
+    <!-- スライダーセクション -->
+    <div class="slider-section">
+        <h2 class="slider-title">インタラクティブスライダー</h2>
+
+        <div class="splide" id="main-splide">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    <li class="splide__slide">
+                        <div class="slide-content">
+                            <div class="slide-number">01</div>
+                            <div class="slide-text">最初のスライド<br>制御エリア開始で表示</div>
+                        </div>
+                    </li>
+                    <li class="splide__slide">
+                        <div class="slide-content">
+                            <div class="slide-number">02</div>
+                            <div class="slide-text">2番目のスライド<br>制御エリア25%で表示</div>
+                        </div>
+                    </li>
+                    <li class="splide__slide">
+                        <div class="slide-content">
+                            <div class="slide-number">03</div>
+                            <div class="slide-text">3番目のスライド<br>制御エリア50%で表示</div>
+                        </div>
+                    </li>
+                    <li class="splide__slide">
+                        <div class="slide-content">
+                            <div class="slide-number">04</div>
+                            <div class="slide-text">4番目のスライド<br>制御エリア75%で表示</div>
+                        </div>
+                    </li>
+                    <li class="splide__slide">
+                        <div class="slide-content">
+                            <div class="slide-number">05</div>
+                            <div class="slide-text">最後のスライド<br>制御エリア終了で表示</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライダー制御終了エリア -->
+    <div class="slider-control-end">
+        <div class="section" style="background: rgba(0, 0, 0, 0.15);">
+            <h2>スライダー制御終了エリア</h2>
+        </div>
+    </div>
+
+    <!-- ボトムセクション -->
+    <div class="section bottom-section">
+        <h2>スクロールを続けてスライドの変化を確認してください</h2>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Splideの初期化
+    const splide = new Splide('#main-splide', {
+      type: 'slide',
+      perPage: 1,
+      perMove: 1,
+      gap: '2rem',
+      padding: '20%', // 隣のスライドが見えるように
+      focus: 'center',
+      arrows: false,
+      pagination: false,
+      drag: false, // スクロールでのみ制御
+      autoWidth: false,
+      breakpoints: {
+        768: {
+          padding: '10%',
+        }
+      }
+    });
+
+    splide.mount();
+
+    // 現在のスライド番号を表示
+    const currentSlideDisplay = document.getElementById('current-slide');
+    const currentMarkerDisplay = document.getElementById('current-marker');
+
+    // スライド変更時の処理
+    splide.on('moved', function(newIndex) {
+      currentSlideDisplay.textContent = newIndex + 1;
+
+      // アクティブなスライドを強調表示
+      const slides = document.querySelectorAll('.splide__slide');
+      slides.forEach((slide, index) => {
+        if (index === newIndex) {
+          slide.classList.add('is-active');
+        } else {
+          slide.classList.remove('is-active');
+        }
+      });
+    });
+
+    // 初期状態で1番目のスライドをアクティブに
+    document.querySelector('.splide__slide').classList.add('is-active');
+
+    // スライド変更関数
+    function changeSlide(slideIndex, reason) {
+      splide.go(slideIndex);
+      currentMarkerDisplay.textContent = `${reason}`;
+      console.log(`${reason} - スライド ${slideIndex + 1} に変更`);
+    }
+
+    // 拡張されたスライダー制御エリアの表示度に基づくスライド制御
+    function handleSliderVisibility() {
+      const controlStart = document.querySelector('.slider-control-start');
+      const controlEnd = document.querySelector('.slider-control-end');
+
+      if (!controlStart || !controlEnd) return;
+
+      const startRect = controlStart.getBoundingClientRect();
+      const endRect = controlEnd.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // 制御エリア全体の高さ
+      const totalControlHeight = endRect.bottom - startRect.top;
+
+      // 制御エリアが画面内にある場合
+      if (startRect.top < windowHeight && endRect.bottom > 0) {
+        let progress = 0;
+
+        // スクロール進行度を計算
+        if (startRect.top <= 0) {
+          // 制御開始エリアが画面上部を超えている場合
+          const scrolledDistance = Math.abs(startRect.top);
+          const maxScrollDistance = totalControlHeight - windowHeight;
+          progress = scrolledDistance / maxScrollDistance;
+        } else {
+          // 制御開始エリアが画面下部から現れている場合
+          progress = (windowHeight - startRect.top) / windowHeight * 0.1;
+        }
+
+        // 進行度を0-1の範囲に制限
+        progress = Math.max(0, Math.min(1, progress));
+
+        // スライドのタイミングを調整（1枚目を長く、5枚目を早く）
+        let slideIndex = 0;
+        if (progress < 0.4) {
+          slideIndex = 0; // 1枚目: 0% - 30%
+        } else if (progress < 0.5) {
+          slideIndex = 1; // 2枚目: 30% - 50%
+        } else if (progress < 0.55) {
+          slideIndex = 2; // 3枚目: 50% - 70%
+        } else if (progress < 0.6) {
+          slideIndex = 3; // 4枚目: 70% - 85%
+        } else {
+          slideIndex = 4; // 5枚目: 85% - 100%
+        }
+
+        // 現在のスライドと異なる場合のみ変更
+        if (slideIndex !== currentSlideIndex) {
+          currentSlideIndex = slideIndex;
+          const percentage = Math.round(progress * 100);
+          changeSlide(slideIndex, `進行度${percentage}% (${slideIndex + 1}/5)`);
+        }
+      } else {
+        // 制御エリア外の場合は最初のスライドに戻す
+        if (currentSlideIndex !== 0) {
+          currentSlideIndex = 0;
+          changeSlide(0, '制御エリア外');
+        }
+      }
+    }
+
+    // 現在のスライドインデックスを追跡
+    let currentSlideIndex = 0;
+
+    // スクロールイベントで監視
+    let isScrolling = false;
+    window.addEventListener('scroll', () => {
+      if (!isScrolling) {
+        requestAnimationFrame(() => {
+          handleSliderVisibility();
+          isScrolling = false;
+        });
+        isScrolling = true;
+      }
+    });
+
+    // 初期読み込み時にも実行
+    handleSliderVisibility();
+
+    // スムーズスクロール用の処理（オプション）
+    document.addEventListener('wheel', function(e) {
+      // 必要に応じてスクロール制御を追加
+    });
+  });
+</script>
+</body>
+</html>
