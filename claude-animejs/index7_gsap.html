@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GSAP ScrollTrigger スライダー</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .top-section {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .bottom-section {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* スライダーセクション */
+        .slider-section {
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            overflow: hidden;
+        }
+
+        .slider-container {
+            display: flex;
+            gap: 3rem;
+            width: auto;
+            flex-shrink: 0;
+        }
+
+        .slide {
+            flex: 0 0 auto;
+            width: 500px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            color: #333;
+            transition: transform 0.3s ease;
+        }
+
+        .slide:hover {
+            transform: translateY(-10px);
+        }
+
+        .slide-number {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .slide-text {
+            font-size: 1.5rem;
+            text-align: center;
+            padding: 0 30px;
+        }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            .slide {
+                width: 300px;
+                height: 250px;
+            }
+
+            .slide-number {
+                font-size: 2.5rem;
+            }
+
+            .slide-text {
+                font-size: 1rem;
+            }
+        }
+
+        /* デバッグ用 */
+        .debug-info {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            min-width: 200px;
+        }
+
+        .debug-info div {
+            margin-bottom: 5px;
+        }
+
+        .slider-title {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 2.5rem;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+<!-- デバッグ情報 -->
+<div class="debug-info">
+    <div>スクロール進行度: <span id="progress">0%</span></div>
+    <div>現在位置: <span id="position">0px</span></div>
+</div>
+
+<div class="container">
+    <!-- トップセクション -->
+    <div class="section top-section">
+        <h1>GSAP ScrollTrigger スライダーデモ</h1>
+    </div>
+
+    <!-- スライダーセクション -->
+    <div class="slider-section">
+        <h2 class="slider-title">スクロール連動スライダー</h2>
+
+        <div class="slider-container">
+            <div class="slide">
+                <div class="slide-number">01</div>
+                <div class="slide-text">最初のスライド<br>スクロール開始</div>
+            </div>
+            <div class="slide">
+                <div class="slide-number">02</div>
+                <div class="slide-text">2番目のスライド<br>スクロール進行中</div>
+            </div>
+            <div class="slide">
+                <div class="slide-number">03</div>
+                <div class="slide-text">3番目のスライド<br>スクロール中央</div>
+            </div>
+            <div class="slide">
+                <div class="slide-number">04</div>
+                <div class="slide-text">4番目のスライド<br>スクロール終盤</div>
+            </div>
+            <div class="slide">
+                <div class="slide-number">05</div>
+                <div class="slide-text">最後のスライド<br>スクロール完了</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ボトムセクション -->
+    <div class="section bottom-section">
+        <h2>スクロール連動完了</h2>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // GSAPのScrollTriggerプラグインを登録
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 要素を取得
+    const sliderSection = document.querySelector('.slider-section');
+    const sliderContainer = document.querySelector('.slider-container');
+    const slides = document.querySelectorAll('.slide');
+
+    // デバッグ用要素
+    const progressDisplay = document.getElementById('progress');
+    const positionDisplay = document.getElementById('position');
+
+    // スライダーの計算
+    const slideWidth = window.innerWidth <= 768 ? 300 : 500;
+    const gap = 48; // 3rem
+    const viewportWidth = window.innerWidth;
+    const viewportCenter = viewportWidth / 2;
+
+    // 最初のスライドを中央に配置する初期位置
+    const startX = viewportCenter - (slideWidth / 2);
+
+    // 最後のスライドを中央に配置する最終位置
+    const totalDistance = (slideWidth + gap) * (slides.length - 1);
+    const endX = startX - totalDistance;
+
+    console.log('=== デバッグ情報 ===');
+    console.log('画面幅:', viewportWidth);
+    console.log('スライド幅:', slideWidth);
+    console.log('初期位置:', startX);
+    console.log('最終位置:', endX);
+    console.log('移動距離:', totalDistance);
+
+    // ScrollTriggerでアニメーション
+    gsap.fromTo(sliderContainer,
+      {
+        // 開始位置
+        x: startX
+      },
+      {
+        // 終了位置
+        x: endX,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sliderSection,
+          pin: true,
+          scrub: 1,
+          start: "top top",
+          end: "+=3000", // 3000pxのスクロール距離
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: function(self) {
+            const progress = Math.round(self.progress * 100);
+            const currentX = startX + (endX - startX) * self.progress;
+
+            progressDisplay.textContent = progress + '%';
+            positionDisplay.textContent = Math.round(currentX) + 'px';
+          }
+        }
+      }
+    );
+
+    // リサイズ時の処理
+    window.addEventListener('resize', () => {
+      ScrollTrigger.refresh();
+    });
+  });
+</script>
+</body>
+</html>
