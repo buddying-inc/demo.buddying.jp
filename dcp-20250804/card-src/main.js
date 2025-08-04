@@ -126,7 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // TODO: 30秒で動画選択ボタンを表示
       // TODO: 30秒でリプレイボタンを表示
-      // TODO: 30秒で戻るボタン表示（クリック後、モーダル消える）
     });
 
     // 音量スライダー
