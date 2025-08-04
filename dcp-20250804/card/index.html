@@ -39,16 +39,16 @@
       display: flex;
       padding: unset;
     }
-    .promotion .promotion__coupon,
-    .promotion .promotion__campaign {
+    .promotion .coupon,
+    .promotion .campaign {
       width: 50%;
       height: 200px;
       padding: 20px;
     }
-    .promotion .promotion__coupon {
+    .promotion .coupon {
       background-color: #62daea;
     }
-    .promotion .promotion__campaign {
+    .promotion .campaign {
       background-color: #af60ff;
     }
 
@@ -60,7 +60,7 @@
       background-color: #ff05cd; height: 500px;
       max-width: 100%;
     }
-    .media .media__intro_video {
+    .short_video {
       width: 100%;
       max-width: 100%;
       height: auto;
@@ -172,8 +172,8 @@
   </section>
 
   <section class="promotion">
-    <div class="promotion__coupon"><h2>クーポン配布中</h2></div>
-    <div class="promotion__campaign"><h2>キャンペーン告知</h2></div>
+    <div class="coupon"><h2>クーポン配布中</h2></div>
+    <div class="campaign"><h2>キャンペーン告知</h2></div>
   </section>
 
   <section class="catchphrase">
@@ -182,7 +182,7 @@
   </section>
 
   <section class="media">
-    <video class="media__intro_video js-intro-video" muted autoplay preload="auto" loop>
+    <video class="short_video js-short-video" muted autoplay preload="auto" loop>
       <source src="../movie/intro.mp4" type="video/mp4">
     </video>
 
@@ -190,9 +190,11 @@
       <button type="button" class="js-close-video-panel">戻る</button>
       <button type="button" class="js-skip-video" style="visibility: hidden;">結末を見る</button>
 
-      <video class="main_video" id="main_video" preload="auto" loop>
+      <video class="main_video js-main-video" preload="auto" loop>
         <source src="../movie/main.mp4" type="video/mp4">
       </video>
+
+      <button type="button" class="js-replay-video" style="visibility: hidden;">リプレイ</button>
 
       <div class="video-controls js-video-controls">
         <div class="control-row">

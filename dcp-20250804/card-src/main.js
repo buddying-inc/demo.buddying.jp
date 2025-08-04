@@ -10,7 +10,8 @@ function formatTime (seconds) {
 }
 
 const setupMainVideo = () => {
-  const player = videojs('main_video', {
+  const elVideo = document.querySelector('.js-main-video');
+  const player = videojs(elVideo, {
     autoplay: false, // 自動再生を無効
     // fluid: true, // 動画コンテンツを親要素いっぱいに広げる
     height: 'auto',
@@ -40,7 +41,8 @@ const setupMainVideo = () => {
   const elCurrentTime = elVideoControl.querySelector('.js-current-time');
   const elDuration = elVideoControl.querySelector('.js-duration');
   const elVolumeSlider = elVideoControl.querySelector('.js-volume-slider');
-  const elProgressContainer = elVideoControl.querySelector('.js-progress-container');
+  const elProgressContainer = elVideoControl.querySelector(
+    '.js-progress-container');
   const elProgressBar = elVideoControl.querySelector('.js-progress-bar');
   const elProgressHandle = elVideoControl.querySelector('.js-progress-handle');
 
@@ -150,37 +152,42 @@ document.addEventListener('DOMContentLoaded', () => {
   const elSkipVideo = document.querySelector('.js-skip-video');
   elSkipVideo.onclick = () => mainVideoPayer.currentTime(30);
 
+  const elReplayVideo = document.querySelector('.js-replay-video');
+  elReplayVideo.onclick = () => {
+    mainVideoPayer.currentTime(0);
+    mainVideoPayer.play();
+  };
+
   const elCloseVideoPanel = document.querySelector('.js-close-video-panel');
   elCloseVideoPanel.onclick = () => {
     mainVideoPayer.currentTime(0);
+    mainVideoPayer.off('timeupdate', timeupdateCallback);
 
     // NOTE: ビデオパネルの全面表示解除
     elVideoPanel.style.display = 'none';
     document.body.classList.remove('locked_scroll');
   };
 
-  const elIntroVideo = document.querySelector('.js-intro-video');
-  elIntroVideo.addEventListener('click', () => {
+  const timeupdateCallback = () => {
+    const current = mainVideoPayer.currentTime();
+
+    // NOTE: 15秒でスキップボタンを表示
+    elSkipVideo.style.visibility = current >= 15 ? 'visible' : 'hidden';
+
+    // TODO: 30秒で動画選択ボタンを表示
+
+    // NOTE: 30秒でリプレイボタンを表示
+    elReplayVideo.style.visibility = current >= 30 ? 'visible' : 'hidden';
+  };
+
+  const elShortVideo = document.querySelector('.js-short-video');
+  elShortVideo.addEventListener('click', () => {
     // NOTE: ビデオパネルの全面表示
     elVideoPanel.style.display = 'block';
     document.body.classList.add('locked_scroll');
 
-    const timeupdateCallback = () => {
-      const current = mainVideoPayer.currentTime();
-
-      // NOTE: 15秒でスキップボタンを表示
-      if (current >= 15) {
-        elSkipVideo.style.visibility = 'visible';
-      } else {
-        elSkipVideo.style.visibility = 'hidden';
-      }
-
-      // TODO: 30秒で動画選択ボタンを表示
-      // TODO: 30秒でリプレイボタンを表示
-    };
-    mainVideoPayer.off('timeupdate', timeupdateCallback);
+    // NOTE: メインビデオを再生開始
     mainVideoPayer.on('timeupdate', timeupdateCallback);
-
     mainVideoPayer.play();
   });
-})
+});
