@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Title</title>
+  <link href="https://unpkg.com/video.js@7/dist/video-js.min.css" rel="stylesheet" />
+  <!-- <link href="https://unpkg.com/@videojs/themes@1/dist/city/index.css" rel="stylesheet"/> -->
+  <script src="js/bundle.js"></script>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      padding: 0;
+      margin: 0;
+    }
+    body.locked_scroll {
+      overflow: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      margin: 0;
+    }
+
+    main {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    section {
+      padding: 20px;
+    }
+
+    .hero {
+      background-color: #59e65e; height: 500px;
+    }
+
+    .promotion {
+      display: flex;
+      padding: unset;
+    }
+    .promotion .promotion__coupon,
+    .promotion .promotion__campaign {
+      width: 50%;
+      height: 200px;
+      padding: 20px;
+    }
+    .promotion .promotion__coupon {
+      background-color: #62daea;
+    }
+    .promotion .promotion__campaign {
+      background-color: #af60ff;
+    }
+
+    .catchphrase {
+      background-color: #fff005; height: 300px;
+    }
+
+    .media {
+      background-color: #ff05cd; height: 500px;
+      max-width: 100%;
+    }
+    .media .media__intro_video {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border: 10px solid #8B4513;
+      border-radius: 150px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+    .media .media__quiz {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding: 0;
+      margin: 0;
+      width: 100dvw;
+      height: 100dvh;
+      background-color: rgba(0, 255, 0, 1);
+    }
+    .media .media__quiz .main_video {
+      width: 90%;
+      height: auto;
+    }
+
+    .custom-controls {
+      background: #333;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    .control-row {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+
+    .play-pause-btn {
+      background: #af60ff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .play-pause-btn:hover {
+      background: #0056b3;
+    }
+
+    .time-display {
+      color: white;
+      font-family: monospace;
+      font-size: 14px;
+    }
+
+    .volume-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .volume-slider {
+      width: 100px;
+    }
+
+    .progress-container {
+      flex: 1;
+      background: #666;
+      height: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .progress-bar {
+      background: #af60ff;
+      height: 100%;
+      border-radius: 4px;
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    .progress-handle {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
+      background: #af60ff;
+      border: 2px solid white;
+      border-radius: 50%;
+      cursor: pointer;
+      left: 0%;
+    }
+
+    .volume-label {
+      color: white;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <h2>キービジュアル</h2>
+  </section>
+
+  <section class="promotion">
+    <div class="promotion__coupon"><h2>クーポン配布中</h2></div>
+    <div class="promotion__campaign"><h2>キャンペーン告知</h2></div>
+  </section>
+
+  <section class="catchphrase">
+    <h2>キャッチコピー</h2>
+    <h3>テキスト テキスト テキスト テキスト テキスト テキスト </h3>
+  </section>
+
+  <section class="media">
+    <video class="media__intro_video js-intro" muted autoplay preload="auto" loop>
+      <source src="../movie/intro.mp4" type="video/mp4">
+    </video>
+
+    <div class="media__quiz js-media-quiz">
+      <button type="button" class="js-return">戻る</button>
+      <button type="button" class="js-video-end" style="visibility: hidden;">結末を見る</button>
+
+      <video class="main_video" id="main_video" preload="auto" loop>
+        <source src="../movie/main.mp4" type="video/mp4">
+      </video>
+
+      <div class="custom-controls">
+        <div class="control-row">
+          <button class="play-pause-btn" id="playPauseBtn">再生</button>
+          <div class="time-display">
+            <span id="currentTime">00:00</span> / <span id="duration">00:00</span>
+          </div>
+          <div class="volume-control">
+            <span class="volume-label">音量:</span>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+          </div>
+        </div>
+        <div class="control-row">
+          <div class="progress-container" id="progressContainer">
+            <div class="progress-bar" id="progressBar"></div>
+            <div class="progress-handle" id="progressHandle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

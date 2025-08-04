@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video.js 外部コントロール</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.5.2/video-js.css" rel="stylesheet">
+    <style>
+        .video-container {
+            max-width: 800px;
+            margin: 20px auto;
+            font-family: Arial, sans-serif;
+        }
+
+        .custom-controls {
+            background: #333;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .control-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .play-pause-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .play-pause-btn:hover {
+            background: #0056b3;
+        }
+
+        .time-display {
+            color: white;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .volume-slider {
+            width: 100px;
+        }
+
+        .progress-container {
+            flex: 1;
+            background: #666;
+            height: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress-bar {
+            background: #007bff;
+            height: 100%;
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        .progress-handle {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            background: #007bff;
+            border: 2px solid white;
+            border-radius: 50%;
+            cursor: pointer;
+            left: 0%;
+        }
+
+        .volume-label {
+            color: white;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="video-container">
+    <video
+            id="my-video"
+            class="video-js"
+            controls={false}
+            preload="auto"
+            width="800"
+            height="450"
+            data-setup='{}'
+    >
+        <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
+        <p class="vjs-no-js">
+            ブラウザがVideo.jsをサポートしていません。
+            <a href="https://videojs.com/html5-video-support/" target="_blank">
+                HTML5動画をサポートするブラウザにアップグレードしてください。
+            </a>
+        </p>
+    </video>
+
+    <!-- カスタムコントロール -->
+    <div class="custom-controls">
+        <div class="control-row">
+            <button class="play-pause-btn" id="playPauseBtn">再生</button>
+            <div class="time-display">
+                <span id="currentTime">00:00</span> / <span id="duration">00:00</span>
+            </div>
+            <div class="volume-control">
+                <span class="volume-label">音量:</span>
+                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+            </div>
+        </div>
+        <div class="control-row">
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar" id="progressBar"></div>
+                <div class="progress-handle" id="progressHandle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.5.2/video.min.js"></script>
+<script>
+  // Video.jsプレーヤーを初期化（デフォルトのコントロールを無効化）
+  const player = videojs('my-video', {
+    controls: false,
+    fluid: true,
+    responsive: true
+  });
+
+  // DOM要素を取得
+  const playPauseBtn = document.getElementById('playPauseBtn');
+  const currentTimeSpan = document.getElementById('currentTime');
+  const durationSpan = document.getElementById('duration');
+  const volumeSlider = document.getElementById('volumeSlider');
+  const progressContainer = document.getElementById('progressContainer');
+  const progressBar = document.getElementById('progressBar');
+  const progressHandle = document.getElementById('progressHandle');
+
+  // 時間フォーマット関数
+  function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  }
+
+  // プレーヤーの準備完了時
+  player.ready(() => {
+    console.log('Video.js プレーヤーが準備完了');
+
+    // 動画の長さが取得できたら表示を更新
+    player.on('loadedmetadata', () => {
+      durationSpan.textContent = formatTime(player.duration());
+    });
+  });
+
+  // 再生/停止ボタンのイベント
+  playPauseBtn.addEventListener('click', () => {
+    if (player.paused()) {
+      player.play();
+      playPauseBtn.textContent = '停止';
+    } else {
+      player.pause();
+      playPauseBtn.textContent = '再生';
+    }
+  });
+
+  // プレーヤーの再生状態変更時
+  player.on('play', () => {
+    playPauseBtn.textContent = '停止';
+  });
+
+  player.on('pause', () => {
+    playPauseBtn.textContent = '再生';
+  });
+
+  // 時間の更新
+  player.on('timeupdate', () => {
+    const current = player.currentTime();
+    const duration = player.duration();
+
+    currentTimeSpan.textContent = formatTime(current);
+
+    if (duration > 0) {
+      const progress = (current / duration) * 100;
+      progressBar.style.width = progress + '%';
+      progressHandle.style.left = progress + '%';
+    }
+  });
+
+  // 音量スライダー
+  volumeSlider.addEventListener('input', (e) => {
+    player.volume(parseFloat(e.target.value));
+  });
+
+  // プログレスバーのクリック
+  progressContainer.addEventListener('click', (e) => {
+    const rect = progressContainer.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const progress = clickX / rect.width;
+    const duration = player.duration();
+
+    if (duration > 0) {
+      player.currentTime(duration * progress);
+    }
+  });
+
+  // プログレスハンドルのドラッグ
+  let isDragging = false;
+
+  progressHandle.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+
+    const rect = progressContainer.getBoundingClientRect();
+    const clickX = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+    const progress = clickX / rect.width;
+    const duration = player.duration();
+
+    if (duration > 0) {
+      progressBar.style.width = (progress * 100) + '%';
+      progressHandle.style.left = (progress * 100) + '%';
+      player.currentTime(duration * progress);
+    }
+  });
+
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+
+  // エラーハンドリング
+  player.on('error', (error) => {
+    console.error('Video.js エラー:', error);
+  });
+</script>
+</body>
+</html>
