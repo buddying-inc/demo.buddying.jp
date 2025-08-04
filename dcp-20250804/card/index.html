@@ -182,13 +182,13 @@
   </section>
 
   <section class="media">
-    <video class="media__intro_video js-intro" muted autoplay preload="auto" loop>
+    <video class="media__intro_video js-intro-video" muted autoplay preload="auto" loop>
       <source src="../movie/intro.mp4" type="video/mp4">
     </video>
 
-    <div class="media__quiz js-media-quiz">
-      <button type="button" class="js-return">戻る</button>
-      <button type="button" class="js-video-end" style="visibility: hidden;">結末を見る</button>
+    <div class="media__quiz js-video-panel">
+      <button type="button" class="js-close-video-panel">戻る</button>
+      <button type="button" class="js-skip-video" style="visibility: hidden;">結末を見る</button>
 
       <video class="main_video" id="main_video" preload="auto" loop>
         <source src="../movie/main.mp4" type="video/mp4">
