@@ -11,9 +11,8 @@ function formatTime (seconds) {
 
 const setupMainVideo = () => {
   const player = videojs('main_video', {
-    audioOnlyMode: true,
     autoplay: false, // 自動再生を無効
-    fluid: true, // 動画コンテンツを親要素いっぱいに広げる
+    // fluid: true, // 動画コンテンツを親要素いっぱいに広げる
     height: 'auto',
     loop: false, // 繰り返し再生無効
     controls: false, // コントローラ表示
@@ -36,13 +35,14 @@ const setupMainVideo = () => {
   }, function () {});
 
   // DOM要素を取得
-  const playPauseBtn = document.getElementById('playPauseBtn');
-  const currentTimeSpan = document.getElementById('currentTime');
-  const durationSpan = document.getElementById('duration');
-  const volumeSlider = document.getElementById('volumeSlider');
-  const progressContainer = document.getElementById('progressContainer');
-  const progressBar = document.getElementById('progressBar');
-  const progressHandle = document.getElementById('progressHandle');
+  const elVideoControl = document.querySelector('.js-video-controls');
+  const elPlayOrPause = elVideoControl.querySelector('.js-play-or-pause');
+  const elCurrentTime = elVideoControl.querySelector('.js-current-time');
+  const elDuration = elVideoControl.querySelector('.js-duration');
+  const elVolumeSlider = elVideoControl.querySelector('.js-volume-slider');
+  const elProgressContainer = elVideoControl.querySelector('.js-progress-container');
+  const elProgressBar = elVideoControl.querySelector('.js-progress-bar');
+  const elProgressHandle = elVideoControl.querySelector('.js-progress-handle');
 
   // プレーヤーの準備完了時
   player.ready(() => {
@@ -50,28 +50,28 @@ const setupMainVideo = () => {
 
     // 動画の長さが取得できたら表示を更新
     player.on('loadedmetadata', () => {
-      durationSpan.textContent = formatTime(player.duration());
+      elDuration.textContent = formatTime(player.duration());
     });
   });
 
   // 再生/停止ボタンのイベント
-  playPauseBtn.addEventListener('click', () => {
+  elPlayOrPause.addEventListener('click', () => {
     if (player.paused()) {
       player.play();
-      playPauseBtn.textContent = '停止';
+      elPlayOrPause.textContent = '停止';
     } else {
       player.pause();
-      playPauseBtn.textContent = '再生';
+      elPlayOrPause.textContent = '再生';
     }
   });
 
   // プレーヤーの再生状態変更時
   player.on('play', () => {
-    playPauseBtn.textContent = '停止';
+    elPlayOrPause.textContent = '停止';
   });
 
   player.on('pause', () => {
-    playPauseBtn.textContent = '再生';
+    elPlayOrPause.textContent = '再生';
   });
 
   // 時間の更新
@@ -79,23 +79,23 @@ const setupMainVideo = () => {
     const current = player.currentTime();
     const duration = player.duration();
 
-    currentTimeSpan.textContent = formatTime(current);
+    elCurrentTime.textContent = formatTime(current);
 
     if (duration > 0) {
       const progress = (current / duration) * 100;
-      progressBar.style.width = progress + '%';
-      progressHandle.style.left = progress + '%';
+      elProgressBar.style.width = progress + '%';
+      elProgressHandle.style.left = progress + '%';
     }
   });
 
   // 音量スライダー
-  volumeSlider.addEventListener('input', (e) => {
+  elVolumeSlider.addEventListener('input', (e) => {
     player.volume(parseFloat(e.target.value));
   });
 
   // プログレスバーのクリック
-  progressContainer.addEventListener('click', (e) => {
-    const rect = progressContainer.getBoundingClientRect();
+  elProgressContainer.addEventListener('click', (e) => {
+    const rect = elProgressContainer.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const progress = clickX / rect.width;
     const duration = player.duration();
@@ -108,7 +108,7 @@ const setupMainVideo = () => {
   // プログレスハンドルのドラッグ
   let isDragging = false;
 
-  progressHandle.addEventListener('mousedown', (e) => {
+  elProgressHandle.addEventListener('mousedown', (e) => {
     isDragging = true;
     e.preventDefault();
   });
@@ -118,14 +118,14 @@ const setupMainVideo = () => {
       return;
     }
 
-    const rect = progressContainer.getBoundingClientRect();
+    const rect = elProgressContainer.getBoundingClientRect();
     const clickX = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
     const progress = clickX / rect.width;
     const duration = player.duration();
 
     if (duration > 0) {
-      progressBar.style.width = (progress * 100) + '%';
-      progressHandle.style.left = (progress * 100) + '%';
+      elProgressBar.style.width = (progress * 100) + '%';
+      elProgressHandle.style.left = (progress * 100) + '%';
       player.currentTime(duration * progress);
     }
   });
