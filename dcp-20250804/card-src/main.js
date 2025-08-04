@@ -152,6 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const elSkipVideo = document.querySelector('.js-skip-video');
   elSkipVideo.onclick = () => mainVideoPayer.currentTime(30);
 
+  const elSubVideoPanel = document.querySelector('.js-sub-video-panel');
+
   const elReplayVideo = document.querySelector('.js-replay-video');
   elReplayVideo.onclick = () => {
     mainVideoPayer.currentTime(0);
@@ -174,10 +176,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // NOTE: 15秒でスキップボタンを表示
     elSkipVideo.style.visibility = current >= 15 ? 'visible' : 'hidden';
 
-    // TODO: 30秒で動画選択ボタンを表示
-
-    // NOTE: 30秒でリプレイボタンを表示
-    elReplayVideo.style.visibility = current >= 30 ? 'visible' : 'hidden';
+    // NOTE: 30秒で動画選択とリプレイボタンを表示
+    if (current > 30) {
+      mainVideoPayer.pause();
+      elSubVideoPanel.style.display = 'block';
+    } else {
+      elSubVideoPanel.style.display = 'none';
+    }
   };
 
   const elShortVideo = document.querySelector('.js-short-video');
@@ -189,5 +194,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // NOTE: メインビデオを再生開始
     mainVideoPayer.on('timeupdate', timeupdateCallback);
     mainVideoPayer.play();
+  });
+
+  const elSubVideoList = document.querySelector('.js-sub-video-list');
+
+  const elSubVideo1 = document.querySelector('.js-sub-video1');
+  elSubVideo1.addEventListener('click', () => {
+    elSubVideo1.startTime = 0;
+    elSubVideo1.play();
+  });
+  elSubVideo1.addEventListener('ended', () => {
+    elSubVideoList.style.display = 'none';
+    elReplayVideo.style.display = 'none';
   });
 });
