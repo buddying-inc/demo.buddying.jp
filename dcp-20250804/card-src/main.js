@@ -165,6 +165,33 @@ document.addEventListener('DOMContentLoaded', () => {
     elMainVideo.play();
   });
 
+  // ・メイン動画30秒後
+  // 　- サブ動画3個表示
+  //　 - レプレーボタン表示
+
+  // ・レプレーボタンクリック
+  // 　- サブ動画非表示
+  //　 - メイン動画再生
+
+  // ・サブ動画クリック
+  // 　- サブ動画再生開始
+
+  // ・サブ動画再生完了
+  // 　- "SOCK CODE でクーポン配布中" テキスト表示。
+  // 　- 戻る（もう一度動画を選ぶ）表示。
+
+  // ・"SOCK CODE でクーポン配布中" クリック
+  // 　- モーダルを全て閉じ、ページ内スクロール
+
+  // ・"戻る" クリック
+  // 　- メイン動画30秒後 と同じ状態に戻る
+
+  // レイヤー
+  // body
+  //   ∟ レイヤー1：メイン動画とプレーヤコントロール
+  //   ∟ レイヤー2：動画が3つ
+  //   ∟ レイヤー3：選択した動画を再生 & 再生後の誘導
+
   const elSubVideoList = document.querySelector('.js-sub-video-list');
 
   const elSubVideo1 = document.querySelector('.js-sub-video1');
