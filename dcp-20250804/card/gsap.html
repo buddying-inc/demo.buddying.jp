@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Card Stack</title>
+    <style>
+        body {
+            background: #fff;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+
+        .container {
+            position: relative;
+            width: 640px;
+            height: 360px;
+        }
+
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transform-origin: center center;
+            background: #fff;
+            border: 1px solid #000;
+        }
+
+        .card video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            pointer-events: none;
+
+        }
+
+        .btn {
+            background: rgba(0, 0, 0, 0.1);
+            border: none;
+            padding: 12px 20px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            pointer-events: all;
+            user-select: none;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card" style="z-index:3; background-color: pink;"><video src="video1.mp4" autoplay muted loop></video></div>
+    <div class="card" style="z-index:2; background-color: lightblue;"><video src="video2.mp4" autoplay muted loop></video></div>
+    <div class="card" style="z-index:1; background-color: greenyellow;"><video src="video3.mp4" autoplay muted loop></video></div>
+
+    <div class="controls" style="z-index:4;">
+        <button class="btn" id="prev">←</button>
+        <button class="btn" id="next">→</button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+  const cards = Array.from(document.querySelectorAll('.card'));
+  const nextBtn = document.getElementById('next');
+  const prevBtn = document.getElementById('prev');
+  let timer = null;
+  let isAnimating = false;
+
+  function arrangeCards() {
+    cards.forEach((card, i) => {
+      const z = cards.length - i;
+      let rotation = 0;
+      let offsetX = 0;
+      let offsetY = 0;
+
+      if (i === 1) {
+        rotation = -3;
+        offsetX = -10;
+        offsetY = 10;
+      } else if (i === 2) {
+        rotation = -6;
+        offsetX = -20;
+        offsetY = 20;
+      }
+
+      gsap.to(card, {
+        zIndex: z,
+        rotationZ: rotation,
+        x: offsetX,
+        y: offsetY,
+        duration: 0.5,
+        ease: "power2.out"
+      });
+    });
+  }
+
+  function showNext() {
+    if (isAnimating) return;
+    isAnimating = true;
+
+    const first = cards.shift();
+    cards.push(first);
+
+    gsap.to(first, {
+      x: 100,
+      y: 100,
+      opacity: 0,
+      duration: 0.4,
+      ease: "power1.in",
+      onComplete: () => {
+        gsap.set(first, { x: -20, y: 20, rotationZ: -6, opacity: 1 });
+        arrangeCards();
+        isAnimating = false;
+      }
+    });
+  }
+
+  function showPrev() {
+    if (isAnimating) return;
+    isAnimating = true;
+
+    const last = cards.pop();
+    cards.unshift(last);
+    gsap.set(last, { x: 100, y: 100, opacity: 0 });
+
+    arrangeCards();
+
+    gsap.to(last, {
+      x: 0,
+      y: 0,
+      opacity: 1,
+      duration: 0.4,
+      ease: "power1.out",
+      onComplete: () => {
+        isAnimating = false;
+      }
+    });
+  }
+
+  function startAuto() {
+    clearInterval(timer);
+    timer = setInterval(showNext, 5000);
+  }
+
+  nextBtn.addEventListener('click', () => {
+    showNext();
+    startAuto();
+  });
+
+  prevBtn.addEventListener('click', () => {
+    showPrev();
+    startAuto();
+  });
+
+  arrangeCards();
+  startAuto();
+</script>
+
+</body>
+</html>

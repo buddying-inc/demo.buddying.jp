@@ -1,0 +1,15 @@
+{
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^26.0.3",
+        "@rollup/plugin-node-resolve": "^15.3.0",
+        "@rollup/plugin-replace": "^5.0.7",
+        "@rollup/plugin-terser": "^0.4.4",
+        "rollup": "^4.24.0"
+    },
+    "engines": {
+        "node": "22.5.1"
+    },
+    "scripts": {
+        "build": "rollup --config"
+    }
+}
