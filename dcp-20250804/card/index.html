@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Title</title>
-  <link href="https://unpkg.com/video.js@7/dist/video-js.min.css" rel="stylesheet" />
-  <!-- <link href="https://unpkg.com/@videojs/themes@1/dist/city/index.css" rel="stylesheet"/> -->
   <script src="js/bundle.js"></script>
   <style>
     body {
@@ -57,21 +55,29 @@
     }
 
     .media {
-      background-color: #ff05cd; height: 500px;
+      background-color: #ff05cd;
       max-width: 100%;
+      height: auto;
     }
-    .short_video {
+    .media > video {
       width: 100%;
       max-width: 100%;
       height: auto;
-      border: 10px solid #8B4513;
+      outline: 10px solid #8B4513;
       border-radius: 150px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      position: relative;
     }
 
-    .media .panel {
+    body:has(.media-popup.show) {
+      overflow: hidden;
+    }
+    .media-popup {
+      position: relative;
       display: none;
+    }
+    .media-popup.show {
+      display: block;
+    }
+    .media-popup .media-layer {
       position: fixed;
       top: 0;
       left: 0;
@@ -80,27 +86,43 @@
       width: 100dvw;
       height: 100dvh;
       background-color: rgba(0, 255, 0, 1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    .media .panel .main_video {
-      width: 90%;
+    .media-popup .media-layer .media-scene {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+    .media-popup .media-layer .media-scene.current {
+      display: block;
+    }
+    .media-popup .media-layer .media-scene .main-video {
+      width: 100%;
+      max-width: 100%;
       height: auto;
+      outline: 10px solid #8B4513;
+      border-radius: 150px;
     }
-
-    .video-controls {
+    .media-popup .media-layer .media-scene .video-controls {
       background: #333;
       padding: 15px;
       border-radius: 8px;
       margin-top: 10px;
     }
-
-    .control-row {
+    .media-popup .media-layer .media-scene .video-controls .control-row {
       display: flex;
       align-items: center;
       gap: 15px;
       margin-bottom: 10px;
     }
-
-    .play-pause-btn {
+    .media-popup .media-layer .media-scene .video-controls .play-pause-btn {
       background: #af60ff;
       color: white;
       border: none;
@@ -109,28 +131,23 @@
       cursor: pointer;
       font-size: 16px;
     }
-
-    .play-pause-btn:hover {
+    .media-popup .media-layer .media-scene .video-controls .play-pause-btn:hover {
       background: #0056b3;
     }
-
-    .time-display {
+    .media-popup .media-layer .media-scene .video-controls .time-display {
       color: white;
       font-family: monospace;
       font-size: 14px;
     }
-
-    .volume-control {
+    .media-popup .media-layer .media-scene .video-controls .volume-control {
       display: flex;
       align-items: center;
       gap: 10px;
     }
-
-    .volume-slider {
+    .media-popup .media-layer .media-scene .video-controls .volume-slider {
       width: 100px;
     }
-
-    .progress-container {
+    .media-popup .media-layer .media-scene .video-controls .progress-container {
       flex: 1;
       background: #666;
       height: 8px;
@@ -138,16 +155,14 @@
       cursor: pointer;
       position: relative;
     }
-
-    .progress-bar {
+    .media-popup .media-layer .media-scene .video-controls .progress-bar {
       background: #af60ff;
       height: 100%;
       border-radius: 4px;
-      width: 0%;
+      width: 0;
       transition: width 0.1s;
     }
-
-    .progress-handle {
+    .media-popup .media-layer .media-scene .video-controls .progress-handle {
       position: absolute;
       top: 50%;
       transform: translate(-50%, -50%);
@@ -157,36 +172,33 @@
       border: 2px solid white;
       border-radius: 50%;
       cursor: pointer;
-      left: 0%;
+      left: 0;
     }
-
-    .volume-label {
+    .media-popup .media-layer .media-scene .video-controls .volume-label {
       color: white;
       font-size: 14px;
     }
-
-    .sub-panel {
+    .media-popup .media-layer .media-scene .skip {
       display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      padding: 0;
-      margin: 0;
-      width: 100dvw;
-      height: 100dvh;
-      background-color: rgba(0, 255, 0, 1);
     }
-
-    .sub-panel .sub_video_list {
+    .media-popup .media-layer .media-scene .options {
+      width: 100%;
       display: flex;
       flex-direction: row;
       gap: 10px;
-      overflow-y: scroll;
+      overflow-x: scroll;
     }
-    .sub-panel .sub_video {
-      width: 90%;
+    .media-popup .media-layer .media-scene .options .option {
+      min-width: 200px;
+      height: 200px;
+      background-color: #fff;
+      cursor: pointer;
+    }
+    .media-popup .media-layer .media-scene .option-video {
+      width: 100%;
+      max-width: 100%;
       height: auto;
-      border: 10px solid #8B4513;
+      outline: 10px solid #8B4513;
       border-radius: 150px;
     }
   </style>
@@ -208,53 +220,54 @@
   </section>
 
   <section class="media">
-    <video class="short_video js-short-video" muted autoplay preload="auto" loop>
-      <source src="../movie/short.mp4" type="video/mp4">
-    </video>
-
-    <div class="panel js-video-panel">
-      <button type="button" class="js-close-video-panel">戻る</button>
-      <button type="button" class="js-skip-video" style="visibility: hidden;">結末を見る</button>
-
-      <video class="main_video js-main-video" preload="auto" loop>
-        <source src="../movie/main.mp4" type="video/mp4">
-      </video>
-
-      <div class="video-controls js-video-controls">
-        <div class="control-row">
-          <button class="play-pause-btn js-play-or-pause">再生</button>
-          <div class="time-display">
-            <span class="js-current-time">00:00</span> / <span class="js-duration">00:00</span>
-          </div>
-          <div class="volume-control">
-            <span class="volume-label">音量:</span>
-            <input type="range" class="volume-slider js-volume-slider" min="0" max="1" step="0.1" value="1">
-          </div>
-        </div>
-        <div class="control-row">
-          <div class="progress-container js-progress-container">
-            <div class="progress-bar js-progress-bar"></div>
-            <div class="progress-handle js-progress-handle"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="sub-panel js-sub-video-panel">
-      <div class="sub_video_list js-sub-video-list">
-        <video class="sub_video js-sub-video1" preload="auto">
-          <source src="../movie/short.mp4" type="video/mp4">
-        </video>
-        <video class="sub_video js-sub-video2" preload="auto">
-          <source src="../movie/short.mp4" type="video/mp4">
-        </video>
-        <video class="sub_video js-sub-video3" preload="auto">
-          <source src="../movie/short.mp4" type="video/mp4">
-        </video>
-      </div>
-      <button type="button" class="js-replay-video">リプレイ</button>
-    </div>
+    <video type="video/mp4" src="../movie/short.mp4" class="js-media-cta" muted autoplay preload="auto" loop title="クリック"></video>
   </section>
+  <div class="media-popup js-media-popup">
+    <div class="media-layer">
+      <div class="media-scene js-media-scene" data-scene-id="1">
+        <p>1. 動画を30秒見る</p>
+        <button type="button" class="js-return">戻る</button>
+        <button type="button" class="skip js-skip">物語の結末を見る</button>
+        <video type="video/mp4" src="../movie/main.mp4" class="main-video js-main-video" muted preload="auto"></video>
+        <div class="video-controls">
+          <div class="control-row">
+            <button class="play-pause-btn js-play-or-pause">再生</button>
+            <div class="time-display">
+              <span class="js-current-time">00:00</span> / <span class="js-duration">00:00</span>
+            </div>
+            <div class="volume-control">
+              <span class="volume-label">音量:</span>
+              <input type="range" class="volume-slider js-volume-slider" min="0" max="1" step="0.1" value="1">
+            </div>
+          </div>
+          <div class="control-row">
+            <div class="progress-container js-progress-container">
+              <div class="progress-bar js-progress-bar"></div>
+              <div class="progress-handle js-progress-handle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="media-scene js-media-scene" data-scene-id="2">
+        <p>2. 選択肢から1つを選択</p>
+        <div class="options">
+          <div class="option js-option" data-video-url="../movie/short.mp4">選択肢1</div>
+          <div class="option js-option" data-video-url="../movie/short.mp4">選択肢2</div>
+          <div class="option js-option" data-video-url="../movie/short.mp4">選択肢3</div>
+        </div>
+        <button type="button" class="js-replay">REPLAY</button>
+      </div>
+      <div class="media-scene js-media-scene" data-scene-id="3">
+        <p>3. 選択した動画を再生</p>
+        <video type="video/mp4" src="" class="option-video js-option-video" muted></video>
+      </div>
+      <div class="media-scene js-media-scene" data-scene-id="4">
+        <p>4. クーポン配布の案内</p>
+        <button type="button" class="js-finish">SOCK CODE でクーポン配布中</button>
+        <button type="button" class="js-again">戻る(もう一度動画を選ぶ)</button>
+      </div>
+    </div>
+  </div>
 </main>
 </body>
 </html>
